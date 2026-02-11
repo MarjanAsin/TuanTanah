@@ -1,0 +1,117 @@
+{{-- resources/views/layouts/app.blade.php --}}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>@yield('title', 'Tuan Tanah')</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="min-h-screen bg-gray-50 flex flex-col">
+
+    <nav class="bg-[#151541] text-white shadow-lg sticky top-0 z-50 font-inria">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+
+            {{-- Logo & Brand --}}
+            <a href="#" class="flex items-center gap-2">
+                <span class="text-xl font-bold tracking-wide">
+                    Tuan Tanah
+                </span>
+            </a>
+
+            @php
+                $menus = [
+                    ['route' => 'beranda',          'label' => 'Beranda'],
+                    ['route' => 'kalkulator.show',  'label' => 'Upload Properti'],
+                    ['route' => 'pelatihan',        'label' => 'Riwayat Properti'],
+                    ['route' => 'info_pendaftaran', 'label' => 'Keluar'],
+                ];
+            @endphp
+
+            {{-- Navigation Links - Desktop --}}
+            <div class="hidden md:flex items-center gap-6 text-sm font-semibold">
+                @foreach($menus as $menu)
+                    @php
+                        $active = request()->routeIs($menu['route']);
+                    @endphp
+                    <a
+                        href="#"
+                        class="relative px-2 py-1 transition duration-300
+                               {{ $active
+                                  ? 'text-white border-b-2 border-white'
+                                  : 'text-gray-300 hover:text-white' }}"
+                    >
+                        {{ $menu['label'] }}
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- Mobile select --}}
+            <div class="md:hidden">
+                <select
+                    onchange="if(this.value){ window.location = this.value; }"
+                    class="bg-[#1c1c5a] text-white border border-white/30 rounded-md px-3 py-2 focus:outline-none"
+                >
+                    @foreach($menus as $menu)
+                        <option
+                            value="#"
+                            {{ request()->routeIs($menu['route']) ? 'selected' : '' }}
+                        >
+                            {{ $menu['label'] }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+    {{-- Main Content --}}
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        @yield('content')
+    </main>
+
+    {{-- Footer --}}
+    <footer class="bg-[#151541] text-white mt-16 font-inria">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+
+        <!-- Top Section -->
+        <div class="flex flex-col md:flex-row justify-between gap-10">
+
+            <!-- Tentang Website -->
+            <div class="max-w-md">
+                <h2 class="text-2xl font-semibold">Tuantanah.com</h2>
+                <p class="mt-4 text-gray-300 leading-relaxed text-sm">
+                    Tuantanah.com adalah platform pemasaran properti terpercaya yang
+                    membantu pelanggan menemukan properti terbaik dengan
+                    proses yang cepat, aman, dan transparan di seluruh Indonesia.
+                </p>
+            </div>
+
+            <!-- Kontak -->
+            <div class="text-sm text-gray-300">
+                <h3 class="text-lg font-semibold text-white mb-4">Hubungi Kami</h3>
+                <p>Alamat: Jl. Kaliurang KM 12 No. 34, Sleman, Yogyakarta 56789</p>
+                <p class="mt-2">Telepon: +62 812-3456-7890</p>
+                <p class="mt-2">Email: info@tuantanah.com</p>
+                <p class="mt-2">Jam Operasional: Senin – Sabtu, 09.00 – 17.00 WIB</p>
+            </div>
+
+        </div>
+
+        <!-- Garis -->
+        <div class="border-t border-gray-600 my-8"></div>
+
+        <!-- Bottom -->
+        <div class="text-center text-sm text-gray-400 tracking-wide">
+            <p>&copy; 2026 Tuantanah.com. Semua hak cipta dilindungi.</p>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+</html>

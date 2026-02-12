@@ -14,7 +14,7 @@
         <div class="flex items-center justify-between h-16">
 
             {{-- Logo & Brand --}}
-            <a href="#" class="flex items-center gap-2">
+            <a href="{{ route('admin.beranda') }}" class="flex items-center gap-2">
                 <span class="text-xl font-bold tracking-wide">
                     Tuan Tanah
                 </span>
@@ -22,10 +22,10 @@
 
             @php
                 $menus = [
-                    ['route' => 'beranda',          'label' => 'Beranda'],
-                    ['route' => 'kalkulator.show',  'label' => 'Verifikasi Properti'],
-                    ['route' => 'pelatihan',        'label' => 'Upload Banner'],
-                    ['route' => 'info_pendaftaran', 'label' => 'Keluar'],
+                    ['route' => 'admin.beranda',          'label' => 'Beranda'],
+                    ['route' => 'admin.verifikasi',  'label' => 'Verifikasi Properti'],
+                    ['route' => 'admin.upload',        'label' => 'Upload Banner'],
+                    ['route' => 'logout', 'label' => 'Keluar'],
                 ];
             @endphp
 
@@ -38,9 +38,9 @@
                     <a
                         href="#"
                         class="relative px-2 py-1 transition duration-300
-                               {{ $active
-                                  ? 'text-white border-b-2 border-white'
-                                  : 'text-gray-300 hover:text-white' }}"
+                            {{ $active
+                                ? 'text-white border-b-2 border-white'
+                                : 'text-gray-300 hover:text-white' }}"
                     >
                         {{ $menu['label'] }}
                     </a>

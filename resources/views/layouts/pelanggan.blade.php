@@ -14,7 +14,7 @@
         <div class="flex items-center justify-between h-16">
 
             {{-- Logo & Brand --}}
-            <a href="#" class="flex items-center gap-2">
+            <a href="{{ route('pelanggan.beranda') }}" class="flex items-center gap-2">
                 <span class="text-xl font-bold tracking-wide">
                     Tuan Tanah
                 </span>
@@ -22,12 +22,13 @@
 
             @php
                 $menus = [
-                    ['route' => 'beranda',          'label' => 'Beranda'],
-                    ['route' => 'kalkulator.show',  'label' => 'Properti'],
-                    ['route' => 'pelatihan',        'label' => 'Kontak'],
-                    ['route' => 'info_pendaftaran', 'label' => 'Masuk'],
+                    ['route' => 'pelanggan.beranda',  'label' => 'Beranda'],
+                    ['route' => 'pelanggan.properti', 'label' => 'Properti'],
+                    ['route' => 'pelanggan.kontak',   'label' => 'Kontak'],
+                    ['route' => 'masuk',              'label' => 'Masuk'],
                 ];
             @endphp
+
 
             {{-- Navigation Links - Desktop --}}
             <div class="hidden md:flex items-center gap-6 text-sm font-semibold">
@@ -36,11 +37,11 @@
                         $active = request()->routeIs($menu['route']);
                     @endphp
                     <a
-                        href="#"
+                        href="{{ route($menu['route']) }}"
                         class="relative px-2 py-1 transition duration-300
-                               {{ $active
-                                  ? 'text-white border-b-2 border-white'
-                                  : 'text-gray-300 hover:text-white' }}"
+                            {{ $active
+                                ? 'text-white border-b-2 border-white'
+                                : 'text-gray-300 hover:text-white' }}"
                     >
                         {{ $menu['label'] }}
                     </a>
@@ -55,7 +56,7 @@
                 >
                     @foreach($menus as $menu)
                         <option
-                            value="#"
+                            value="{{ route($menu['route']) }}"
                             {{ request()->routeIs($menu['route']) ? 'selected' : '' }}
                         >
                             {{ $menu['label'] }}

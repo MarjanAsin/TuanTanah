@@ -7,85 +7,105 @@
 <div class="bg-white">
 
     {{-- PROPERTI UNGGULAN --}}
-    <section class="py-3">
+    <section class="py-6">
         <div class="max-w-7xl mx-auto px-6">
-            
+
             <h2 class="text-2xl font-semibold font-inria mb-6">
-                Daftar Properti unggulan
+                Daftar Properti Unggulan
             </h2>
 
             <div class="grid md:grid-cols-3 gap-10">
 
-                {{-- CARD --}}
-                @for ($i = 1; $i <= 3; $i++)
+                @forelse($unggulan as $item)
                 <div class="bg-white rounded-md shadow-sm overflow-hidden hover:shadow-md transition duration-200">
 
-                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be"
-                         class="w-full h-44 object-cover"
-                         alt="Rumah">
+                    <img src="{{ asset('storage/' . $item->foto_properti) }}"
+                         class="w-full h-44 object-cover">
 
                     <div class="p-4 text-xs">
-                        <h3 class="font-semibold mb-1">Rumah {{ $i }}</h3>
-                        <p class="text-gray-500">Lokasi</p>
+                        <h3 class="font-semibold mb-1">
+                            {{ $item->nama_properti }}
+                        </h3>
+
                         <p class="text-gray-500">
-                            3 Kamar Tidur | 2 Kamar Mandi | Luas Rumah 300m²
+                            {{ $item->lokasi }}
+                        </p>
+
+                        <p class="text-gray-500">
+                            {{ $item->fasilitas }}
                         </p>
 
                         <div class="flex justify-between items-center mt-2">
                             <p class="font-semibold">
-                                Rp 1.000.000.000
+                                Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </p>
-                            <a href="#" class="text-gray-600 hover:text-black">
+
+                            <a href="{{ route('pelanggan.detail', $item->properti_id) }}"
+                               class="text-gray-600 hover:text-black">
                                 Lihat Detail →
                             </a>
                         </div>
                     </div>
 
                 </div>
-                @endfor
+                @empty
+                    <p class="text-gray-500 text-sm">
+                        Belum ada properti unggulan.
+                    </p>
+                @endforelse
 
             </div>
         </div>
     </section>
 
 
-    {{-- DAFTAR PROPERTI --}}
-    <section class="py-4">
+    {{-- SEMUA PROPERTI --}}
+    <section class="py-6">
         <div class="max-w-7xl mx-auto px-6">
-            
+
             <h2 class="text-2xl font-semibold font-inria mb-6">
                 Daftar Properti
             </h2>
 
             <div class="grid md:grid-cols-3 gap-10">
 
-                {{-- CARD --}}
-                @for ($i = 1; $i <= 3; $i++)
+                @forelse($properti as $item)
                 <div class="bg-white rounded-md shadow-sm overflow-hidden hover:shadow-md transition duration-200">
 
-                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be"
-                         class="w-full h-44 object-cover"
-                         alt="Rumah">
+                    <img src="{{ asset('storage/' . $item->foto_properti) }}"
+                         class="w-full h-44 object-cover">
 
                     <div class="p-4 text-xs">
-                        <h3 class="font-semibold mb-1">Rumah {{ $i }}</h3>
-                        <p class="text-gray-500">Lokasi</p>
+                        <h3 class="font-semibold mb-1">
+                            {{ $item->nama_properti }}
+                        </h3>
+
                         <p class="text-gray-500">
-                            3 Kamar Tidur | 2 Kamar Mandi | Luas Rumah 300m²
+                            {{ $item->lokasi }}
+                        </p>
+
+                        <p class="text-gray-500">
+                            {{ $item->fasilitas }}
                         </p>
 
                         <div class="flex justify-between items-center mt-2">
                             <p class="font-semibold">
-                                Rp 1.000.000.000
+                                Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </p>
-                            <a href="#" class="text-gray-600 hover:text-black">
+
+                            <a href="{{ route('pelanggan.detail', $item->properti_id) }}"
+                               class="text-gray-600 hover:text-black">
                                 Lihat Detail →
                             </a>
                         </div>
                     </div>
 
                 </div>
-                @endfor
+                @empty
+                    <p class="text-gray-500 text-sm">
+                        Belum ada properti tersedia.
+                    </p>
+                @endforelse
 
             </div>
         </div>

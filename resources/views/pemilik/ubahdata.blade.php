@@ -6,96 +6,129 @@
 
 <div class="mt-10 mb-16">
 
-    {{-- Judul --}}
     <h2 class="text-xl font-semibold text-center mb-10 font-inria">
         Ubah data properti
     </h2>
 
-    <div class="grid grid-cols-2 gap-12">
+    <form method="POST" action="{{ route('pemilik.update', $properti->properti_id) }}"
+          enctype="multipart/form-data">
 
-        {{-- KIRI : GAMBAR --}}
-        <div>
-            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
-                 class="w-full h-64 object-cover mb-6">
+        @csrf
+        @method('PUT')
 
-            <div class="flex gap-6">
-                <button class="bg-red-700 text-white px-6 py-2 text-sm">
-                    Hapus Properti
+        <div class="grid grid-cols-2 gap-12">
+
+            {{-- KIRI --}}
+            <div>
+
+                {{-- Preview Foto --}}
+                <img id="previewImage"
+                    src="{{ asset('storage/' . $properti->foto_properti) }}"
+                    class="w-full h-64 object-cover mb-6">
+
+                {{-- Input File Hidden --}}
+                <input type="file"
+                    name="foto_properti"
+                    id="fotoInput"
+                    class="hidden"
+                    accept="image/*">
+
+                {{-- Tombol Ubah Foto --}}
+                <button type="button"
+                    onclick="document.getElementById('fotoInput').click()"
+                    class="bg-indigo-600 text-white px-5 py-2 text-sm">
+                    Ubah Foto
                 </button>
 
-                <button class="bg-indigo-600 text-white px-6 py-2 text-sm">
-                    Perbarui
-                </button>
             </div>
+
+
+
+            {{-- KANAN --}}
+            <div>
+
+                <form method="POST"
+                    action="{{ route('pemilik.update', $properti->properti_id) }}"
+                    enctype="multipart/form-data">
+
+
+                    @csrf
+                    @method('PUT')
+
+                    <div class="space-y-5 text-sm">
+
+                        <div class="grid grid-cols-3 items-center gap-4">
+                            <label>Nama Properti</label>
+                            <input type="text" name="nama_properti"
+                                value="{{ $properti->nama_properti }}"
+                                class="col-span-2 border px-3 py-2">
+                        </div>
+
+                        <div class="grid grid-cols-3 items-center gap-4">
+                            <label>Lokasi</label>
+                            <input type="text" name="lokasi"
+                                value="{{ $properti->lokasi }}"
+                                class="col-span-2 border px-3 py-2">
+                        </div>
+
+                        <div class="grid grid-cols-3 items-center gap-4">
+                            <label>Fasilitas</label>
+                            <input type="text" name="fasilitas"
+                                value="{{ $properti->fasilitas }}"
+                                class="col-span-2 border px-3 py-2">
+                        </div>
+
+                        <div class="grid grid-cols-3 items-center gap-4">
+                            <label>Harga</label>
+                            <input type="number" name="harga"
+                                value="{{ $properti->harga }}"
+                                class="col-span-2 border px-3 py-2">
+                        </div>
+
+                        <div class="grid grid-cols-3 items-start gap-4">
+                            <label class="pt-2">Deskripsi</label>
+                            <textarea name="deskripsi" rows="4"
+                                    class="col-span-2 border px-3 py-2">{{ $properti->deskripsi }}</textarea>
+                        </div>
+
+                        <div class="grid grid-cols-3 items-center gap-4">
+                            <label>Nomor WhatsApp</label>
+                            <input type="text" name="kontak_whatsapp"
+                                value="{{ $properti->kontak_whatsapp }}"
+                                class="col-span-2 border px-3 py-2">
+                        </div>
+
+                        {{-- TOMBOL SIMPAN PERUBAHAN --}}
+                        <div class="grid grid-cols-3 gap-4 pt-4">
+                            <div></div>
+                            <button type="submit"
+                                class="col-span-2 bg-indigo-600 text-white py-2 text-sm hover:bg-indigo-700 transition">
+                                Simpan Perubahan
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
         </div>
 
-
-
-        {{-- KANAN : FORM --}}
-        <div class="space-y-5 text-sm">
-
-            {{-- Nama Properti --}}
-            <div class="grid grid-cols-3 items-center gap-4">
-                <label class="col-span-1">Nama Properti</label>
-                <input type="text"
-                    value="Rumah"
-                    class="col-span-2 border border-gray-400 px-3 py-2 bg-white">
-            </div>
-
-            {{-- Lokasi --}}
-            <div class="grid grid-cols-3 items-center gap-4">
-                <label class="col-span-1">Lokasi</label>
-                <input type="text"
-                    value="Sleman, Yogyakarta"
-                    class="col-span-2 border border-gray-400 px-3 py-2 bg-white">
-            </div>
-
-            {{-- Fasilitas --}}
-            <div class="grid grid-cols-3 items-center gap-4">
-                <label class="col-span-1">Fasilitas</label>
-                <input type="text"
-                    value="6 Kamar Tidur | 3 Kamar Mandi | Luas Rumah 1000m²"
-                    class="col-span-2 border border-gray-400 px-3 py-2 bg-white">
-            </div>
-
-            {{-- Harga --}}
-            <div class="grid grid-cols-3 items-center gap-4">
-                <label class="col-span-1">Harga</label>
-                <input type="text"
-                    value="Rp 2.000.000.000"
-                    class="col-span-2 border border-gray-400 px-3 py-2 bg-white">
-            </div>
-
-            {{-- Deskripsi --}}
-            <div class="grid grid-cols-3 items-start gap-4">
-                <label class="col-span-1 pt-2">Deskripsi</label>
-                <textarea rows="4"
-                    class="col-span-2 border border-gray-400 px-3 py-2 bg-white">
-        Rumah ini dibangun dekat dengan universitas dan mall, dengan luas yang cukup besar untuk memiliki lokasi yang strategis, serta bebas dari banjir.
-                </textarea>
-            </div>
-
-            {{-- Nomor WhatsApp --}}
-            <div class="grid grid-cols-3 items-center gap-4">
-                <label class="col-span-1">Nomor WhatsApp</label>
-                <input type="text"
-                    value="081231199444"
-                    class="col-span-2 border border-gray-400 px-3 py-2 bg-white">
-            </div>
-
-            {{-- Tombol Simpan (sejajar dengan field) --}}
-            <div class="grid grid-cols-3 gap-4 pt-3">
-                <div></div>
-                <button class="col-span-2 bg-indigo-600 text-white py-2 text-sm hover:bg-indigo-700 transition">
-                    Simpan Perubahan
-                </button>
-            </div>
-
-        </div>
-
-
-    </div>
+    </form>
 
 </div>
 
 @endsection
+
+<script>
+document.getElementById('fotoInput').addEventListener('change', function(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById('previewImage').src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+});
+</script>
+

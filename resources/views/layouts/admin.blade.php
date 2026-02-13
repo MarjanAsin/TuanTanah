@@ -1,4 +1,3 @@
-{{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,12 +8,12 @@
 </head>
 <body class="min-h-screen bg-gray-50 flex flex-col">
 
-    <nav class="bg-[#151541] text-white shadow-lg sticky top-0 z-50 font-inria">
+<nav class="bg-[#151541] text-white shadow-lg sticky top-0 z-50 font-inria">
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center justify-between h-16">
 
-            {{-- Logo & Brand --}}
-            <a href="{{ route('admin.beranda') }}" class="flex items-center gap-2">
+            {{-- Logo --}}
+            <a href="{{ route('pemilik.beranda') }}" class="flex items-center gap-2">
                 <span class="text-xl font-bold tracking-wide">
                     Tuan Tanah
                 </span>
@@ -22,66 +21,81 @@
 
             @php
                 $menus = [
-                    ['route' => 'admin.beranda',          'label' => 'Beranda'],
-                    ['route' => 'admin.verifikasi',  'label' => 'Verifikasi Properti'],
-                    ['route' => 'admin.upload',        'label' => 'Upload Banner'],
-                    ['route' => 'logout', 'label' => 'Keluar'],
+                    ['route' => 'admin.beranda', 'label' => 'Beranda'],
+                    ['route' => 'admin.verifikasi', 'label' => 'Verifikasi Properti'],
+                    ['route' => 'admin.upload', 'label' => 'Upload Banner'],
                 ];
             @endphp
 
-            {{-- Navigation Links - Desktop --}}
+            {{-- Desktop Menu --}}
             <div class="hidden md:flex items-center gap-6 text-sm font-semibold">
+
                 @foreach($menus as $menu)
                     @php
                         $active = request()->routeIs($menu['route']);
                     @endphp
-                    <a
-                        href="#"
-                        class="relative px-2 py-1 transition duration-300
-                            {{ $active
-                                ? 'text-white border-b-2 border-white'
-                                : 'text-gray-300 hover:text-white' }}"
-                    >
+                    <a href="{{ route($menu['route']) }}"
+                       class="relative px-2 py-1 transition duration-300
+                       {{ $active
+                          ? 'text-white border-b-2 border-white'
+                          : 'text-gray-300 hover:text-white' }}">
                         {{ $menu['label'] }}
                     </a>
                 @endforeach
+
+                {{-- Logout --}}
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="text-gray-300 hover:text-red-400 transition">
+                        Keluar
+                    </button>
+                </form>
+
             </div>
 
-            {{-- Mobile select --}}
-            <div class="md:hidden">
+            {{-- Mobile Menu --}}
+            <div class="md:hidden flex items-center gap-3">
+
                 <select
                     onchange="if(this.value){ window.location = this.value; }"
-                    class="bg-[#1c1c5a] text-white border border-white/30 rounded-md px-3 py-2 focus:outline-none"
+                    class="bg-[#1c1c5a] text-white border border-white/30 rounded-md px-3 py-2 focus:outline-none text-sm"
                 >
                     @foreach($menus as $menu)
                         <option
-                            value="#"
-                            {{ request()->routeIs($menu['route']) ? 'selected' : '' }}
-                        >
+                            value="{{ route($menu['route']) }}"
+                            {{ request()->routeIs($menu['route']) ? 'selected' : '' }}>
                             {{ $menu['label'] }}
                         </option>
                     @endforeach
                 </select>
+
+                {{-- Logout Mobile --}}
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="text-sm text-red-300">
+                        Keluar
+                    </button>
+                </form>
+
             </div>
 
         </div>
     </div>
 </nav>
 
+{{-- Main Content --}}
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+    @yield('content')
+</main>
 
-    {{-- Main Content --}}
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-        @yield('content')
-    </main>
-
-    {{-- Footer --}}
-    <footer class="bg-[#151541] text-white mt-16 font-inria">
+{{-- Footer --}}
+<footer class="bg-[#151541] text-white mt-16 font-inria">
     <div class="max-w-7xl mx-auto px-6 py-12">
 
-        <!-- Top Section -->
         <div class="flex flex-col md:flex-row justify-between gap-10">
 
-            <!-- Tentang Website -->
             <div class="max-w-md">
                 <h2 class="text-2xl font-semibold">Tuantanah.com</h2>
                 <p class="mt-4 text-gray-300 leading-relaxed text-sm">
@@ -91,7 +105,6 @@
                 </p>
             </div>
 
-            <!-- Kontak -->
             <div class="text-sm text-gray-300">
                 <h3 class="text-lg font-semibold text-white mb-4">Hubungi Kami</h3>
                 <p>Alamat: Jl. Kaliurang KM 12 No. 34, Sleman, Yogyakarta 56789</p>
@@ -102,10 +115,8 @@
 
         </div>
 
-        <!-- Garis -->
         <div class="border-t border-gray-600 my-8"></div>
 
-        <!-- Bottom -->
         <div class="text-center text-sm text-gray-400 tracking-wide">
             <p>&copy; 2026 Tuantanah.com. Semua hak cipta dilindungi.</p>
         </div>

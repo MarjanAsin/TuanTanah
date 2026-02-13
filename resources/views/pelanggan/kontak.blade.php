@@ -129,7 +129,7 @@
                     $pesan = urlencode("Halo Admin TuanTanah, saya tertarik untuk memasang iklan atau menjadikan properti saya sebagai Properti Unggulan. Mohon informasi lebih lanjut.");
                 @endphp
 
-                <a href="https://wa.me/6287765205722?text={{ $pesan }}"
+                <a href="https://wa.me/6281234567890?text={{ $pesan }}"
                 target="_blank"
                 class="flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-md text-sm font-semibold hover:bg-green-600 transition">
 

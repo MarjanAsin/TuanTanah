@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\PemilikController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,12 +64,62 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/admin', function () {
-        return view('admin.beranda');
-    })->name('admin.beranda');
+    Route::get('/pemilik', [PemilikController::class, 'beranda'])
+        ->name('pemilik.beranda');
 
-    Route::get('/pemilik', function () {
-        return view('pemilik.beranda');
-    })->name('pemilik.beranda');
+    Route::get('/pemilik/{id}/edit', [PemilikController::class, 'edit'])
+        ->name('pemilik.edit');
+
+    Route::put('/pemilik/{id}', [PemilikController::class, 'update'])
+        ->name('pemilik.update');
+
+    Route::delete('/pemilik/{id}', [PemilikController::class, 'destroy'])
+        ->name('pemilik.destroy');
+
+    Route::put('/pemilik/{id}/update-foto', [PemilikController::class, 'updateFoto'])
+    ->name('pemilik.updateFoto');
+
+    Route::delete('/pemilik/{id}/hapus-foto', [PemilikController::class, 'hapusFoto'])
+        ->name('pemilik.hapusFoto');
+
+    Route::get('/pemilik/upload', [PemilikController::class, 'upload'])
+        ->name('pemilik.upload');
+
+    Route::post('/pemilik/upload', [PemilikController::class, 'store'])
+        ->name('pemilik.store');
+
+    Route::get('/pemilik/riwayat', [PemilikController::class, 'riwayat'])
+        ->name('pemilik.riwayat');
+
 });
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/admin', [AdminController::class, 'beranda'])
+        ->name('admin.beranda');
+
+    Route::post('/admin/unggulan', [AdminController::class, 'unggulan'])
+        ->name('admin.unggulan');
+
+    Route::get('/admin/verifikasi', [AdminController::class, 'verifikasi'])
+        ->name('admin.verifikasi');
+
+    Route::get('/admin/properti/{id}', [AdminController::class, 'detail'])
+        ->name('admin.detail');
+
+    Route::post('/admin/properti/{id}/{aksi}', [AdminController::class, 'verifikasiProses'])
+        ->name('admin.proses');
+
+    Route::get('/admin/banner', [AdminController::class, 'uploadBannerForm'])
+    ->name('admin.upload');
+
+    Route::post('/admin/banner', [AdminController::class, 'uploadBanner'])
+        ->name('admin.banner.store');
+
+
+
+});
+
 

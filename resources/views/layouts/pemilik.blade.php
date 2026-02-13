@@ -24,6 +24,7 @@
                     ['route' => 'pemilik.beranda', 'label' => 'Beranda'],
                     ['route' => 'pemilik.upload', 'label' => 'Upload Properti'],
                     ['route' => 'pemilik.riwayat', 'label' => 'Riwayat Properti'],
+                    ['route' => 'pemilik.pembayaran', 'label' => 'Pembayaran'],
                 ];
             @endphp
 
@@ -32,7 +33,7 @@
 
                 @foreach($menus as $menu)
                     @php
-                        $active = request()->routeIs($menu['route']);
+                        $active = request()->routeIs($menu['route'].'*');
                     @endphp
                     <a href="{{ route($menu['route']) }}"
                        class="relative px-2 py-1 transition duration-300
@@ -64,7 +65,7 @@
                     @foreach($menus as $menu)
                         <option
                             value="{{ route($menu['route']) }}"
-                            {{ request()->routeIs($menu['route']) ? 'selected' : '' }}>
+                            {{ request()->routeIs($menu['route'].'*') ? 'selected' : '' }}>
                             {{ $menu['label'] }}
                         </option>
                     @endforeach

@@ -105,6 +105,41 @@ class AdminController extends Controller
                         ->with('success', 'Banner berhasil diupload.');
     }
 
+    // LIST
+    public function pembayaran()
+    {
+        $properti = Properti::where('status', 'menunggu_pembayaran')
+                            ->whereNotNull('bukti_pembayaran')
+                            ->get();
+
+        return view('admin.pembayaran', compact('properti'));
+    }
+
+
+    // DETAIL
+    public function detailPembayaran($id)
+    {
+        $properti = Properti::where('properti_id', $id)
+                            ->where('status', 'menunggu_pembayaran')
+                            ->firstOrFail();
+
+        return view('admin.detailpembayaran', compact('properti'));
+    }
+
+
+    // VALIDASI
+    public function validasiPembayaran($id)
+    {
+        $properti = Properti::findOrFail($id);
+
+        $properti->update([
+            'status' => 'menunggu'
+        ]);
+
+        return redirect()->route('admin.pembayaran')
+                        ->with('success', 'Pembayaran berhasil divalidasi.');
+    }
+
 
 
 }

@@ -9,14 +9,15 @@ use App\Models\Properti;
 
 class PemilikController extends Controller
 {
+    // ======================================
+    // BERANDA
+    // ======================================
     public function beranda()
     {
         $userId = Auth::id();
 
-        // Total properti
         $total = Properti::where('user_id', $userId)->count();
 
-        // Status
         $menunggu = Properti::where('user_id', $userId)
                             ->where('status', 'menunggu')
                             ->count();
@@ -29,7 +30,6 @@ class PemilikController extends Controller
                             ->where('status', 'ditolak')
                             ->count();
 
-        // Properti disetujui
         $properti = Properti::where('user_id', $userId)
                             ->where('status', 'disetujui')
                             ->latest()
@@ -43,6 +43,10 @@ class PemilikController extends Controller
             'properti'
         ));
     }
+
+    // ======================================
+    // EDIT
+    // ======================================
     public function edit($id)
     {
         $properti = Properti::where('properti_id', $id)
@@ -52,6 +56,9 @@ class PemilikController extends Controller
         return view('pemilik.ubahdata', compact('properti'));
     }
 
+    // ======================================
+    // UPDATE
+    // ======================================
     public function update(Request $request, $id)
     {
         $properti = Properti::where('properti_id', $id)
@@ -90,18 +97,27 @@ class PemilikController extends Controller
             'status' => 'menunggu',
         ]);
 
-
         return redirect()->route('pemilik.beranda')
-                        ->with('success', 'Properti berhasil diperbarui.');
+                         ->with('success', 'Properti berhasil diperbarui.');
     }
 
+    // ======================================
+    // FORM UPLOAD
+    // ======================================
     public function upload()
     {
         return view('pemilik.upload');
     }
 
+    // ======================================
+    // STORE (Upload Properti)
+    // ======================================
     public function store(Request $request)
     {
+        $userId = Auth::id();
+
+        $jumlahProperti = Properti::where('user_id', $userId)->count();
+
         $request->validate([
             'nama_properti' => 'required',
             'fasilitas' => 'required',
@@ -115,8 +131,13 @@ class PemilikController extends Controller
         $path = $request->file('foto_properti')
                         ->store('properti', 'public');
 
-        \App\Models\Properti::create([
-            'user_id' => Auth::id(),
+        // Upload pertama gratis
+        $status = $jumlahProperti >= 1
+                    ? 'menunggu_pembayaran'
+                    : 'menunggu';
+
+        $properti = Properti::create([
+            'user_id' => $userId,
             'nama_properti' => $request->nama_properti,
             'fasilitas' => $request->fasilitas,
             'foto_properti' => $path,
@@ -124,32 +145,85 @@ class PemilikController extends Controller
             'harga' => $request->harga,
             'kontak_whatsapp' => $request->kontak_whatsapp,
             'deskripsi' => $request->deskripsi,
-            'status' => 'menunggu',
+            'status' => $status,
             'is_unggulan' => 0,
         ]);
 
+        // Kalau harus bayar → ke halaman detail pembayaran
+        if ($status == 'menunggu_pembayaran') {
+            return redirect()->route('pemilik.detail', $properti->properti_id);
+        }
+
         return redirect()->route('pemilik.beranda')
-            ->with('success', 'Properti berhasil diupload dan menunggu verifikasi admin.');
+            ->with('success', 'Properti pertama berhasil diupload secara gratis.');
     }
 
+    // ======================================
+    // RIWAYAT
+    // ======================================
     public function riwayat()
     {
         $userId = Auth::id();
 
-        $menunggu = \App\Models\Properti::where('user_id', $userId)
-                        ->where('status', 'menunggu')
-                        ->latest()
-                        ->get();
+        $menunggu = Properti::where('user_id', $userId)
+                            ->where('status', 'menunggu')
+                            ->latest()
+                            ->get();
 
-        $ditolak = \App\Models\Properti::where('user_id', $userId)
-                        ->where('status', 'ditolak')
-                        ->latest()
-                        ->get();
+        $ditolak = Properti::where('user_id', $userId)
+                            ->where('status', 'ditolak')
+                            ->latest()
+                            ->get();
 
         return view('pemilik.riwayat', compact('menunggu', 'ditolak'));
     }
 
+    // ======================================
+    // INDEX PEMBAYARAN
+    // ======================================
+    public function pembayaran()
+    {
+        $properti = Properti::where('user_id', auth()->id())
+                            ->where('status', 'menunggu_pembayaran')
+                            ->latest()
+                            ->get();
 
+        return view('pemilik.pembayaran', compact('properti'));
+    }
 
+    // ======================================
+    // DETAIL PEMBAYARAN
+    // ======================================
+    public function pembayaranDetail($id)
+    {
+        $properti = Properti::where('properti_id', $id)
+                            ->where('user_id', auth()->id())
+                            ->firstOrFail();
 
+        return view('pemilik.detail', compact('properti'));
+    }
+
+    // ======================================
+    // UPLOAD BUKTI
+    // ======================================
+    public function uploadBukti(Request $request, $id)
+    {
+        $properti = Properti::where('properti_id', $id)
+                            ->where('user_id', Auth::id())
+                            ->firstOrFail();
+
+        $request->validate([
+            'bukti_pembayaran' => 'required|image'
+        ]);
+
+        $path = $request->file('bukti_pembayaran')
+                        ->store('bukti', 'public');
+
+        $properti->update([
+            'bukti_pembayaran' => $path
+        ]);
+
+        return redirect()->route('pemilik.beranda')
+            ->with('success', 'Bukti pembayaran berhasil dikirim. Menunggu validasi admin.');
+    }
 }

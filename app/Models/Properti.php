@@ -19,7 +19,8 @@ class Properti extends Model
         'kontak_whatsapp',
         'foto_properti',
         'status',
-        'is_unggulan'
+        'is_unggulan',
+        'bukti_pembayaran'
     ];
 
     public function user()

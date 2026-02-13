@@ -91,6 +91,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pemilik/riwayat', [PemilikController::class, 'riwayat'])
         ->name('pemilik.riwayat');
 
+    Route::get('/pemilik/pembayaran',
+        [PemilikController::class, 'pembayaran']
+    )->name('pemilik.pembayaran');
+
+    Route::get('/pemilik/pembayaran/{id}',
+        [PemilikController::class, 'pembayaranDetail']
+    )->name('pemilik.detail');
+
+    Route::post('/pemilik/pembayaran/{id}',
+        [PemilikController::class, 'uploadBukti'])
+        ->name('pemilik.upload.bukti');
+
+
 });
 
 
@@ -117,6 +130,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/admin/banner', [AdminController::class, 'uploadBanner'])
         ->name('admin.banner.store');
+
+    // LIST PEMBAYARAN
+    Route::get('/admin/pembayaran',
+        [AdminController::class, 'pembayaran'])
+        ->name('admin.pembayaran');
+
+    // DETAIL PEMBAYARAN
+    Route::get('/admin/pembayaran/{id}',
+        [AdminController::class, 'detailPembayaran'])
+        ->name('admin.detailpembayaran');
+
+    // VALIDASI
+    Route::post('/admin/pembayaran/{id}/validasi',
+        [AdminController::class, 'validasiPembayaran'])
+        ->name('admin.validasi.pembayaran');
 
 
 

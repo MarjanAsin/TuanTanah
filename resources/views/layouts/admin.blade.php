@@ -24,6 +24,7 @@
                     ['route' => 'admin.beranda', 'label' => 'Beranda'],
                     ['route' => 'admin.verifikasi', 'label' => 'Verifikasi Properti'],
                     ['route' => 'admin.upload', 'label' => 'Upload Banner'],
+                    ['route' => 'admin.pembayaran', 'label' => 'Pembayaran'],
                 ];
             @endphp
 

@@ -17,6 +17,10 @@ class AdminController extends Controller
 
         $menunggu = Properti::where('status', 'menunggu')->count();
 
+        $menungguPembayaran = Properti::where('status', 'menunggu_pembayaran')
+                               ->whereNotNull('bukti_pembayaran')
+                               ->count();
+
         $properti = Properti::where('status', 'disetujui')
                             ->latest()
                             ->get();
@@ -25,6 +29,7 @@ class AdminController extends Controller
             'totalProperti',
             'totalPemilik',
             'menunggu',
+            'menungguPembayaran',
             'properti'
         ));
     }

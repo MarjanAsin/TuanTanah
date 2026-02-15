@@ -13,7 +13,7 @@
         <div class="flex items-center justify-between h-16">
 
             {{-- Logo --}}
-            <a href="{{ route('pemilik.beranda') }}" class="flex items-center gap-2">
+            <a href="{{ route('admin.beranda') }}" class="flex items-center gap-2">
                 <span class="text-xl font-bold tracking-wide">
                     Tuan Tanah
                 </span>
@@ -22,9 +22,9 @@
             @php
                 $menus = [
                     ['route' => 'admin.beranda', 'label' => 'Beranda'],
-                    ['route' => 'admin.verifikasi', 'label' => 'Verifikasi Properti'],
-                    ['route' => 'admin.upload', 'label' => 'Upload Banner'],
-                    ['route' => 'admin.pembayaran', 'label' => 'Pembayaran'],
+                    ['route' => 'admin.verifikasi', 'label' => 'Verifikasi'],
+                    ['route' => 'admin.pembayaran', 'label' => 'Validasi'],
+                    ['route' => 'admin.upload', 'label' => 'Banner'],
                 ];
             @endphp
 
@@ -48,7 +48,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="text-gray-300 hover:text-red-400 transition">
+                        class="text-gray-300 hover:text-red-400 transition cursor-pointer">
                         Keluar
                     </button>
                 </form>
@@ -75,7 +75,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="text-sm text-red-300">
+                        class="text-sm text-red-300 cursor-pointer">
                         Keluar
                     </button>
                 </form>

@@ -18,6 +18,10 @@ class PemilikController extends Controller
 
         $total = Properti::where('user_id', $userId)->count();
 
+        $menungguPembayaran = Properti::where('user_id', $userId)
+                              ->where('status', 'menunggu_pembayaran')
+                              ->count();
+
         $menunggu = Properti::where('user_id', $userId)
                             ->where('status', 'menunggu')
                             ->count();
@@ -37,6 +41,7 @@ class PemilikController extends Controller
 
         return view('pemilik.beranda', compact(
             'total',
+            'menungguPembayaran',
             'menunggu',
             'disetujui',
             'ditolak',

@@ -19,11 +19,10 @@ class PelangganController extends Controller
                         ->latest()
                         ->first();
 
-        // Properti unggulan (max 3)
+        // Properti unggulan
         $properti = Properti::where('status', 'disetujui')
                             ->where('is_unggulan', 1)
                             ->latest()
-                            ->take(3)
                             ->get();
 
         return view('pelanggan.beranda', compact('banner', 'properti'));

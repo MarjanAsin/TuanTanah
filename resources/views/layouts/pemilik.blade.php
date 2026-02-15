@@ -22,9 +22,9 @@
             @php
                 $menus = [
                     ['route' => 'pemilik.beranda', 'label' => 'Beranda'],
-                    ['route' => 'pemilik.upload', 'label' => 'Upload Properti'],
-                    ['route' => 'pemilik.riwayat', 'label' => 'Riwayat Properti'],
+                    ['route' => 'pemilik.upload', 'label' => 'Upload'],
                     ['route' => 'pemilik.pembayaran', 'label' => 'Pembayaran'],
+                    ['route' => 'pemilik.riwayat', 'label' => 'Riwayat'],
                 ];
             @endphp
 
@@ -48,7 +48,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="text-gray-300 hover:text-red-400 transition">
+                        class="text-gray-300 hover:text-red-400 transition cursor-pointer">
                         Keluar
                     </button>
                 </form>
@@ -75,7 +75,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="text-sm text-red-300">
+                        class="text-sm text-red-300 cursor-pointer">
                         Keluar
                     </button>
                 </form>

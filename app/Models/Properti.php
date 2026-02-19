@@ -20,7 +20,8 @@ class Properti extends Model
         'foto_properti',
         'status',
         'is_unggulan',
-        'bukti_pembayaran'
+        'bukti_pembayaran',
+        'alasan_penolakan'
     ];
 
     public function user()

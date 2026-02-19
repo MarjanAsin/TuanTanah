@@ -57,7 +57,7 @@
 
                             <a href="{{ route('pemilik.edit', $item->properti_id) }}"
                                class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
-                                Ubah →
+                                Ubah Data →
                             </a>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
 
 
     {{-- =========================
-        DITOLAK
+    DITOLAK
     ========================= --}}
     <section class="pt-12">
         <div class="max-w-7xl mx-auto px-6">
@@ -102,8 +102,8 @@
 
                     <div class="overflow-hidden">
                         <img src="{{ asset('storage/' . $item->foto_properti) }}"
-                             class="w-full h-52 object-cover hover:scale-105 transition duration-500"
-                             alt="Properti">
+                            class="w-full h-52 object-cover hover:scale-105 transition duration-500"
+                            alt="Properti">
                     </div>
 
                     <div class="p-5 text-sm">
@@ -126,14 +126,27 @@
                             </p>
 
                             <a href="{{ route('pemilik.edit', $item->properti_id) }}"
-                               class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
-                                Ubah →
+                            class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
+                                Ubah Data →
                             </a>
                         </div>
 
-                        <p class="text-red-600 text-xs mt-3">
-                            Properti ini ditolak oleh admin.
-                        </p>
+                        {{-- ================= ALASAN PENOLAKAN ================= --}}
+                        @if($item->alasan_penolakan)
+                            <div class="mt-4 bg-red-50 border border-red-200 rounded-xl p-3">
+                                <p class="text-xs font-semibold text-red-600 mb-1">
+                                    Alasan Penolakan:
+                                </p>
+                                <p class="text-xs text-red-700 leading-relaxed">
+                                    {{ $item->alasan_penolakan }}
+                                </p>
+                            </div>
+                        @else
+                            <p class="text-red-600 text-xs mt-3">
+                                Properti ini ditolak oleh admin.
+                            </p>
+                        @endif
+
                     </div>
 
                 </div>

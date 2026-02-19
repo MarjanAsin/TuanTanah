@@ -7,7 +7,7 @@
 <div class="max-w-7xl mx-auto px-4">
 
     <h2 class="text-2xl font-semibold text-gray-800 mb-10">
-        Properti Belum Dibayar
+        Daftar Properti Belum Dibayar
     </h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -17,12 +17,20 @@
     <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1
                 transition duration-300 overflow-hidden border border-gray-100 relative">
 
-        {{-- Badge Status --}}
-        <div class="absolute top-4 left-4
-                    bg-red-100 text-red-600
-                    text-xs font-semibold px-3 py-1 rounded-full">
-            Menunggu Pembayaran
-        </div>
+        {{-- ================= BADGE STATUS ================= --}}
+        @if($item->status === 'menunggu_pembayaran')
+            <div class="absolute top-4 left-4
+                        bg-red-100 text-red-600
+                        text-xs font-semibold px-3 py-1 rounded-full">
+                Belum Dibayar
+            </div>
+        @elseif($item->status === 'menunggu_verifikasi_pembayaran')
+            <div class="absolute top-4 left-4
+                        bg-yellow-100 text-yellow-700
+                        text-xs font-semibold px-3 py-1 rounded-full">
+                Menunggu Verifikasi Admin
+            </div>
+        @endif
 
         {{-- Image --}}
         <div class="overflow-hidden">
@@ -45,10 +53,15 @@
                 Rp {{ number_format($item->harga, 0, ',', '.') }}
             </p>
 
+            {{-- ================= ACTION ================= --}}
             <div class="flex justify-end">
                 <a href="{{ route('pemilik.detail', $item->properti_id) }}"
                    class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
-                    Detail →
+                    @if($item->status === 'menunggu_pembayaran')
+                        Bayar →
+                    @else
+                        Lihat Detail →
+                    @endif
                 </a>
             </div>
 

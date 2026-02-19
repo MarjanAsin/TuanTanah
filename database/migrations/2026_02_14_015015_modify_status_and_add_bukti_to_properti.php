@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::table('properti', function (Blueprint $table) {
@@ -22,6 +19,7 @@ return new class extends Migration
             ALTER TABLE properti
             MODIFY status ENUM(
                 'menunggu_pembayaran',
+                'menunggu_verifikasi_pembayaran',
                 'menunggu',
                 'disetujui',
                 'ditolak'
@@ -35,5 +33,4 @@ return new class extends Migration
             $table->dropColumn('bukti_pembayaran');
         });
     }
-
 };

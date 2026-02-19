@@ -24,15 +24,20 @@
                 @csrf
 
                 {{-- ROW 1 --}}
-                <div class="grid grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                             Nama Properti
                         </label>
                         <input type="text" name="nama_properti"
+                            value="{{ old('nama_properti') }}"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+
+                        @error('nama_properti')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
@@ -40,15 +45,20 @@
                             Fasilitas
                         </label>
                         <input type="text" name="fasilitas"
+                            value="{{ old('fasilitas') }}"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+
+                        @error('fasilitas')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
 
                 </div>
 
 
                 {{-- ROW 2 --}}
-                <div class="grid grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                     {{-- FOTO PROPERTI --}}
                     <div>
@@ -59,6 +69,7 @@
                         <input type="file"
                                name="foto_properti"
                                id="foto_properti"
+                               accept="image/*"
                                class="hidden"
                                onchange="document.getElementById('namaFotoProperti').innerText = this.files[0]?.name || 'Belum ada file dipilih'">
 
@@ -97,32 +108,53 @@
                             Lokasi
                         </label>
                         <input type="text" name="lokasi"
+                            value="{{ old('lokasi') }}"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+
+                        @error('lokasi')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
 
                 </div>
 
 
                 {{-- ROW 3 --}}
-                <div class="grid grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                             Harga
                         </label>
                         <input type="number" name="harga"
+                            value="{{ old('harga') }}"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+
+                        @error('harga')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                             Nomor WhatsApp
                         </label>
-                        <input type="number" name="kontak_whatsapp"
+
+                        <input type="text"
+                            name="kontak_whatsapp"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            maxlength="15"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
-                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                            value="{{ old('kontak_whatsapp') }}">
+
+                        @error('kontak_whatsapp')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
 
                 </div>
@@ -135,7 +167,11 @@
                     </label>
                     <textarea name="deskripsi" rows="4"
                         class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm
-                               focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">{{ old('deskripsi') }}</textarea>
+
+                    @error('deskripsi')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
 
 

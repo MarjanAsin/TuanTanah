@@ -5,29 +5,35 @@
 @section('content')
 
 {{-- Statistik --}}
-<div class="grid grid-cols-4 gap-8 mb-10">
+<div class="grid grid-cols-5 gap-8 mb-10">
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">Properti</h3>
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">Total Properti</h3>
         <p class="text-3xl font-bold">{{ $totalProperti }}</p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">Properti Aktif</h3>
+        <p class="text-3xl font-bold">{{ $totalAktif }}</p>
+    </div>
+
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
         <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">Pemilik Properti</h3>
         <p class="text-3xl font-bold">{{ $totalPemilik }}</p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
         <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">Menunggu Verifikasi</h3>
         <p class="text-3xl font-bold">{{ $menunggu }}</p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
         <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">Menunggu Validasi Pembayaran</h3>
         <p class="text-3xl font-bold">{{ $menungguPembayaran }}</p>
     </div>
 
 </div>
+
 
 
 {{-- Tandai Properti Unggulan --}}

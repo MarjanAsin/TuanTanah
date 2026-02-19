@@ -28,14 +28,14 @@
         Kembali
     </a>
 
-    <h2 class="text-2xl font-semibold text-center mb-8 text-gray-800">
+    <h2 class="text-2xl font-semibold text-center mb-4 text-gray-800">
         Detail Pembayaran
     </h2>
 
     <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
 
         {{-- Informasi --}}
-        <div class="space-y-5 text-sm">
+        <div class="space-y-3 text-sm">
 
             <div>
                 <p class="text-gray-500">Properti</p>
@@ -61,9 +61,6 @@
 
         </div>
 
-        {{-- Divider --}}
-        <div class="border-t border-gray-100 my-8"></div>
-
         {{-- Form Upload --}}
         <form method="POST"
               action="{{ route('pemilik.upload.bukti', $properti->properti_id) }}"
@@ -72,7 +69,7 @@
             @csrf
 
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                <label class="block text-sm font-semibold text-gray-700 mb-2 my-4">
                     Upload Bukti Transfer
                 </label>
 
@@ -85,8 +82,11 @@
 
                 {{-- Custom field --}}
                 <label for="buktiInput"
-                       class="flex items-center h-[44px] border border-gray-200 rounded-lg bg-gray-50 px-4
-                              cursor-pointer hover:bg-gray-100 transition">
+                       class="flex items-center h-[44px] border rounded-lg px-4
+                              cursor-pointer transition
+                              {{ $errors->has('bukti_pembayaran')
+                                  ? 'border-red-400 bg-red-50'
+                                  : 'border-gray-200 bg-gray-50 hover:bg-gray-100' }}">
 
                     <svg class="w-4 h-4 text-gray-400 mr-2"
                          fill="none"
@@ -107,6 +107,15 @@
                     </span>
 
                 </label>
+
+                {{-- ERROR MESSAGE --}}
+                <div class="h-4 mt-1">
+                    @error('bukti_pembayaran')
+                        <p class="text-red-500 text-xs">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
             </div>
 
             <button type="submit"

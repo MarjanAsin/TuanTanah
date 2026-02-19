@@ -11,22 +11,12 @@
 
     {{-- Jumlah Properti --}}
     <div class="bg-gradient-to-br from-[#151541] to-indigo-800
-                text-white p-6 rounded-2xl w-48 text-center
+                text-white p-6 rounded-2xl w-56 text-center
                 shadow-md hover:shadow-xl transition duration-300">
-        <h3 class="text-sm uppercase tracking-wide text-gray-200 mb-2">
+        <h3 class="text-sm uppercase tracking-wide text-gray-200 mb-2 font-bold">
             Jumlah Properti
         </h3>
         <p class="text-3xl font-bold">{{ $total }}</p>
-    </div>
-
-    {{-- Menunggu Pembayaran --}}
-    <div class="bg-gradient-to-br from-[#151541] to-indigo-800
-                text-white p-6 rounded-2xl w-48 text-center
-                shadow-md hover:shadow-xl transition duration-300">
-        <h3 class="text-sm uppercase tracking-wide text-gray-200 mb-2">
-            Menunggu Pembayaran
-        </h3>
-        <p class="text-3xl font-bold">{{ $menungguPembayaran }}</p>
     </div>
 
     {{-- Status Properti --}}
@@ -37,27 +27,64 @@
             <h3 class="text-base font-semibold">Status Properti</h3>
         </div>
 
-        <div class="flex gap-6 bg-white p-6 rounded-b-2xl shadow-sm">
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-6 bg-white p-6 rounded-b-2xl shadow-sm">
 
-            <div class="flex-1 bg-indigo-50 text-indigo-700 px-6 py-5 rounded-xl text-center">
-                <p class="text-xs uppercase tracking-wide font-bold">Menunggu</p>
-                <p class="text-2xl font-bold mt-1">{{ $menunggu }}</p>
+            {{-- Belum Dibayar --}}
+            <div class="bg-red-50 text-red-500 px-6 py-5 rounded-xl text-center">
+                <p class="text-xs uppercase tracking-wide font-bold">
+                    Belum Dibayar
+                </p>
+                <p class="text-2xl font-bold mt-1">
+                    {{ $menungguPembayaran }}
+                </p>
             </div>
 
-            <div class="flex-1 bg-green-50 text-green-700 px-6 py-5 rounded-xl text-center">
-                <p class="text-xs uppercase tracking-wide font-bold">Disetujui</p>
-                <p class="text-2xl font-bold mt-1">{{ $disetujui }}</p>
+            {{-- Sudah Bayar --}}
+            <div class="bg-yellow-50 text-yellow-600 px-6 py-5 rounded-xl text-center">
+                <p class="text-xs uppercase tracking-wide font-bold">
+                    Sudah Bayar
+                </p>
+                <p class="text-2xl font-bold mt-1">
+                    {{ $sudahBayar }}
+                </p>
             </div>
 
-            <div class="flex-1 bg-red-50 text-red-600 px-6 py-5 rounded-xl text-center">
-                <p class="text-xs uppercase tracking-wide font-bold">Ditolak</p>
-                <p class="text-2xl font-bold mt-1">{{ $ditolak }}</p>
+            {{-- Menunggu Verifikasi --}}
+            <div class="bg-indigo-50 text-indigo-700 px-6 py-5 rounded-xl text-center">
+                <p class="text-xs uppercase tracking-wide font-bold">
+                    Menunggu
+                </p>
+                <p class="text-2xl font-bold mt-1">
+                    {{ $menunggu }}
+                </p>
+            </div>
+
+            {{-- Disetujui --}}
+            <div class="bg-green-50 text-green-700 px-6 py-5 rounded-xl text-center">
+                <p class="text-xs uppercase tracking-wide font-bold">
+                    Disetujui
+                </p>
+                <p class="text-2xl font-bold mt-1">
+                    {{ $disetujui }}
+                </p>
+            </div>
+
+            {{-- Ditolak --}}
+            <div class="bg-red-100 text-red-700 px-6 py-5 rounded-xl text-center">
+                <p class="text-xs uppercase tracking-wide font-bold">
+                    Ditolak
+                </p>
+                <p class="text-2xl font-bold mt-1">
+                    {{ $ditolak }}
+                </p>
             </div>
 
         </div>
+
     </div>
 
 </div>
+
 
 
 

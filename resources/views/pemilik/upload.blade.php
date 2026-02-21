@@ -98,7 +98,7 @@
                         <input type="file"
                                name="foto_properti"
                                id="foto_properti"
-                               accept=".jpg,.jpeg,.png,.webp"
+                               accept=".jpg,.jpeg,.png"
                                class="hidden"
                                onchange="document.getElementById('namaFotoProperti').innerText = this.files[0]?.name || 'Belum ada file dipilih'">
 
@@ -127,7 +127,7 @@
                         </label>
 
                         <p class="text-xs text-gray-500 mt-2">
-                            Format: JPG, PNG, WEBP • Maks. 5MB • Disarankan 1200×800 px
+                            Format: JPG, PNG, JPEG • Maks. 5MB • Disarankan 1200×800 px
                         </p>
 
                         @error('foto_properti')

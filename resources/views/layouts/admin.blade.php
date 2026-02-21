@@ -13,10 +13,8 @@
         <div class="flex items-center justify-between h-16">
 
             {{-- Logo --}}
-            <a href="{{ route('admin.beranda') }}" class="flex items-center gap-2">
-                <span class="text-xl font-bold tracking-wide">
-                    Tuan Tanah
-                </span>
+            <a href="{{ route('admin.beranda') }}" class="text-xl font-bold tracking-wide">
+                Tuan Tanah
             </a>
 
             @php
@@ -32,9 +30,7 @@
             <div class="hidden md:flex items-center gap-6 text-sm font-semibold">
 
                 @foreach($menus as $menu)
-                    @php
-                        $active = request()->routeIs($menu['route']);
-                    @endphp
+                    @php $active = request()->routeIs($menu['route'].'*'); @endphp
                     <a href="{{ route($menu['route']) }}"
                        class="relative px-2 py-1 transition duration-300
                        {{ $active
@@ -44,7 +40,6 @@
                     </a>
                 @endforeach
 
-                {{-- Logout --}}
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
@@ -55,35 +50,55 @@
 
             </div>
 
-            {{-- Mobile Menu --}}
-            <div class="md:hidden flex items-center gap-3">
-
-                <select
-                    onchange="if(this.value){ window.location = this.value; }"
-                    class="bg-[#1c1c5a] text-white border border-white/30 rounded-md px-3 py-2 focus:outline-none text-sm"
-                >
-                    @foreach($menus as $menu)
-                        <option
-                            value="{{ route($menu['route']) }}"
-                            {{ request()->routeIs($menu['route']) ? 'selected' : '' }}>
-                            {{ $menu['label'] }}
-                        </option>
-                    @endforeach
-                </select>
-
-                {{-- Logout Mobile --}}
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                        class="text-sm text-red-300 cursor-pointer">
-                        Keluar
-                    </button>
-                </form>
-
-            </div>
+            {{-- Mobile Hamburger --}}
+            <button id="menuBtn"
+                    class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg
+                           hover:bg-white/10 transition cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-6 h-6"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
 
         </div>
     </div>
+
+    {{-- Mobile Dropdown --}}
+    <div id="mobileMenu"
+         class="md:hidden hidden bg-[#1c1c5a] border-t border-white/10">
+
+        <div class="flex flex-col px-6 py-4 space-y-3 text-sm font-semibold">
+
+            @foreach($menus as $menu)
+                @php $active = request()->routeIs($menu['route'].'*'); @endphp
+                <a href="{{ route($menu['route']) }}"
+                   class="py-2 transition
+                   {{ $active
+                        ? 'text-white'
+                        : 'text-gray-300 hover:text-white' }}">
+                    {{ $menu['label'] }}
+                </a>
+            @endforeach
+
+            <div class="border-t border-white/10 my-2"></div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit"
+                        class="text-left text-red-300 hover:text-red-400 transition cursor-pointer">
+                    Keluar
+                </button>
+            </form>
+
+        </div>
+    </div>
+
 </nav>
 
 {{-- Main Content --}}
@@ -124,6 +139,15 @@
 
     </div>
 </footer>
+
+<script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
 
 </body>
 </html>

@@ -6,7 +6,7 @@
 
 <div class="max-w-7xl mx-auto px-4">
 
-    <h2 class="text-2xl font-semibold text-gray-800 mb-10">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-10 font-inria">
         Daftar Properti Belum Dibayar
     </h2>
 
@@ -17,21 +17,6 @@
     <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1
                 transition duration-300 overflow-hidden border border-gray-100 relative">
 
-        {{-- ================= BADGE STATUS ================= --}}
-        @if($item->status === 'menunggu_pembayaran')
-            <div class="absolute top-4 left-4
-                        bg-red-100 text-red-600
-                        text-xs font-semibold px-3 py-1 rounded-full">
-                Belum Dibayar
-            </div>
-        @elseif($item->status === 'menunggu_verifikasi_pembayaran')
-            <div class="absolute top-4 left-4
-                        bg-yellow-100 text-yellow-700
-                        text-xs font-semibold px-3 py-1 rounded-full">
-                Menunggu Verifikasi Admin
-            </div>
-        @endif
-
         {{-- Image --}}
         <div class="overflow-hidden">
             <img src="{{ asset('storage/' . $item->foto_properti) }}"
@@ -41,7 +26,7 @@
         {{-- Content --}}
         <div class="p-6 text-sm">
 
-            <h3 class="font-semibold text-gray-800 mb-1">
+            <h3 class="font-semibold text-gray-800 mb-1 font-inria">
                 {{ $item->nama_properti }}
             </h3>
 
@@ -57,11 +42,7 @@
             <div class="flex justify-end">
                 <a href="{{ route('pemilik.detail', $item->properti_id) }}"
                    class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
-                    @if($item->status === 'menunggu_pembayaran')
-                        Bayar →
-                    @else
-                        Lihat Detail →
-                    @endif
+                    Bayar →
                 </a>
             </div>
 
@@ -70,7 +51,7 @@
     </div>
 
     @empty
-        <p class="col-span-3 text-gray-500 text-center">
+        <p class="col-span-3 text-gray-500 text-center font-inria">
             Tidak ada properti yang perlu dibayar.
         </p>
     @endforelse

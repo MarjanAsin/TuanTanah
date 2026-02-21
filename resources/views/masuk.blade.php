@@ -15,44 +15,56 @@
         <form method="POST" action="{{ route('masuk') }}" class="space-y-5">
             @csrf
 
+            {{-- Email --}}
             <div>
-                <label class="text-xs uppercase tracking-wide text-gray-300">
+                <label class="text-xs uppercase tracking-wide text-gray-300 font-inria">
                     Email
                 </label>
 
-                <input type="email" name="email" value="{{ old('email') }}"
-                    class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
-                           focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                <input type="email"
+                       name="email"
+                       value="{{ old('email') }}"
+                       placeholder="Masukkan email Anda"
+                       class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
+                              placeholder:text-gray-400
+                              focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
 
                 @error('email')
                     <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
+            {{-- Password --}}
             <div>
-                <label class="text-xs uppercase tracking-wide text-gray-300">
+                <label class="text-xs uppercase tracking-wide text-gray-300 font-inria">
                     Password
                 </label>
 
-                <input type="password" name="password"
-                    class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
-                           focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                <input type="password"
+                       name="password"
+                       placeholder="Masukkan password Anda"
+                       class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
+                              placeholder:text-gray-400
+                              focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
 
                 @error('password')
                     <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
+            {{-- Submit --}}
             <button type="submit"
                     class="w-full bg-indigo-600 hover:bg-indigo-700
                            py-3 rounded-lg text-sm font-semibold
                            shadow-md hover:shadow-lg
-                           transition duration-300 mt-3 cursor-pointer">
+                           transition duration-300 mt-3 cursor-pointer font-inria">
                 Masuk
             </button>
+
         </form>
 
-        <p class="text-xs text-gray-300 mt-6 text-center">
+        {{-- Link Register --}}
+        <p class="text-xs text-gray-300 mt-6 text-center font-inria">
             Belum punya akun?
             <a href="{{ route('daftar') }}"
                class="text-white font-semibold hover:underline ml-1">

@@ -38,7 +38,7 @@
 
                     <div class="p-5 text-sm">
 
-                        <h3 class="font-semibold text-gray-800 mb-1">
+                        <h3 class="font-semibold text-gray-800 mb-1 font-inria">
                             {{ $item->nama_properti }}
                         </h3>
 
@@ -65,7 +65,7 @@
                 </div>
 
                 @empty
-                    <p class="col-span-3 text-gray-500 text-sm text-center">
+                    <p class="col-span-3 text-gray-500 text-sm text-center font-inria">
                         Tidak ada properti yang sedang menunggu verifikasi.
                     </p>
                 @endforelse
@@ -108,7 +108,7 @@
 
                     <div class="p-5 text-sm">
 
-                        <h3 class="font-semibold text-gray-800 mb-1">
+                        <h3 class="font-semibold text-gray-800 mb-1 font-inria">
                             {{ $item->nama_properti }}
                         </h3>
 
@@ -134,15 +134,15 @@
                         {{-- ================= ALASAN PENOLAKAN ================= --}}
                         @if($item->alasan_penolakan)
                             <div class="mt-4 bg-red-50 border border-red-200 rounded-xl p-3">
-                                <p class="text-xs font-semibold text-red-600 mb-1">
+                                <p class="text-xs font-semibold text-red-600 mb-1 font-inria">
                                     Alasan Penolakan:
                                 </p>
-                                <p class="text-xs text-red-700 leading-relaxed">
+                                <p class="text-xs text-red-700 leading-relaxed font-inria">
                                     {{ $item->alasan_penolakan }}
                                 </p>
                             </div>
                         @else
-                            <p class="text-red-600 text-xs mt-3">
+                            <p class="text-red-600 text-xs mt-3 font-inria">
                                 Properti ini ditolak oleh admin.
                             </p>
                         @endif
@@ -152,7 +152,7 @@
                 </div>
 
                 @empty
-                    <p class="col-span-3 text-gray-500 text-sm text-center">
+                    <p class="col-span-3 text-gray-500 text-sm text-center font-inria">
                         Tidak ada properti yang ditolak.
                     </p>
                 @endforelse

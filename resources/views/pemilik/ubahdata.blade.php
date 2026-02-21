@@ -8,7 +8,7 @@
 
     {{-- Tombol Kembali --}}
     <a href="{{ url()->previous() ?: route('pemilik.beranda') }}"
-       class="inline-flex items-center gap-2 mb-8 px-5 py-2.5
+       class="inline-flex items-center gap-2 mb-6 sm:mb-8 px-5 py-2.5
               bg-white border border-gray-200 rounded-full shadow-sm
               text-sm font-medium text-gray-700
               hover:bg-indigo-600 hover:text-white hover:shadow-md
@@ -28,7 +28,7 @@
         Kembali
     </a>
 
-    <h2 class="text-2xl font-semibold text-center mb-12 font-inria text-gray-800">
+    <h2 class="text-xl sm:text-2xl font-semibold text-center mb-8 sm:mb-12 font-inria text-gray-800">
         Ubah Data Properti
     </h2>
 
@@ -40,7 +40,8 @@
         @csrf
         @method('PUT')
 
-        <div class="grid grid-cols-2 gap-14">
+        {{-- GRID RESPONSIVE --}}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
 
             {{-- ================= LEFT ================= --}}
             <div>
@@ -48,7 +49,7 @@
                 <div class="overflow-hidden rounded-2xl shadow-md mb-6">
                     <img id="previewImage"
                          src="{{ asset('storage/' . $properti->foto_properti) }}"
-                         class="w-full h-80 object-cover">
+                         class="w-full h-64 sm:h-80 object-cover">
                 </div>
 
                 <input type="file"
@@ -56,30 +57,30 @@
                        id="fotoInput"
                        class="hidden"
                        accept="image/*">
-            <div>
+
                 @error('foto_properti')
-                    <p class="text-red-500 text-xs">
+                    <p class="text-red-500 text-xs mb-4">
                         {{ $message }}
                     </p>
                 @enderror
-            </div><br>
+
                 <button type="button"
                         onclick="document.getElementById('fotoInput').click()"
-                        class="bg-indigo-600 hover:bg-indigo-700
+                        class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700
                                text-white px-6 py-2.5 rounded-xl
                                text-sm font-semibold shadow-md
-                               hover:shadow-lg transition cursor-pointer">
+                               hover:shadow-lg transition cursor-pointer font-inria">
                     Ubah Foto
                 </button>
 
             </div>
 
             {{-- ================= RIGHT ================= --}}
-            <div class="space-y-6 text-sm">
+            <div class="space-y-5 sm:space-y-6 text-sm">
 
                 {{-- Nama --}}
                 <div>
-                    <label class="block font-semibold text-gray-700 mb-2">
+                    <label class="block font-semibold text-gray-700 mb-2 font-inria">
                         Nama Properti
                     </label>
                     <input type="text" name="nama_properti"
@@ -94,7 +95,7 @@
 
                 {{-- Lokasi --}}
                 <div>
-                    <label class="block font-semibold text-gray-700 mb-2">
+                    <label class="block font-semibold text-gray-700 mb-2 font-inria">
                         Lokasi
                     </label>
                     <input type="text" name="lokasi"
@@ -109,7 +110,7 @@
 
                 {{-- Fasilitas --}}
                 <div>
-                    <label class="block font-semibold text-gray-700 mb-2">
+                    <label class="block font-semibold text-gray-700 mb-2 font-inria">
                         Fasilitas
                     </label>
                     <input type="text" name="fasilitas"
@@ -124,7 +125,7 @@
 
                 {{-- Harga --}}
                 <div>
-                    <label class="block font-semibold text-gray-700 mb-2">
+                    <label class="block font-semibold text-gray-700 mb-2 font-inria">
                         Harga
                     </label>
                     <input type="number" name="harga"
@@ -139,7 +140,7 @@
 
                 {{-- Deskripsi --}}
                 <div>
-                    <label class="block font-semibold text-gray-700 mb-2">
+                    <label class="block font-semibold text-gray-700 mb-2 font-inria">
                         Deskripsi
                     </label>
                     <textarea name="deskripsi" rows="4"
@@ -153,7 +154,7 @@
 
                 {{-- Nomor WhatsApp --}}
                 <div>
-                    <label class="block font-semibold text-gray-700 mb-2">
+                    <label class="block font-semibold text-gray-700 mb-2 font-inria">
                         Nomor WhatsApp
                     </label>
                     <input type="tel"
@@ -178,7 +179,7 @@
                         class="w-full bg-indigo-600 hover:bg-indigo-700
                                text-white py-3 rounded-xl text-sm font-semibold
                                shadow-md hover:shadow-lg transition duration-300
-                               opacity-50 cursor-not-allowed">
+                               opacity-50 cursor-not-allowed font-inria">
                     Simpan Perubahan
                 </button>
 
@@ -191,66 +192,3 @@
 </div>
 
 @endsection
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-
-    const form = document.getElementById("formEdit");
-    const submitBtn = document.getElementById("btnSubmit");
-    const fotoInput = document.getElementById("fotoInput");
-    const previewImage = document.getElementById("previewImage");
-
-    const initialValues = {
-        nama_properti: "{{ $properti->nama_properti }}",
-        lokasi: "{{ $properti->lokasi }}",
-        fasilitas: "{{ $properti->fasilitas }}",
-        harga: "{{ $properti->harga }}",
-        deskripsi: `{{ $properti->deskripsi }}`,
-        kontak_whatsapp: "{{ $properti->kontak_whatsapp }}"
-    };
-
-    function checkChanges() {
-
-        let changed = false;
-
-        Object.keys(initialValues).forEach(function(key) {
-            const field = form.querySelector(`[name="${key}"]`);
-            if (field && field.value.trim() !== initialValues[key].toString().trim()) {
-                changed = true;
-            }
-        });
-
-        if (fotoInput.files.length > 0) {
-            changed = true;
-        }
-
-        if (changed) {
-            submitBtn.disabled = false;
-            submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
-        } else {
-            submitBtn.disabled = true;
-            submitBtn.classList.add("opacity-50", "cursor-not-allowed");
-        }
-    }
-
-    fotoInput.addEventListener("change", function(event) {
-
-        if (event.target.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-            }
-
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        checkChanges();
-    });
-
-    form.addEventListener("input", checkChanges);
-    form.addEventListener("change", checkChanges);
-
-});
-</script>

@@ -28,7 +28,7 @@
         Kembali
     </a>
 
-    <h2 class="text-2xl font-semibold text-center mb-4 text-gray-800">
+    <h2 class="text-2xl font-semibold text-center font-inria mb-4 text-gray-800">
         Detail Pembayaran
     </h2>
 
@@ -38,21 +38,21 @@
         <div class="space-y-3 text-sm">
 
             <div>
-                <p class="text-gray-500">Properti</p>
-                <p class="font-semibold text-gray-800">
+                <p class="text-gray-500 font-inria font-bold">Properti</p>
+                <p class="font-semibold text-gray-800 font-inria">
                     {{ $properti->nama_properti }}
                 </p>
             </div>
 
             <div>
-                <p class="text-gray-500">Biaya Upload</p>
-                <p class="text-indigo-600 font-bold text-lg">
+                <p class="text-gray-500 font-inria font-bold">Biaya Upload</p>
+                <p class="text-indigo-600 font-bold text-lg font-inria">
                     Rp 50.000
                 </p>
             </div>
 
             <div>
-                <p class="text-gray-500">Transfer ke</p>
+                <p class="text-gray-500 font-inria font-bold">Transfer ke</p>
                 <p class="font-medium text-gray-800">
                     BCA 123456789 <br>
                     a.n TuanTanah
@@ -65,11 +65,11 @@
         <form method="POST"
               action="{{ route('pemilik.upload.bukti', $properti->properti_id) }}"
               enctype="multipart/form-data"
-              class="space-y-5">
+              class="space-y-5 mt-6">
             @csrf
 
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2 my-4">
+                <label class="block text-sm font-bold text-gray-700 mb-2 font-inria">
                     Upload Bukti Transfer
                 </label>
 
@@ -77,6 +77,7 @@
                 <input type="file"
                        name="bukti_pembayaran"
                        id="buktiInput"
+                       accept=".jpg,.jpeg,.png,.pdf"
                        class="hidden"
                        onchange="document.getElementById('namaBukti').innerText = this.files[0]?.name || 'Belum ada file dipilih'">
 
@@ -108,8 +109,15 @@
 
                 </label>
 
+                {{-- INFO FORMAT --}}
+                <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                    Format yang diterima: JPG, JPEG, atau PNG <br>
+                    Ukuran maksimal: 2MB <br>
+                    Pastikan bukti transfer terlihat jelas (tanggal & nominal terbaca).
+                </p>
+
                 {{-- ERROR MESSAGE --}}
-                <div class="h-4 mt-1">
+                <div class="min-h-[18px] mt-1">
                     @error('bukti_pembayaran')
                         <p class="text-red-500 text-xs">
                             {{ $message }}
@@ -121,7 +129,7 @@
             <button type="submit"
                     class="w-full bg-indigo-600 hover:bg-indigo-700
                            text-white py-3 rounded-xl text-sm font-semibold
-                           shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
+                           shadow-md hover:shadow-lg transition duration-300 cursor-pointer font-inria">
                 Kirim Bukti
             </button>
 

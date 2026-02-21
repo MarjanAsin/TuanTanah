@@ -4,7 +4,7 @@
 
 @section('content')
 
-<h2 class="text-2xl font-semibold text-gray-800 mb-10">
+<h2 class="text-2xl font-semibold text-gray-800 mb-10 font-inria">
     Daftar Properti Menunggu Validasi Pembayaran
 </h2>
 
@@ -29,7 +29,7 @@
 
     <div class="p-6 text-sm">
 
-        <h3 class="font-semibold text-gray-800 mb-1">
+        <h3 class="font-semibold text-gray-800 mb-1 font-inria">
             {{ $item->nama_properti }}
         </h3>
 
@@ -53,7 +53,7 @@
 </div>
 
 @empty
-<p class="text-gray-500 col-span-3 text-center">
+<p class="text-gray-500 col-span-3 text-center font-inria">
     Tidak ada pembayaran yang perlu divalidasi.
 </p>
 @endforelse

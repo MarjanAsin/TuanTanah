@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="p-5 text-sm">
-                        <h3 class="font-semibold text-gray-800 mb-1">
+                        <h3 class="font-semibold text-gray-800 mb-1 font-inria">
                             {{ $item->nama_properti }}
                         </h3>
 
@@ -54,7 +54,7 @@
 
                 </div>
                 @empty
-                    <p class="text-gray-500 text-sm col-span-3 text-center">
+                    <p class="text-gray-500 text-sm col-span-3 text-center font-inria">
                         Belum ada properti unggulan.
                     </p>
                 @endforelse
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="p-5 text-sm">
-                        <h3 class="font-semibold text-gray-800 mb-1">
+                        <h3 class="font-semibold text-gray-800 mb-1 font-inria">
                             {{ $item->nama_properti }}
                         </h3>
 
@@ -112,7 +112,7 @@
 
                 </div>
                 @empty
-                    <p class="text-gray-500 text-sm col-span-3 text-center">
+                    <p class="text-gray-500 text-sm col-span-3 text-center font-inria">
                         Belum ada properti tersedia.
                     </p>
                 @endforelse

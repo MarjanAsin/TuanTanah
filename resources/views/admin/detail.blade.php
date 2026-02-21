@@ -39,7 +39,7 @@
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm p-4 text-center">
-                <p class="text-xs text-gray-500">
+                <p class="text-xs text-gray-500 font-inria">
                     Diposting pada
                     {{ \Carbon\Carbon::parse($properti->created_at)->format('d.m.Y') }}
                 </p>
@@ -61,7 +61,7 @@
                                 class="w-full bg-red-600 hover:bg-red-700
                                     text-white py-3 rounded-xl
                                     text-sm font-semibold
-                                    transition duration-300 shadow-sm cursor-pointer">
+                                    transition duration-300 shadow-sm cursor-pointer font-inria">
                             Tolak Properti
                         </button>
 
@@ -73,12 +73,12 @@
                                     required
                                     placeholder="Masukkan alasan penolakan..."
                                     class="w-full border border-red-300 rounded-xl px-4 py-3 text-sm
-                                            focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                                            focus:outline-none focus:ring-2 focus:ring-red-500 font-inria"></textarea>
 
                             <button type="submit"
                                     class="w-full bg-red-700 hover:bg-red-800
                                         text-white py-2 rounded-xl
-                                        text-sm font-semibold transition cursor-pointer">
+                                        text-sm font-semibold transition cursor-pointer font-inria">
                                 Konfirmasi Penolakan
                             </button>
 
@@ -96,7 +96,7 @@
                                 class="w-full bg-green-600 hover:bg-green-700
                                     text-white py-3 rounded-xl
                                     text-sm font-semibold
-                                    transition duration-300 shadow-sm cursor-pointer">
+                                    transition duration-300 shadow-sm cursor-pointer font-inria">
                             Verifikasi Properti
                         </button>
                     </form>
@@ -114,36 +114,36 @@
 
             <div class="bg-white rounded-2xl shadow-sm p-6">
 
-                <h3 class="text-lg font-semibold mb-6">
+                <h3 class="text-lg font-semibold mb-6 font-inria">
                     {{ $properti->nama_properti }}
                 </h3>
 
                 <div class="space-y-4 text-sm">
 
                     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                        <p class="font-medium text-gray-700 mb-1">Lokasi</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Lokasi</p>
                         <p class="text-gray-600">{{ $properti->lokasi }}</p>
                     </div>
 
                     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                        <p class="font-medium text-gray-700 mb-1">Fasilitas</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Fasilitas</p>
                         <p class="text-gray-600">{{ $properti->fasilitas }}</p>
                     </div>
 
                     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                        <p class="font-medium text-gray-700 mb-1">Harga</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Harga</p>
                         <p class="text-gray-800 font-semibold">
                             Rp {{ number_format($properti->harga, 0, ',', '.') }}
                         </p>
                     </div>
 
                     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                        <p class="font-medium text-gray-700 mb-1">Deskripsi</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Deskripsi</p>
                         <p class="text-gray-600">{{ $properti->deskripsi }}</p>
                     </div>
 
                     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                        <p class="font-medium text-gray-700 mb-1">Kontak WhatsApp</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Kontak WhatsApp</p>
                         <p class="text-gray-600">{{ $properti->kontak_whatsapp }}</p>
                     </div>
 

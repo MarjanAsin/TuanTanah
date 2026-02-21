@@ -6,8 +6,9 @@
 
 <div class="max-w-6xl mx-auto mt-4 mb-20 px-4">
 
+    {{-- BACK BUTTON --}}
     <a href="{{ url()->previous() ?: route('pelanggan.beranda') }}"
-       class="inline-flex items-center gap-2 mb-8 px-5 py-2.5
+       class="inline-flex items-center gap-2 mb-6 sm:mb-8 px-5 py-2.5
               bg-white border border-gray-200 rounded-full shadow-sm
               text-sm font-medium text-gray-700
               hover:bg-indigo-600 hover:text-white hover:shadow-md
@@ -28,31 +29,35 @@
     </a>
 
 
-    <div class="grid grid-cols-2 gap-14">
+    {{-- GRID RESPONSIVE --}}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
 
-        {{-- KIRI --}}
+        {{-- ================= LEFT SIDE ================= --}}
         <div>
 
-            {{-- FOTO PROPERTI --}}
+            {{-- FOTO --}}
             <div class="overflow-hidden rounded-2xl shadow-md mb-4">
                 <img src="{{ asset('storage/' . $properti->foto_properti) }}"
-                     class="w-full h-80 object-cover hover:scale-105 transition duration-500">
+                     class="w-full h-64 sm:h-80 object-cover hover:scale-105 transition duration-500">
             </div>
 
-            {{-- TANGGAL POST --}}
-            <p class="text-xs text-right text-gray-500 mb-8">
+            {{-- TANGGAL --}}
+            <p class="text-xs text-right text-gray-500 mb-6 sm:mb-8 font-inria">
                 Diposting pada
                 {{ \Carbon\Carbon::parse($properti->created_at)->format('d.m.Y') }}
             </p>
 
-            {{-- TOMBOL WHATSAPP --}}
+            {{-- WHATSAPP BUTTON --}}
             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $properti->kontak_whatsapp) }}"
                target="_blank"
                class="w-full flex items-center justify-center gap-3
                       bg-green-600 hover:bg-green-700
-                      text-white py-3 rounded-xl
-                      text-sm font-semibold shadow-md hover:shadow-lg
-                      transition duration-300">
+                      active:scale-95
+                      text-white py-3.5 sm:py-4
+                      rounded-2xl
+                      text-sm sm:text-base font-semibold
+                      shadow-lg hover:shadow-xl
+                      transition duration-300 font-inria">
 
                 {{-- Icon WhatsApp --}}
                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -67,37 +72,37 @@
         </div>
 
 
-        {{-- KANAN --}}
-        <div class="space-y-5 text-sm">
+        {{-- ================= RIGHT SIDE ================= --}}
+        <div class="space-y-4 sm:space-y-5 text-sm">
 
             {{-- NAMA --}}
-            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+            <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2 sm:mb-3 font-inria">
                 {{ $properti->nama_properti }}
             </h3>
 
             {{-- LOKASI --}}
-            <div class="bg-white p-5 rounded-xl border border-gray-300 shadow-sm">
-                <p class="font-medium text-gray-700 mb-1">Lokasi</p>
+            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-1 font-inria">Lokasi</p>
                 <p class="text-gray-600">{{ $properti->lokasi }}</p>
             </div>
 
             {{-- FASILITAS --}}
-            <div class="bg-white p-5 rounded-xl border border-gray-300 shadow-sm">
-                <p class="font-medium text-gray-700 mb-1">Fasilitas</p>
+            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-1 font-inria">Fasilitas</p>
                 <p class="text-gray-600">{{ $properti->fasilitas }}</p>
             </div>
 
             {{-- HARGA --}}
-            <div class="bg-white p-5 rounded-xl border border-gray-300 shadow-sm">
-                <p class="font-medium text-gray-700 mb-1">Harga</p>
+            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-1 font-inria">Harga</p>
                 <p class="text-indigo-600 font-bold text-base">
                     Rp {{ number_format($properti->harga, 0, ',', '.') }}
                 </p>
             </div>
 
             {{-- DESKRIPSI --}}
-            <div class="bg-white p-5 rounded-xl border border-gray-300 shadow-sm">
-                <p class="font-medium text-gray-700 mb-1">Deskripsi</p>
+            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-1 font-inria">Deskripsi</p>
                 <p class="text-gray-600 leading-relaxed">
                     {{ $properti->deskripsi }}
                 </p>

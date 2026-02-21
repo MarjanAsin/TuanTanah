@@ -4,11 +4,11 @@
 
 @section('content')
 
-<h2 class="text-xl font-semibold text-gray-800 mb-8">
+<h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-6 sm:mb-8 font-inria">
     Daftar Properti yang Belum Diverifikasi
 </h2>
 
-<div class="grid grid-cols-3 gap-10">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
 
     @forelse($properti as $item)
 
@@ -16,12 +16,12 @@
 
         <div class="overflow-hidden">
             <img src="{{ asset('storage/' . $item->foto_properti) }}"
-                 class="w-full h-48 object-cover hover:scale-105 transition duration-300">
+                 class="w-full h-44 sm:h-48 object-cover hover:scale-105 transition duration-300">
         </div>
 
-        <div class="p-5 text-sm">
+        <div class="p-4 sm:p-5 text-sm">
 
-            <h3 class="font-semibold text-gray-800 mb-1">
+            <h3 class="font-semibold text-gray-800 mb-1 font-inria">
                 {{ $item->nama_properti }}
             </h3>
 
@@ -49,7 +49,7 @@
     </div>
 
     @empty
-        <p class="text-sm text-gray-500 col-span-3 text-center">
+        <p class="text-sm text-gray-500 col-span-full text-center font-inria">
             Tidak ada properti yang perlu diverifikasi.
         </p>
     @endforelse

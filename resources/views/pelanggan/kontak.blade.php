@@ -17,25 +17,25 @@
         <div class="grid md:grid-cols-4 gap-6 mb-20">
 
             <div class="bg-gradient-to-br from-[#151541] to-indigo-700 text-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition duration-300">
-                <h3 class="font-semibold mb-2">Nomor Telepon</h3>
-                <p class="text-sm text-gray-200">+62 812-3456-7890</p>
+                <h3 class="font-semibold mb-2 font-inria">Nomor Telepon</h3>
+                <p class="text-sm text-gray-200 font-inria">+62 812-3456-7890</p>
             </div>
 
             <div class="bg-gradient-to-br from-[#151541] to-indigo-700 text-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition duration-300">
-                <h3 class="font-semibold mb-2">Email</h3>
-                <p class="text-sm text-gray-200">info@tuantanah.com</p>
+                <h3 class="font-semibold mb-2 font-inria">Email</h3>
+                <p class="text-sm text-gray-200 font-inria">info@tuantanah.com</p>
             </div>
 
             <div class="bg-gradient-to-br from-[#151541] to-indigo-700 text-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition duration-300">
-                <h3 class="font-semibold mb-2">Alamat</h3>
-                <p class="text-sm text-gray-200">
+                <h3 class="font-semibold mb-2 font-inria">Alamat</h3>
+                <p class="text-sm text-gray-200 font-inria">
                     Jl. Kaliurang KM 12 No. 34, Sleman, Yogyakarta 56789
                 </p>
             </div>
 
             <div class="bg-gradient-to-br from-[#151541] to-indigo-700 text-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition duration-300">
-                <h3 class="font-semibold mb-2">Jam Operasional</h3>
-                <p class="text-sm text-gray-200">Senin – Sabtu, 09.00 – 17.00 WIB</p>
+                <h3 class="font-semibold mb-2 font-inria">Jam Operasional</h3>
+                <p class="text-sm text-gray-200 font-inria">Senin – Sabtu, 09.00 – 17.00 WIB</p>
             </div>
 
         </div>
@@ -52,7 +52,7 @@
                     Ada Pertanyaan? Hubungi Kami
                 </h3>
 
-                <p class="text-sm text-gray-500 mb-8">
+                <p class="text-sm text-gray-500 mb-8 font-inria">
                     Isi form di bawah ini dan kami akan merespon dalam waktu singkat.
                 </p>
 
@@ -95,7 +95,7 @@
 
                     <button type="submit"
                             class="bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg
-                                   text-sm font-medium shadow-md hover:shadow-lg transition w-full cursor-pointer">
+                                   text-sm font-medium shadow-md hover:shadow-lg transition w-full cursor-pointer font-inria">
                         Kirim Pesan
                     </button>
                 </form>
@@ -118,7 +118,7 @@
                    target="_blank"
                    class="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600
                           text-white py-4 rounded-2xl text-sm font-semibold
-                          shadow-md hover:shadow-xl transition duration-300">
+                          shadow-md hover:shadow-xl transition duration-300 font-inria">
 
                     {{-- Icon WhatsApp --}}
                     <svg xmlns="http://www.w3.org/2000/svg"

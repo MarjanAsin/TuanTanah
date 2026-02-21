@@ -41,7 +41,7 @@
 
             {{-- Bukti Pembayaran --}}
             <div class="bg-white rounded-xl shadow-sm p-4">
-                <p class="text-sm font-semibold mb-3 text-gray-700">
+                <p class="text-sm font-semibold mb-3 text-gray-700 font-inria">
                     Bukti Pembayaran
                 </p>
 
@@ -65,24 +65,24 @@
 
             <div class="bg-white rounded-xl shadow-sm p-6">
 
-                <h3 class="text-lg font-semibold mb-6">
+                <h3 class="text-lg font-semibold mb-6 font-inria">
                     {{ $properti->nama_properti }}
                 </h3>
 
                 <div class="space-y-4 text-sm">
 
                     <div class="bg-gray-50 p-4 rounded-lg border">
-                        <p class="font-medium text-gray-700 mb-1">Lokasi</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Lokasi</p>
                         <p class="text-gray-600">{{ $properti->lokasi }}</p>
                     </div>
 
                     <div class="bg-gray-50 p-4 rounded-lg border">
-                        <p class="font-medium text-gray-700 mb-1">Fasilitas</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Fasilitas</p>
                         <p class="text-gray-600">{{ $properti->fasilitas }}</p>
                     </div>
 
                     <div class="bg-gray-50 p-4 rounded-lg border">
-                        <p class="font-medium text-gray-700 mb-1">Harga</p>
+                        <p class="font-semibold text-gray-700 mb-1 font-inria">Harga</p>
                         <p class="text-gray-800 font-semibold">
                             Rp {{ number_format($properti->harga, 0, ',', '.') }}
                         </p>
@@ -100,7 +100,7 @@
                             class="w-full bg-green-600 hover:bg-green-700
                                    text-white py-3 rounded-lg
                                    text-sm font-semibold
-                                   transition duration-300 shadow-sm cursor-pointer">
+                                   transition duration-300 shadow-sm cursor-pointer font-inria">
                             Validasi Pembayaran
                         </button>
                     </form>

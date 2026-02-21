@@ -9,15 +9,13 @@
 </head>
 <body class="min-h-screen bg-gray-50 flex flex-col">
 
-    <nav class="bg-[#151541] text-white shadow-lg sticky top-0 z-50 font-inria">
+<nav class="bg-[#151541] text-white shadow-lg sticky top-0 z-50 font-inria">
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center justify-between h-16">
 
-            {{-- Logo & Brand --}}
-            <a href="{{ route('pelanggan.beranda') }}" class="flex items-center gap-2">
-                <span class="text-xl font-bold tracking-wide">
-                    Tuan Tanah
-                </span>
+            {{-- Logo --}}
+            <a href="{{ route('pelanggan.beranda') }}" class="text-xl font-bold tracking-wide">
+                Tuan Tanah
             </a>
 
             @php
@@ -29,60 +27,72 @@
                 ];
             @endphp
 
-
-            {{-- Navigation Links - Desktop --}}
+            {{-- Desktop Menu --}}
             <div class="hidden md:flex items-center gap-6 text-sm font-semibold">
                 @foreach($menus as $menu)
-                    @php
-                        $active = request()->routeIs($menu['route']);
-                    @endphp
-                    <a
-                        href="{{ route($menu['route']) }}"
-                        class="relative px-2 py-1 transition duration-300
-                            {{ $active
-                                ? 'text-white border-b-2 border-white'
-                                : 'text-gray-300 hover:text-white' }}"
-                    >
+                    @php $active = request()->routeIs($menu['route']); @endphp
+                    <a href="{{ route($menu['route']) }}"
+                       class="relative px-2 py-1 transition duration-300
+                       {{ $active
+                            ? 'text-white border-b-2 border-white'
+                            : 'text-gray-300 hover:text-white' }}">
                         {{ $menu['label'] }}
                     </a>
                 @endforeach
             </div>
 
-            {{-- Mobile select --}}
-            <div class="md:hidden">
-                <select
-                    onchange="if(this.value){ window.location = this.value; }"
-                    class="bg-[#1c1c5a] text-white border border-white/30 rounded-md px-3 py-2 focus:outline-none"
-                >
-                    @foreach($menus as $menu)
-                        <option
-                            value="{{ route($menu['route']) }}"
-                            {{ request()->routeIs($menu['route']) ? 'selected' : '' }}
-                        >
-                            {{ $menu['label'] }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            {{-- Mobile Hamburger --}}
+            <button id="menuBtn"
+                    class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg
+                           hover:bg-white/10 transition cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-6 h-6"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
 
         </div>
+    </div>
+
+    {{-- Mobile Dropdown --}}
+    <div id="mobileMenu"
+         class="md:hidden hidden bg-[#1c1c5a] border-t border-white/10">
+
+        <div class="flex flex-col px-6 py-4 space-y-3 text-sm font-semibold">
+            @foreach($menus as $menu)
+                @php $active = request()->routeIs($menu['route']); @endphp
+                <a href="{{ route($menu['route']) }}"
+                   class="py-2 transition
+                   {{ $active
+                        ? 'text-white'
+                        : 'text-gray-300 hover:text-white' }}">
+                    {{ $menu['label'] }}
+                </a>
+            @endforeach
+        </div>
+
     </div>
 </nav>
 
 
-    {{-- Main Content --}}
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-        @yield('content')
-    </main>
+{{-- Main Content --}}
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+    @yield('content')
+</main>
 
-    {{-- Footer --}}
-    <footer class="bg-[#151541] text-white mt-16 font-inria">
+
+{{-- Footer --}}
+<footer class="bg-[#151541] text-white mt-16 font-inria">
     <div class="max-w-7xl mx-auto px-6 py-12">
 
-        <!-- Top Section -->
         <div class="flex flex-col md:flex-row justify-between gap-10">
 
-            <!-- Tentang Website -->
             <div class="max-w-md">
                 <h2 class="text-2xl font-semibold">Tuantanah.com</h2>
                 <p class="mt-4 text-gray-300 leading-relaxed text-sm">
@@ -92,7 +102,6 @@
                 </p>
             </div>
 
-            <!-- Kontak -->
             <div class="text-sm text-gray-300">
                 <h3 class="text-lg font-semibold text-white mb-4">Hubungi Kami</h3>
                 <p>Alamat: Jl. Kaliurang KM 12 No. 34, Sleman, Yogyakarta 56789</p>
@@ -103,16 +112,25 @@
 
         </div>
 
-        <!-- Garis -->
         <div class="border-t border-gray-600 my-8"></div>
 
-        <!-- Bottom -->
         <div class="text-center text-sm text-gray-400 tracking-wide">
             <p>&copy; 2026 Tuantanah.com. Semua hak cipta dilindungi.</p>
         </div>
 
     </div>
 </footer>
+
+
+{{-- Toggle Script --}}
+<script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
 
 </body>
 </html>

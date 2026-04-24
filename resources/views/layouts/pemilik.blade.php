@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
+    {{-- Baris sakti ini yang KURANG, Yang Mulia: --}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;600;700&display=swap" rel="stylesheet">
     <title>@yield('title', 'Tuan Tanah')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

@@ -23,6 +23,7 @@ class PelangganController extends Controller
         $properti = Properti::where('status', 'disetujui')
                             ->where('is_unggulan', 1)
                             ->latest()
+                            ->take(6)
                             ->get();
 
         return view('pelanggan.beranda', compact('banner', 'properti'));

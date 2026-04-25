@@ -6,9 +6,32 @@
 
 <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center px-4">
 
-    <div class="bg-[#151541] w-full max-w-sm rounded-2xl shadow-2xl p-10 text-white">
+    {{-- CARD --}}
+    <div class="bg-[#151541] w-full max-w-sm rounded-2xl shadow-2xl p-8 text-white relative">
 
-        <h2 class="text-2xl font-semibold text-center mb-8 font-inria tracking-wide">
+        {{-- BACK BUTTON --}}
+        <a href="{{ url()->previous() ?: route('pelanggan.beranda') }}"
+        class="absolute top-4 left-4 flex items-center justify-center w-9 h-9
+                rounded-full bg-white/10 backdrop-blur-md
+                border border-white/20
+                shadow-md
+                hover:bg-indigo-500 hover:shadow-lg hover:scale-110
+                transition duration-300 group">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-gray-200 group-hover:text-white transition"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7" />
+            </svg>
+
+        </a>
+
+        <h2 class="text-2xl font-semibold text-center mb-8 mt-4 font-inria tracking-wide">
             Selamat Datang
         </h2>
 

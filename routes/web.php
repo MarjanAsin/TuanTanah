@@ -9,12 +9,26 @@ use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
-| ROUTE PELANGGAN (PUBLIC)
+| ROUTE PELANGGAN (PUBLIC + AUTO REDIRECT ROLE)
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', [PelangganController::class, 'beranda'])
-    ->name('pelanggan.beranda');
+Route::get('/', function () {
+
+    if (auth()->check()) {
+
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.beranda');
+        }
+
+        if (auth()->user()->role === 'pemilik') {
+            return redirect()->route('pemilik.beranda');
+        }
+    }
+
+    return app(PelangganController::class)->beranda();
+})->name('pelanggan.beranda');
+
 
 Route::get('/properti', [PelangganController::class, 'properti'])
     ->name('pelanggan.properti');

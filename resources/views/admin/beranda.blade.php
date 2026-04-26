@@ -7,49 +7,49 @@
 {{-- =========================
     STATISTIK
 ========================= --}}
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
+<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
-        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Total Properti
         </h3>
-        <p class="text-3xl font-bold">
+        <p class="text-xl sm:text-3xl font-bold">
             {{ $totalProperti }}
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
-        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Properti Aktif
         </h3>
-        <p class="text-3xl font-bold">
+        <p class="text-xl sm:text-3xl font-bold">
             {{ $totalAktif }}
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
-        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Pemilik Properti
         </h3>
-        <p class="text-3xl font-bold">
+        <p class="text-xl sm:text-3xl font-bold">
             {{ $totalPemilik }}
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
-        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Menunggu Verifikasi
         </h3>
-        <p class="text-3xl font-bold">
+        <p class="text-xl sm:text-3xl font-bold">
             {{ $menunggu }}
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
-        <h3 class="text-xs uppercase tracking-wider opacity-80 mb-2">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold col-span-2 sm:col-span-1">
+        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Validasi Pembayaran
         </h3>
-        <p class="text-3xl font-bold">
+        <p class="text-xl sm:text-3xl font-bold">
             {{ $menungguPembayaran }}
         </p>
     </div>
@@ -66,7 +66,6 @@
     <form method="POST" action="{{ route('admin.unggulan') }}">
         @csrf
 
-        {{-- Header --}}
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
 
             <h2 class="text-lg font-semibold text-gray-800 font-inria">
@@ -83,8 +82,6 @@
 
         </div>
 
-
-        {{-- Grid Properti --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
             @forelse($properti as $item)

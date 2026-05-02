@@ -32,22 +32,49 @@
         Detail Pembayaran
     </h2>
 
-    <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+    <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
 
-        {{-- Informasi --}}
-        <div class="space-y-3 text-sm">
+        {{-- STATUS --}}
+        <div class="mb-4">
+
+            @if($properti->status_pembayaran == 'pending' && is_null($properti->bukti_pembayaran))
+                <span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full font-semibold">
+                    Belum Dibayar
+                </span>
+
+            @elseif($properti->status_pembayaran == 'ditolak')
+                <span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full font-semibold">
+                    Ditolak
+                </span>
+            @endif
+
+        </div>
+
+        {{-- PROPERTI --}}
+        <div class="flex items-center gap-4 mb-4">
+            <img src="{{ asset('storage/' . $properti->foto_properti) }}"
+                 class="w-16 h-16 rounded-lg object-cover">
 
             <div>
-                <p class="text-gray-500 font-inria font-bold">Properti</p>
+                <p class="text-gray-500 text-xs font-inria">Properti</p>
                 <p class="font-semibold text-gray-800 font-inria">
                     {{ $properti->nama_properti }}
                 </p>
             </div>
+        </div>
+
+        <hr class="my-4 border-gray-200">
+
+        {{-- INFORMASI PEMBAYARAN --}}
+        <div class="space-y-4 text-sm">
 
             <div>
                 <p class="text-gray-500 font-inria font-bold">Biaya Upload</p>
-                <p class="text-indigo-600 font-bold text-lg font-inria">
-                    Rp 50.000
+                <p class="text-2xl font-bold text-indigo-600 font-inria">
+                    Rp 10.000
+                </p>
+                <p class="text-xs text-gray-400">
+                    Biaya untuk mempublikasikan properti
                 </p>
             </div>
 
@@ -61,11 +88,19 @@
 
         </div>
 
-        {{-- Form Upload --}}
+        <hr class="my-4 border-gray-200">
+        @if($properti->status_pembayaran == 'ditolak')
+            <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded mb-4">
+                <p class="font-semibold mb-1">Pembayaran ditolak</p>
+                <p>{{ $properti->alasan_penolakan_pembayaran }}</p>
+            </div>
+        @endif
+        {{-- FORM UPLOAD --}}
         <form method="POST"
               action="{{ route('pemilik.upload.bukti', $properti->properti_id) }}"
               enctype="multipart/form-data"
-              class="space-y-5 mt-6">
+              id="formBukti"
+              class="space-y-5">
             @csrf
 
             <div>
@@ -109,14 +144,14 @@
 
                 </label>
 
-                {{-- INFO FORMAT --}}
+                {{-- INFO --}}
                 <p class="text-xs text-gray-500 mt-2 leading-relaxed">
-                    Format yang diterima: JPG, JPEG, atau PNG <br>
-                    Ukuran maksimal: 2MB <br>
-                    Pastikan bukti transfer terlihat jelas (tanggal & nominal terbaca).
+                    Format: JPG, JPEG, PNG, PDF <br>
+                    Maksimal: 2MB <br>
+                    Pastikan bukti terlihat jelas.
                 </p>
 
-                {{-- ERROR MESSAGE --}}
+                {{-- ERROR --}}
                 <div class="min-h-[18px] mt-1">
                     @error('bukti_pembayaran')
                         <p class="text-red-500 text-xs">
@@ -126,11 +161,14 @@
                 </div>
             </div>
 
-            <button type="submit"
-                    class="w-full bg-indigo-600 hover:bg-indigo-700
-                           text-white py-3 rounded-xl text-sm font-semibold
-                           shadow-md hover:shadow-lg transition duration-300 cursor-pointer font-inria">
-                Kirim Bukti
+            <button type="submit" id="btnBukti"
+                class="w-full
+                {{ $properti->status_pembayaran == 'ditolak' ? 'bg-red-500 hover:bg-red-600' : 'bg-indigo-600 hover:bg-indigo-700' }}
+                text-white py-3 rounded-xl text-sm font-semibold
+                shadow-md hover:shadow-lg transition duration-300 cursor-pointer font-inria">
+
+                {{ $properti->status_pembayaran == 'ditolak' ? 'Upload Ulang Bukti' : 'Kirim Bukti' }}
+
             </button>
 
         </form>
@@ -140,3 +178,22 @@
 </div>
 
 @endsection
+
+
+{{-- SCRIPT --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('formBukti');
+    const btn = document.getElementById('btnBukti');
+
+    console.log(form, btn); // DEBUG
+
+    if (form && btn) {
+        form.addEventListener('submit', function () {
+            btn.disabled = true;
+            btn.innerText = 'Mengirim...';
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+        });
+    }
+});
+</script>

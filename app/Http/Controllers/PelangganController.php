@@ -13,14 +13,13 @@ class PelangganController extends Controller
     // ===============================
     public function beranda()
     {
-        // Banner aktif (hanya 1)
         $banner = Banner::whereDate('tanggal_mulai', '<=', Carbon::today())
                         ->whereDate('tanggal_selesai', '>=', Carbon::today())
                         ->latest()
                         ->first();
 
-        // Properti unggulan
         $properti = Properti::where('status', 'disetujui')
+                            ->where('status_pembayaran', 'valid') // 🔥 tambahan
                             ->where('is_unggulan', 1)
                             ->latest()
                             ->take(6)
@@ -35,14 +34,14 @@ class PelangganController extends Controller
     // ===============================
     public function properti()
     {
-        // Properti unggulan
         $unggulan = Properti::where('status', 'disetujui')
+                            ->where('status_pembayaran', 'valid') // 🔥 tambahan
                             ->where('is_unggulan', 1)
                             ->latest()
                             ->get();
 
-        // Semua properti (kecuali unggulan supaya tidak dobel)
         $properti = Properti::where('status', 'disetujui')
+                            ->where('status_pembayaran', 'valid') // 🔥 tambahan
                             ->where('is_unggulan', 0)
                             ->latest()
                             ->get();
@@ -58,6 +57,7 @@ class PelangganController extends Controller
     {
         $properti = Properti::where('properti_id', $id)
                             ->where('status', 'disetujui')
+                            ->where('status_pembayaran', 'valid') // 🔥 tambahan
                             ->firstOrFail();
 
         return view('pelanggan.detail', compact('properti'));

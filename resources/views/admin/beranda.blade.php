@@ -103,8 +103,8 @@
                         {{ $item->lokasi }}
                     </p>
 
-                    <p class="text-gray-500 text-xs mb-2 truncate">
-                        {{ $item->fasilitas }}
+                    <p class="text-gray-500 text-xs truncate">
+                        {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
                     </p>
 
                     <p class="font-bold text-indigo-600 mb-3">
@@ -127,7 +127,7 @@
             </div>
 
             @empty
-                <p class="text-sm text-gray-500 col-span-full text-center font-inria">
+                <p class="text-gray-500 col-span-full text-center font-inria">
                     Tidak ada properti yang disetujui.
                 </p>
             @endforelse

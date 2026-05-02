@@ -7,7 +7,7 @@
 <div class="max-w-7xl mx-auto px-4">
 
     <h2 class="text-2xl font-semibold text-gray-800 mb-10 font-inria">
-        Daftar Properti Belum Dibayar
+        Pembayaran Properti
     </h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -17,34 +17,60 @@
     <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1
                 transition duration-300 overflow-hidden border border-gray-100 relative">
 
-        {{-- Image --}}
+        {{-- BADGE STATUS --}}
+        @if(is_null($item->bukti_pembayaran))
+            <div class="absolute top-4 left-4 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow">
+                Belum Dibayar
+            </div>
+
+        @elseif($item->status_pembayaran == 'ditolak')
+            <div class="absolute top-4 left-4 bg-red-400 text-white text-xs px-3 py-1 rounded-full font-semibold shadow">
+                Ditolak
+            </div>
+        @endif
+
+        {{-- IMAGE --}}
         <div class="overflow-hidden">
             <img src="{{ asset('storage/' . $item->foto_properti) }}"
-                 class="w-full h-52 object-cover hover:scale-105 transition duration-500">
+                 class="w-full h-48 object-cover hover:scale-105 transition duration-500">
         </div>
 
-        {{-- Content --}}
-        <div class="p-6 text-sm">
+        {{-- CONTENT --}}
+        <div class="p-5 text-sm">
 
-            <h3 class="font-semibold text-gray-800 mb-1 font-inria">
+            <h3 class="font-semibold text-gray-800 mb-2 font-inria">
                 {{ $item->nama_properti }}
             </h3>
 
-            <p class="text-gray-500 text-xs mb-3">
-                {{ $item->lokasi }}
+            {{-- BIAYA --}}
+            <p class="text-gray-400 text-xs mb-4">
+                Biaya Upload:
+                <span class="font-semibold text-gray-700">Rp 10.000</span>
             </p>
 
-            <p class="font-bold text-indigo-600 text-base mb-5">
-                Rp {{ number_format($item->harga, 0, ',', '.') }}
-            </p>
+            {{-- ALASAN PENOLAKAN --}}
+            @if($item->status_pembayaran == 'ditolak')
+                <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-2 rounded mb-4">
+                    {{ $item->alasan_penolakan_pembayaran }}
+                </div>
+            @endif
 
-            {{-- ================= ACTION ================= --}}
-            <div class="flex justify-end">
-                <a href="{{ route('pemilik.detail', $item->properti_id) }}"
-                   class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
-                    Bayar →
-                </a>
-            </div>
+            {{-- ACTION --}}
+            <a href="{{ route('pemilik.detail', $item->properti_id) }}"
+               class="block text-center
+                      {{ $item->status_pembayaran == 'ditolak' ? 'bg-red-500 hover:bg-red-600' : 'bg-indigo-600 hover:bg-indigo-700' }}
+                      text-white py-2.5 rounded-xl text-sm font-semibold
+                      transition duration-300 shadow">
+
+                @if(is_null($item->bukti_pembayaran))
+                    Bayar Sekarang
+                @elseif($item->status_pembayaran == 'pending')
+                    Lihat Status
+                @elseif($item->status_pembayaran == 'ditolak')
+                    Upload Ulang
+                @endif
+
+            </a>
 
         </div>
 

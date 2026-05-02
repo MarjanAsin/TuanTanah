@@ -36,15 +36,45 @@
         <div>
 
             {{-- FOTO --}}
-            <div class="overflow-hidden rounded-2xl shadow-md mb-4">
-                <img src="{{ asset('storage/' . $properti->foto_properti) }}"
-                     class="w-full h-64 sm:h-80 object-cover hover:scale-105 transition duration-500">
+            <div class="mb-4">
+
+                @if(str_contains($properti->foto_properti, ','))
+                    {{-- MULTI FOTO (SLIDER) --}}
+                    <div class="relative overflow-hidden rounded-2xl shadow-md">
+
+                        <div id="slider" class="flex transition-transform duration-500">
+
+                            @foreach(explode(',', $properti->foto_properti) as $foto)
+                                <img src="{{ asset('storage/' . trim($foto)) }}"
+                                    class="w-full h-64 sm:h-80 object-cover flex-shrink-0">
+                            @endforeach
+
+                        </div>
+
+                        {{-- BUTTON --}}
+                        <button onclick="prevSlide()"
+                            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 px-2 py-1 rounded">
+                            ‹
+                        </button>
+
+                        <button onclick="nextSlide()"
+                            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 px-2 py-1 rounded">
+                            ›
+                        </button>
+
+                    </div>
+
+                @else
+                    {{-- SINGLE FOTO --}}
+                    <img src="{{ asset('storage/' . $properti->foto_properti) }}"
+                        class="w-full h-64 sm:h-80 object-cover rounded-2xl shadow-md">
+                @endif
+
             </div>
 
             {{-- TANGGAL --}}
-            <p class="text-xs text-right text-gray-500 mb-6 sm:mb-8 font-inria">
-                Diposting pada
-                {{ \Carbon\Carbon::parse($properti->created_at)->format('d.m.Y') }}
+            <p class="text-xs text-right text-gray-500 mb-6 font-inria">
+                Diposting {{ $properti->created_at->diffForHumans() }}
             </p>
 
             {{-- WHATSAPP BUTTON --}}
@@ -73,45 +103,119 @@
 
 
         {{-- ================= RIGHT SIDE ================= --}}
-        <div class="space-y-4 sm:space-y-5 text-sm">
+        <div class="space-y-6 text-sm">
 
-            {{-- NAMA --}}
-            <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2 sm:mb-3 font-inria">
-                {{ $properti->nama_properti }}
-            </h3>
+            {{-- NAMA + HARGA (DIGABUNG) --}}
+            <div class="bg-gradient-to-r from-indigo-600 to-indigo-500
+                        text-white p-6 rounded-2xl shadow-lg">
 
-            {{-- LOKASI --}}
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
-                <p class="font-semibold text-gray-700 mb-1 font-inria">Lokasi</p>
-                <p class="text-gray-600">{{ $properti->lokasi }}</p>
-            </div>
+                <h3 class="text-xl font-semibold font-inria mb-2">
+                    {{ $properti->nama_properti }}
+                </h3>
 
-            {{-- FASILITAS --}}
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
-                <p class="font-semibold text-gray-700 mb-1 font-inria">Fasilitas</p>
-                <p class="text-gray-600">{{ $properti->fasilitas }}</p>
-            </div>
+                <p class="text-sm opacity-80 mb-2">
+                    {{ $properti->lokasi }}
+                </p>
 
-            {{-- HARGA --}}
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
-                <p class="font-semibold text-gray-700 mb-1 font-inria">Harga</p>
-                <p class="text-indigo-600 font-bold text-base">
+                <p class="text-2xl font-bold">
                     Rp {{ number_format($properti->harga, 0, ',', '.') }}
                 </p>
             </div>
 
-            {{-- DESKRIPSI --}}
-            <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
-                <p class="font-semibold text-gray-700 mb-1 font-inria">Deskripsi</p>
-                <p class="text-gray-600 leading-relaxed">
-                    {{ $properti->deskripsi }}
+            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-3 font-inria">
+                    Informasi Properti
                 </p>
+
+                <div class="grid grid-cols-2 gap-4 text-sm">
+
+                    <div>
+                        <p class="text-gray-400">Tipe</p>
+                        <p class="font-semibold text-gray-700">
+                            {{ $properti->tipe_properti ?? '-' }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400">Luas Tanah</p>
+                        <p class="font-semibold text-gray-700">
+                            {{ $properti->luas_tanah ?? '-' }} m²
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400">Kamar</p>
+                        <p class="font-semibold text-gray-700">
+                            {{ $properti->jumlah_kamar ?? '-' }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- FASILITAS --}}
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-3 font-inria">
+                    Fasilitas
+                </p>
+
+                <div class="flex flex-wrap gap-2">
+                    @foreach(explode(',', $properti->fasilitas) as $item)
+                        @if(trim($item) !== '')
+                            <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
+                                {{ trim($item) }}
+                            </span>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+
+            {{-- DESKRIPSI --}}
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-2 font-inria">
+                    Deskripsi
+                </p>
+
+                <p class="text-gray-600  leading-tight break-words">{{ $properti->deskripsi }}</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                <p class="font-semibold text-gray-700 mb-3 font-inria">
+                    Lokasi di Peta
+                </p>
+
+                <iframe
+                    src="https://www.google.com/maps?q={{ urlencode($properti->lokasi) }}&output=embed"
+                    class="w-full h-64 rounded-xl border"
+                    loading="lazy">
+                </iframe>
             </div>
 
         </div>
 
-    </div>
+            </div>
 
-</div>
+        </div>
 
 @endsection
+
+<script>
+let index = 0;
+const slider = document.getElementById('slider');
+
+function showSlide(i) {
+    if (!slider) return;
+    const total = slider.children.length;
+    index = (i + total) % total;
+    slider.style.transform = `translateX(-${index * 100}%)`;
+}
+
+function nextSlide() {
+    showSlide(index + 1);
+}
+
+function prevSlide() {
+    showSlide(index - 1);
+}
+</script>

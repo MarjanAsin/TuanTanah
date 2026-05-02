@@ -46,6 +46,7 @@
 
             <form method="POST"
                   action="{{ route('pemilik.store') }}"
+                  id="formUpload"
                   enctype="multipart/form-data"
                   class="space-y-8">
 
@@ -217,7 +218,7 @@
 
                 {{-- BUTTON --}}
                 <div class="pt-4">
-                    <button type="submit"
+                    <button type="submit" id="btnUpload"
                         class="w-full bg-indigo-600 hover:bg-indigo-700
                                text-white py-3 rounded-xl text-sm font-semibold
                                shadow-md hover:shadow-lg
@@ -235,3 +236,18 @@
 </div>
 
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('formUpload');
+    const btn = document.getElementById('btnUpload');
+
+    if (form && btn) {
+        form.addEventListener('submit', function () {
+            btn.disabled = true;
+            btn.innerText = 'Sedang mengunggah...';
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+        });
+    }
+});
+</script>

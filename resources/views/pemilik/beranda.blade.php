@@ -103,62 +103,62 @@
     Properti yang sudah disetujui
 </h2>
 
-<div class="grid md:grid-cols-2 gap-10">
+<div class="grid md:grid-cols-3 gap-8">
 
-    @forelse($properti as $item)
+@forelse($properti as $item)
 
-    <div class="bg-white rounded-2xl shadow-sm overflow-hidden relative
-                hover:shadow-xl hover:-translate-y-1
-                transition duration-300">
+<a href="{{ route('pemilik.edit', $item->properti_id) }}"
+   class="group block bg-white rounded-2xl shadow-sm overflow-hidden relative
+          hover:shadow-xl hover:-translate-y-1
+          transition duration-300 cursor-pointer">
 
-        {{-- Badge Properti Unggulan --}}
-        @if($item->is_unggulan)
-            <div class="absolute top-4 left-4
-                        bg-gradient-to-r from-yellow-600 to-orange-400
-                        text-white px-3 py-1 text-xs font-semibold
-                        rounded-full shadow-md font-inria">
-                ⭐ Properti Unggulan
-            </div>
-        @endif
-
-        <div class="overflow-hidden">
-            <img src="{{ asset('storage/' . $item->foto_properti) }}"
-                 class="w-full h-52 object-cover hover:scale-105 transition duration-500">
+    {{-- Badge Properti Unggulan --}}
+    @if($item->is_unggulan)
+        <div class="absolute top-4 left-4
+                    bg-gradient-to-r from-yellow-600 to-orange-400
+                    text-white px-3 py-1 text-xs font-semibold
+                    rounded-full shadow-md font-inria z-10">
+            ⭐ Properti Unggulan
         </div>
+    @endif
 
-        <div class="p-5 text-sm">
-
-            <h3 class="font-semibold text-gray-800 mb-1 font-inria">
-                {{ $item->nama_properti }}
-            </h3>
-
-            <p class="text-gray-500 text-xs mb-1">
-                {{ $item->lokasi }}
-            </p>
-
-            <p class="text-gray-500 text-xs truncate">
-                {{ $item->fasilitas }}
-            </p>
-
-            <p class="font-bold text-indigo-600 mt-3">
-                Rp {{ number_format($item->harga, 0, ',', '.') }}
-            </p>
-
-            <div class="flex justify-end mt-4">
-                <a href="{{ route('pemilik.edit', $item->properti_id) }}"
-                   class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
-                    Ubah data →
-                </a>
-            </div>
-
-        </div>
+    <div class="overflow-hidden">
+        <img src="{{ asset('storage/' . $item->foto_properti) }}"
+             class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
     </div>
 
-    @empty
-        <p class="text-gray-500 text-sm col-span-2 text-center font-inria">
-            Belum ada properti yang disetujui.
+    <div class="p-5 text-sm">
+
+        <h3 class="font-semibold text-gray-800 mb-1 font-inria">
+            {{ $item->nama_properti }}
+        </h3>
+
+        <p class="text-gray-500 text-xs mb-1">
+            {{ $item->lokasi }}
         </p>
-    @endforelse
+
+        <p class="text-gray-500 text-xs truncate">
+            {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
+        </p>
+
+        <p class="font-bold text-indigo-600 mt-3">
+            Rp {{ number_format($item->harga, 0, ',', '.') }}
+        </p>
+
+        {{-- Optional hint --}}
+        <p class="text-xs text-gray-400 mt-3">
+            Klik untuk mengubah data
+        </p>
+
+    </div>
+
+</a>
+
+@empty
+    <p class="text-gray-500 col-span-3 text-center font-inria">
+        Belum ada properti yang disetujui.
+    </p>
+@endforelse
 
 </div>
 

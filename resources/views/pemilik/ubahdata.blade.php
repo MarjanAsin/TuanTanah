@@ -143,7 +143,7 @@
                     <label class="block font-semibold text-gray-700 mb-2 font-inria">
                         Deskripsi
                     </label>
-                    <textarea name="deskripsi" rows="4"
+                    <textarea name="deskripsi" rows="1"
                               class="w-full border border-gray-300 rounded-lg px-4 py-3
                                      focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">{{ old('deskripsi', $properti->deskripsi) }}</textarea>
 
@@ -192,3 +192,51 @@
 </div>
 
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('formEdit');
+    const btn = document.getElementById('btnSubmit');
+
+    if (form && btn) {
+
+        // Ambil semua input
+        const inputs = form.querySelectorAll('input, textarea');
+
+        // Simpan nilai awal
+        const initialData = {};
+        inputs.forEach(input => {
+            initialData[input.name] = input.value;
+        });
+
+        function checkChanges() {
+            let changed = false;
+
+            inputs.forEach(input => {
+                if (input.value !== initialData[input.name]) {
+                    changed = true;
+                }
+            });
+
+            if (changed) {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.classList.add('cursor-pointer'); // 🔥 ini tambahan
+            } else {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.classList.remove('cursor-pointer'); // 🔥 ini juga
+            }
+        }
+
+        // Deteksi perubahan
+        form.addEventListener('input', checkChanges);
+
+        // Saat submit
+        form.addEventListener('submit', function () {
+            btn.disabled = true;
+            btn.innerText = 'Menyimpan...';
+        });
+    }
+});
+</script>

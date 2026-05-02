@@ -292,46 +292,42 @@
         <div class="grid md:grid-cols-3 gap-10">
 
             @forelse($properti as $item)
+            <a href="{{ route('pelanggan.detail', $item->properti_id) }}"
+class="group block bg-white rounded-3xl overflow-hidden border border-gray-100
+        shadow-sm hover:shadow-2xl transition duration-300 hover:-translate-y-2">
 
-                <div class="group bg-white rounded-3xl overflow-hidden border border-gray-100
-                            shadow-sm hover:shadow-2xl transition duration-300 hover:-translate-y-2">
+    {{-- BADGE UNGGULAN --}}
+    <div class="relative overflow-hidden">
+        <img src="{{ $item->foto_properti ? asset('storage/' . $item->foto_properti) : asset('images/no-image.png') }}"
+            class="w-full h-56 object-cover group-hover:scale-110 transition duration-500">
 
-                    <div class="overflow-hidden">
-                        <img src="{{ asset('storage/' . $item->foto_properti) }}"
-                             class="w-full h-56 object-cover group-hover:scale-110 transition duration-500">
-                    </div>
+        <div class="absolute top-3 left-3 bg-gradient-to-r from-yellow-600 to-orange-400 text-white text-xs px-3 py-1 rounded-full shadow font-semibold">
+            ⭐ Properti Unggulan
+        </div>
+    </div>
 
-                    <div class="p-7 text-sm">
+    <div class="p-7 text-sm">
 
-                        <h3 class="font-semibold text-lg text-gray-900 mb-1 font-inria">
-                            {{ $item->nama_properti }}
-                        </h3>
+        <h3 class="font-semibold text-lg text-gray-900 mb-1 font-inria group-hover:text-indigo-600 transition">
+            {{ $item->nama_properti }}
+        </h3>
 
-                        <p class="text-gray-500 text-xs mb-1">
-                            {{ $item->lokasi }}
-                        </p>
+        <p class="text-gray-500 text-xs mb-1">
+            {{ $item->lokasi }}
+        </p>
 
-                        <p class="text-gray-500 text-xs truncate">
-                            {{ $item->fasilitas }}
-                        </p>
+        <p class="text-gray-500 text-xs truncate">
+            {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
+        </p>
 
-                        <p class="font-bold text-indigo-600 text-lg mt-5">
-                            Rp {{ number_format($item->harga, 0, ',', '.') }}
-                        </p>
+        <p class="font-bold text-indigo-600 text-lg mt-5">
+            Rp {{ number_format($item->harga, 0, ',', '.') }}
+        </p>
 
-                        <div class="flex justify-end mt-6">
-                            <a href="{{ route('pelanggan.detail', $item->properti_id) }}"
-                               class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">
-                                Lihat Detail →
-                            </a>
-                        </div>
-
-                    </div>
-
-                </div>
-
+    </div>
+</a>
             @empty
-                <p class="text-gray-500 text-sm col-span-3 text-center font-inria">
+                <p class="text-gray-500 col-span-3 text-center font-inria">
                     Belum ada properti unggulan.
                 </p>
             @endforelse

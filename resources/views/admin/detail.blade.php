@@ -125,9 +125,16 @@
                         <p class="text-gray-600">{{ $properti->lokasi }}</p>
                     </div>
 
-                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
                         <p class="font-semibold text-gray-700 mb-1 font-inria">Fasilitas</p>
-                        <p class="text-gray-600">{{ $properti->fasilitas }}</p>
+
+                        <ul class="list-disc list-inside text-gray-600 grid grid-cols-2 sm:grid-cols-3 gap-y-1 gap-x-4">
+                            @foreach(explode(',', $properti->fasilitas) as $item)
+                                @if(trim($item) !== '')
+                                    <li>{{ trim($item) }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
                     </div>
 
                     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
@@ -137,9 +144,10 @@
                         </p>
                     </div>
 
-                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                    {{-- DESKRIPSI --}}
+                    <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
                         <p class="font-semibold text-gray-700 mb-1 font-inria">Deskripsi</p>
-                        <p class="text-gray-600">{{ $properti->deskripsi }}</p>
+                        <p class="text-gray-600  leading-tight break-words">{{ $properti->deskripsi }}</p>
                     </div>
 
                     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">

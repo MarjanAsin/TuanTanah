@@ -159,4 +159,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::post('/pembayaran/{id}/validasi', [AdminController::class, 'validasiPembayaran'])
         ->name('admin.validasi.pembayaran');
+
+    Route::post('/tolak-pembayaran/{id}', [AdminController::class, 'tolakPembayaran'])
+    ->name('admin.tolak.pembayaran');
 });

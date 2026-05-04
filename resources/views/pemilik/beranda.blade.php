@@ -122,9 +122,16 @@
         </div>
     @endif
 
+    @php
+        $foto = $item->fotos->first();
+    @endphp
+
     <div class="overflow-hidden">
-        <img src="{{ asset('storage/' . $item->foto_properti) }}"
-             class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+        <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+            class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+    </div>
+    <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold">
+        {{ ucfirst($item->tipe_properti ?? 'properti') }}
     </div>
 
     <div class="p-5 text-sm">

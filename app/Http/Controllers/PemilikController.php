@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Properti;
+use App\Models\PropertiFoto;
 
 class PemilikController extends Controller
 {
@@ -16,36 +17,50 @@ class PemilikController extends Controller
     {
         $userId = Auth::id();
 
-        $total = Properti::where('user_id', $userId)->count();
-
-        // Belum upload bukti
-        $menungguPembayaran = Properti::where('user_id', $userId)
-            ->where('status_pembayaran', 'pending')
-            ->whereNull('bukti_pembayaran')
+        // 🔥 TOTAL (hanya yang sudah valid pembayaran)
+        $total = Properti::where('user_id', $userId)
+            ->where('status_pembayaran', 'valid')
             ->count();
 
-        // Sudah upload bukti (menunggu validasi admin)
+        // 🔥 BELUM BAYAR + DITOLAK PEMBAYARAN
+        $menungguPembayaran = Properti::where('user_id', $userId)
+            ->where(function($q){
+                $q->where(function ($sub) {
+                    $sub->where('status_pembayaran', 'pending')
+                        ->whereNull('bukti_pembayaran');
+                })
+                ->orWhere('status_pembayaran', 'ditolak'); // 🔥 MASUK SINI
+            })
+            ->count();
+
+        // 🔥 SUDAH BAYAR (MENUNGGU VALIDASI)
         $sudahBayar = Properti::where('user_id', $userId)
             ->where('status_pembayaran', 'pending')
             ->whereNotNull('bukti_pembayaran')
             ->count();
 
+        // 🔥 MENUNGGU VERIFIKASI ADMIN (SETELAH VALID)
         $menunggu = Properti::where('user_id', $userId)
+            ->where('status_pembayaran', 'valid')
             ->where('status', 'menunggu')
             ->count();
 
+        // 🔥 DISETUJUI
         $disetujui = Properti::where('user_id', $userId)
+            ->where('status_pembayaran', 'valid')
             ->where('status', 'disetujui')
             ->count();
 
+        // 🔥 DITOLAK (HANYA VERIFIKASI PROPERTI)
         $ditolak = Properti::where('user_id', $userId)
-            ->where(function($q){
-                $q->where('status', 'ditolak')
-                  ->orWhere('status_pembayaran', 'ditolak');
-            })
+            ->where('status_pembayaran', 'valid') // 🔥 WAJIB
+            ->where('status', 'ditolak')
             ->count();
 
-        $properti = Properti::where('user_id', $userId)
+        // 🔥 LIST PROPERTI (YANG SUDAH SIAP TAMPIL)
+        $properti = Properti::with('fotos')
+            ->where('user_id', $userId)
+            ->where('status_pembayaran', 'valid')
             ->where('status', 'disetujui')
             ->latest()
             ->get();
@@ -67,7 +82,8 @@ class PemilikController extends Controller
     // ======================================
     public function edit($id)
     {
-        $properti = Properti::where('properti_id', $id)
+        $properti = Properti::with('fotos')
+            ->where('properti_id', $id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
@@ -91,7 +107,13 @@ class PemilikController extends Controller
             'harga' => 'required|numeric|min:0',
             'deskripsi' => 'required|string',
             'kontak_whatsapp' => 'required|digits_between:10,15',
-            'foto_properti' => 'nullable|image|mimes:jpg,jpeg,png|max:5120'
+            'tipe_properti' => 'required|in:rumah,tanah,ruko,apartemen',
+            'luas_tanah' => 'nullable|numeric|min:0',
+            'jumlah_kamar' => 'nullable|integer|min:0',
+
+            // 🔥 MULTI FOTO
+            'foto_properti' => 'nullable|array|max:5',
+            'foto_properti.*' => 'image|mimes:jpg,jpeg,png|max:5120'
         ], [
             'nama_properti.required' => 'Nama properti wajib diisi.',
             'lokasi.required' => 'Lokasi wajib diisi.',
@@ -101,22 +123,15 @@ class PemilikController extends Controller
             'deskripsi.required' => 'Deskripsi wajib diisi.',
             'kontak_whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
             'kontak_whatsapp.digits_between' => 'Nomor WhatsApp harus 10–15 digit.',
-            'foto_properti.image' => 'File harus berupa gambar.',
-            'foto_properti.mimes' => 'Format gambar harus JPG, JPEG, atau PNG.',
-            'foto_properti.max' => 'Ukuran gambar maksimal 5MB.'
+
+            'tipe_properti.required' => 'Tipe wajib diisi.',
+
+            'foto_properti.*.image' => 'File harus berupa gambar.',
+            'foto_properti.*.mimes' => 'Format gambar harus JPG, JPEG, atau PNG.',
+            'foto_properti.*.max' => 'Ukuran gambar maksimal 5MB.',
         ]);
 
-        if ($request->hasFile('foto_properti')) {
-            if ($properti->foto_properti) {
-                Storage::disk('public')->delete($properti->foto_properti);
-            }
-
-            $path = $request->file('foto_properti')
-                ->store('properti', 'public');
-
-            $properti->foto_properti = $path;
-        }
-
+        // 🔥 UPDATE DATA
         $properti->update([
             'nama_properti' => $request->nama_properti,
             'lokasi' => $request->lokasi,
@@ -124,8 +139,32 @@ class PemilikController extends Controller
             'harga' => $request->harga,
             'deskripsi' => $request->deskripsi,
             'kontak_whatsapp' => $request->kontak_whatsapp,
+            'tipe_properti' => $request->tipe_properti,
+            'luas_tanah' => $request->luas_tanah,
+            'jumlah_kamar' => $request->jumlah_kamar,
             'status' => 'menunggu',
         ]);
+
+        // 🔥 UPDATE FOTO (kalau ada upload baru)
+        if ($request->hasFile('foto_properti')) {
+
+            // hapus semua foto lama
+            foreach ($properti->fotos as $foto) {
+                Storage::disk('public')->delete($foto->path);
+                $foto->delete();
+            }
+
+            // simpan foto baru
+            foreach ($request->file('foto_properti') as $file) {
+
+                $path = $file->store('properti', 'public');
+
+                PropertiFoto::create([
+                    'properti_id' => $properti->properti_id,
+                    'path' => $path
+                ]);
+            }
+        }
 
         return redirect()->route('pemilik.beranda')
             ->with('success', 'Properti berhasil diperbarui.');
@@ -145,7 +184,6 @@ class PemilikController extends Controller
     {
         $userId = Auth::id();
 
-        // 🔥 FIX: hanya hitung properti yang sudah valid (sudah bayar / gratis berhasil)
         $jumlahProperti = Properti::where('user_id', $userId)
             ->where('status_pembayaran', 'valid')
             ->count();
@@ -153,37 +191,46 @@ class PemilikController extends Controller
         $request->validate([
             'nama_properti' => 'required|string|max:255',
             'fasilitas' => 'required|string|max:255',
-            'foto_properti' => 'required|image|mimes:jpg,jpeg,png|max:5120',
+            'foto_properti' => 'required|array|max:5',
+            'foto_properti.*' => 'image|mimes:jpg,jpeg,png|max:5120',
             'lokasi' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
             'kontak_whatsapp' => 'required|digits_between:10,15',
+            'tipe_properti' => 'required|in:rumah,tanah,ruko,apartemen',
+            'luas_tanah' => 'nullable|numeric|min:0',
+            'jumlah_kamar' => 'nullable|integer|min:0',
             'deskripsi' => 'required|string',
         ], [
             'nama_properti.required' => 'Nama properti wajib diisi.',
             'fasilitas.required' => 'Fasilitas wajib diisi.',
-            'foto_properti.required' => 'Foto properti wajib diupload.',
-            'foto_properti.image' => 'File harus berupa gambar.',
-            'foto_properti.mimes' => 'Format gambar harus JPG, JPEG, atau PNG.',
-            'foto_properti.max' => 'Ukuran gambar maksimal 5MB.',
+
+            'foto_properti.required' => 'Minimal satu foto properti harus diupload.',
+            'foto_properti.*.image' => 'File harus berupa gambar.',
+            'foto_properti.*.mimes' => 'Format gambar harus JPG, JPEG, atau PNG.',
+            'foto_properti.*.max' => 'Ukuran gambar maksimal 5MB.',
+
             'lokasi.required' => 'Lokasi wajib diisi.',
+
             'harga.required' => 'Harga wajib diisi.',
             'harga.numeric' => 'Harga harus berupa angka.',
+            'harga.min' => 'Harga tidak boleh kurang dari 0.',
+
+            'tipe_properti.required' => 'Tipe wajib diisi.',
+
             'kontak_whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
             'kontak_whatsapp.digits_between' => 'Nomor WhatsApp harus 10–15 digit.',
+
             'deskripsi.required' => 'Deskripsi wajib diisi.',
         ]);
-
-        $path = $request->file('foto_properti')
-            ->store('properti', 'public');
 
         // 🔥 FREEMIUM LOGIC
         $statusPembayaran = $jumlahProperti >= 1 ? 'pending' : 'valid';
 
+        // 🔥 BUAT PROPERTI
         $properti = Properti::create([
             'user_id' => $userId,
             'nama_properti' => $request->nama_properti,
             'fasilitas' => $request->fasilitas,
-            'foto_properti' => $path,
             'lokasi' => $request->lokasi,
             'harga' => $request->harga,
             'kontak_whatsapp' => $request->kontak_whatsapp,
@@ -191,15 +238,30 @@ class PemilikController extends Controller
             'status' => 'menunggu',
             'status_pembayaran' => $statusPembayaran,
             'is_unggulan' => 0,
+            'tipe_properti' => $request->tipe_properti,
+            'luas_tanah' => $request->luas_tanah,
+            'jumlah_kamar' => $request->jumlah_kamar,
         ]);
 
-        // 🔥 Kalau perlu bayar
+        // 🔥 SIMPAN FOTO
+        if ($request->hasFile('foto_properti')) {
+            foreach ($request->file('foto_properti') as $file) {
+
+                $path = $file->store('properti', 'public');
+
+                \App\Models\PropertiFoto::create([
+                    'properti_id' => $properti->properti_id,
+                    'path' => $path
+                ]);
+            }
+        }
+
+        // 🔥 REDIRECT
         if ($statusPembayaran === 'pending') {
             return redirect()->route('pemilik.detail', $properti->properti_id)
                 ->with('info', 'Silakan lakukan pembayaran untuk melanjutkan.');
         }
 
-        // 🔥 Kalau gratis
         return redirect()->route('pemilik.beranda')
             ->with('success', 'Properti pertama berhasil diupload secara gratis.');
     }
@@ -212,16 +274,19 @@ class PemilikController extends Controller
     {
         $userId = Auth::id();
 
-        $menunggu = Properti::where('user_id', $userId)
+        // 🔥 MENUNGGU VERIFIKASI (SUDAH VALID PEMBAYARAN)
+        $menunggu = Properti::with('fotos')
+            ->where('user_id', $userId)
+            ->where('status_pembayaran', 'valid')
             ->where('status', 'menunggu')
             ->latest()
             ->get();
 
-        $ditolak = Properti::where('user_id', $userId)
-            ->where(function($q){
-                $q->where('status', 'ditolak')
-                  ->orWhere('status_pembayaran', 'ditolak');
-            })
+        // 🔥 DITOLAK OLEH ADMIN (BUKAN PEMBAYARAN)
+        $ditolak = Properti::with('fotos')
+            ->where('user_id', $userId)
+            ->where('status_pembayaran', 'valid') // 🔥 penting
+            ->where('status', 'ditolak') // 🔥 hanya ditolak properti
             ->latest()
             ->get();
 
@@ -234,7 +299,8 @@ class PemilikController extends Controller
     // ======================================
     public function pembayaran()
     {
-        $properti = Properti::where('user_id', Auth::id())
+        $properti = Properti::with('fotos')
+            ->where('user_id', Auth::id())
             ->where(function ($query) {
 
                 // BELUM BAYAR
@@ -259,9 +325,10 @@ class PemilikController extends Controller
     // ======================================
     public function pembayaranDetail($id)
     {
-        $properti = Properti::where('properti_id', $id)
+        $properti = Properti::with('fotos') // 🔥 INI WAJIB
+            ->where('properti_id', $id)
             ->where('user_id', Auth::id())
-            ->whereIn('status_pembayaran', ['pending', 'ditolak']) // 🔥 FIX
+            ->whereIn('status_pembayaran', ['pending', 'ditolak'])
             ->firstOrFail();
 
         return view('pemilik.detail', compact('properti'));

@@ -15,19 +15,31 @@ class AdminController extends Controller
     // ======================================
     public function beranda()
     {
-        $totalProperti = Properti::count();
+        // 🔥 TOTAL PROPERTI (yang sudah valid pembayaran)
+        $totalProperti = Properti::where('status_pembayaran', 'valid')->count();
 
+        // 🔥 TOTAL PEMILIK
         $totalPemilik = User::where('role', 'pemilik')->count();
 
-        $menunggu = Properti::where('status', 'menunggu')->count();
+        // 🔥 MENUNGGU VERIFIKASI PROPERTI (SUDAH BAYAR)
+        $menunggu = Properti::where('status_pembayaran', 'valid')
+            ->where('status', 'menunggu')
+            ->count();
 
-        $totalAktif = Properti::where('status', 'disetujui')->count();
+        // 🔥 PROPERTI AKTIF (SUDAH DISETUJUI + SUDAH BAYAR)
+        $totalAktif = Properti::where('status_pembayaran', 'valid')
+            ->where('status', 'disetujui')
+            ->count();
 
-        $menungguPembayaran = Properti::where('status', 'menunggu_verifikasi_pembayaran')
+        // 🔥 MENUNGGU VALIDASI PEMBAYARAN
+        $menungguPembayaran = Properti::where('status_pembayaran', 'pending')
             ->whereNotNull('bukti_pembayaran')
             ->count();
 
-        $properti = Properti::where('status', 'disetujui')
+        // 🔥 LIST PROPERTI (YANG SUDAH SIAP TAMPIL)
+        $properti = Properti::with('fotos')
+            ->where('status_pembayaran', 'valid')
+            ->where('status', 'disetujui')
             ->latest()
             ->get();
 
@@ -47,11 +59,13 @@ class AdminController extends Controller
     public function unggulan(Request $request)
     {
         Properti::where('status', 'disetujui')
+            ->where('status_pembayaran', 'valid') // 🔥 TAMBAH
             ->update(['is_unggulan' => 0]);
 
         if ($request->properti) {
             Properti::whereIn('properti_id', $request->properti)
                 ->where('status', 'disetujui')
+                ->where('status_pembayaran', 'valid') // 🔥 TAMBAH INI
                 ->update(['is_unggulan' => 1]);
         }
 
@@ -63,8 +77,9 @@ class AdminController extends Controller
     // ======================================
     public function verifikasi()
     {
-        $properti = Properti::where('status', 'menunggu')
-            ->where('status_pembayaran', 'valid') // 🔥 INI KUNCINYA
+        $properti = Properti::with('fotos')
+            ->where('status', 'menunggu')
+            ->where('status_pembayaran', 'valid')
             ->latest()
             ->get();
 
@@ -76,7 +91,9 @@ class AdminController extends Controller
     // ======================================
     public function detail($id)
     {
-        $properti = Properti::where('properti_id', $id)
+        $properti = Properti::with('fotos')
+            ->where('properti_id', $id)
+            ->where('status_pembayaran', 'valid')
             ->firstOrFail();
 
         return view('admin.detail', compact('properti'));
@@ -89,6 +106,7 @@ class AdminController extends Controller
     {
         $properti = Properti::where('properti_id', $id)
             ->where('status', 'menunggu')
+            ->where('status_pembayaran', 'valid') // 🔥 TAMBAH INI
             ->firstOrFail();
 
         if ($aksi === 'setujui') {
@@ -168,7 +186,8 @@ class AdminController extends Controller
     // ======================================
     public function pembayaran()
     {
-        $properti = Properti::where('status_pembayaran', 'pending')
+        $properti = Properti::with('fotos')
+            ->where('status_pembayaran', 'pending')
             ->whereNotNull('bukti_pembayaran')
             ->latest()
             ->get();
@@ -182,7 +201,8 @@ class AdminController extends Controller
     // ======================================
     public function detailPembayaran($id)
     {
-        $properti = Properti::where('properti_id', $id)
+        $properti = Properti::with('fotos')
+            ->where('properti_id', $id)
             ->where('status_pembayaran', 'pending')
             ->whereNotNull('bukti_pembayaran')
             ->firstOrFail();

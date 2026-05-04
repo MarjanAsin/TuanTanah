@@ -89,8 +89,11 @@
             <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
 
                 <div class="overflow-hidden">
-                    <img src="{{ asset('storage/' . $item->foto_properti) }}"
-                         class="w-full h-44 object-cover hover:scale-105 transition duration-300">
+                    @php
+                        $foto = $item->fotos->first();
+                    @endphp
+                    <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                        class="w-full h-44 object-cover hover:scale-105 transition duration-300">
                 </div>
 
                 <div class="p-4 text-sm">

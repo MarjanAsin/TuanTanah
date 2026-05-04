@@ -34,17 +34,38 @@ class PelangganController extends Controller
     // ===============================
     public function properti()
     {
-        $unggulan = Properti::where('status', 'disetujui')
-                            ->where('status_pembayaran', 'valid') // 🔥 tambahan
-                            ->where('is_unggulan', 1)
-                            ->latest()
-                            ->get();
+        $query = Properti::with('fotos')
+            ->where('status', 'disetujui')
+            ->where('status_pembayaran', 'valid');
 
-        $properti = Properti::where('status', 'disetujui')
-                            ->where('status_pembayaran', 'valid') // 🔥 tambahan
-                            ->where('is_unggulan', 0)
-                            ->latest()
-                            ->get();
+        // 🔍 FILTER LOKASI
+        if (request('lokasi')) {
+            $query->where('lokasi', 'like', '%' . request('lokasi') . '%');
+        }
+
+        // 🔍 FILTER TIPE
+        if (request()->filled('tipe')) {
+            $query->where('tipe_properti', request('tipe'));
+        }
+
+        if (request()->filled('min')) {
+            $query->where('harga', '>=', (int) request('min'));
+        }
+
+        if (request()->filled('max')) {
+            $query->where('harga', '<=', (int) request('max'));
+        }
+
+        // 🔥 DATA
+        $properti = (clone $query)
+            ->where('is_unggulan', 0)
+            ->latest()
+            ->get();
+
+        $unggulan = (clone $query)
+            ->where('is_unggulan', 1)
+            ->latest()
+            ->get();
 
         return view('pelanggan.properti', compact('unggulan', 'properti'));
     }
@@ -55,10 +76,11 @@ class PelangganController extends Controller
     // ===============================
     public function detail($id)
     {
-        $properti = Properti::where('properti_id', $id)
-                            ->where('status', 'disetujui')
-                            ->where('status_pembayaran', 'valid') // 🔥 tambahan
-                            ->firstOrFail();
+        $properti = Properti::with('fotos') // 🔥 TAMBAH INI
+            ->where('properti_id', $id)
+            ->where('status', 'disetujui')
+            ->where('status_pembayaran', 'valid')
+            ->firstOrFail();
 
         return view('pelanggan.detail', compact('properti'));
     }

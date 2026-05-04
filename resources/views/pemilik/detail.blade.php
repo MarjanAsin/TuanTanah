@@ -51,17 +51,21 @@
         </div>
 
         {{-- PROPERTI --}}
-        <div class="flex items-center gap-4 mb-4">
-            <img src="{{ asset('storage/' . $properti->foto_properti) }}"
-                 class="w-16 h-16 rounded-lg object-cover">
+    <div class="flex items-center gap-4 mb-4">
+        @php
+            $foto = $properti->fotos->first();
+        @endphp
 
-            <div>
-                <p class="text-gray-500 text-xs font-inria">Properti</p>
-                <p class="font-semibold text-gray-800 font-inria">
-                    {{ $properti->nama_properti }}
-                </p>
-            </div>
+        <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+            class="w-16 h-16 rounded-lg object-cover">
+
+        <div>
+            <p class="text-gray-500 text-xs font-inria">Properti</p>
+            <p class="font-semibold text-gray-800 font-inria">
+                {{ $properti->nama_properti }}
+            </p>
         </div>
+    </div>
 
         <hr class="my-4 border-gray-200">
 

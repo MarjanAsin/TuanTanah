@@ -76,7 +76,7 @@
                         </label>
                         <input type="text" name="fasilitas"
                             value="{{ old('fasilitas') }}"
-                            placeholder="Contoh: 3 Kamar Tidur, 2 Kamar Mandi, Garasi"
+                            placeholder="Contoh: AC, WiFi, Garasi, Kolam Renang, CCTV"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    placeholder:text-gray-400
                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
@@ -97,11 +97,14 @@
                         </label>
 
                         <input type="file"
-                               name="foto_properti"
+                               name="foto_properti[]"
                                id="foto_properti"
                                accept=".jpg,.jpeg,.png"
                                class="hidden"
-                               onchange="document.getElementById('namaFotoProperti').innerText = this.files[0]?.name || 'Belum ada file dipilih'">
+                               onchange="
+                                let names = Array.from(this.files).map(f => f.name).join(', ');
+                                document.getElementById('namaFotoProperti').innerText = names || 'Belum ada file dipilih';
+                                " multiple>
 
                         <label for="foto_properti"
                                class="flex items-center h-[42px] border border-gray-200 rounded-lg bg-gray-50 px-4
@@ -127,11 +130,24 @@
 
                         </label>
 
-                        <p class="text-xs text-gray-500 mt-2">
-                            Format: JPG, PNG, JPEG • Maks. 5MB • Disarankan 1200×800 px
-                        </p>
+                        <div class="mt-2 text-xs text-gray-500 space-y-1">
+
+                            <p class="font-medium text-gray-600">Ketentuan Upload:</p>
+
+                            <ul class="list-disc pl-4 space-y-0.5">
+                                <li>Format: JPG, PNG, JPEG</li>
+                                <li>Maksimal ukuran: 5MB per file</li>
+                                <li>Resolusi disarankan: 1200 × 800 px</li>
+                                <li>Maksimal 5 foto</li>
+                            </ul>
+
+                        </div>
 
                         @error('foto_properti')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
+
+                        @error('foto_properti.*')
                             <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                         @enderror
                     </div>
@@ -200,6 +216,55 @@
 
                 </div>
 
+                {{-- ROW 4 --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    {{-- TIPE --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                            Tipe Properti
+                        </label>
+                        <select name="tipe_properti"
+                            class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition cursor-pointer">
+
+                            <option value="">Pilih tipe</option>
+                            <option value="rumah" {{ old('tipe_properti') == 'rumah' ? 'selected' : '' }}>Rumah</option>
+                            <option value="tanah" {{ old('tipe_properti') == 'tanah' ? 'selected' : '' }}>Tanah</option>
+                            <option value="ruko" {{ old('tipe_properti') == 'ruko' ? 'selected' : '' }}>Ruko</option>
+                            <option value="apartemen" {{ old('tipe_properti') == 'apartemen' ? 'selected' : '' }}>Apartemen</option>
+                        </select>
+                    </div>
+
+                    {{-- LUAS --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                            Luas Tanah (m²)
+                        </label>
+                        <input type="number" name="luas_tanah" value="{{ old('luas_tanah') }}"
+                            placeholder="Contoh: 120"
+                            class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                    </div>
+
+                </div>
+
+                {{-- ROW 5 --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    {{-- KAMAR --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                            Jumlah Kamar
+                        </label>
+                        <input type="number" name="jumlah_kamar" value="{{ old('jumlah_kamar') }}"
+                            placeholder="Contoh: 3"
+                            class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                    </div>
+
+                </div>
+
 
                 {{-- DESKRIPSI --}}
                 <div>
@@ -239,6 +304,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
+    // ================= SUBMIT BUTTON =================
     const form = document.getElementById('formUpload');
     const btn = document.getElementById('btnUpload');
 
@@ -249,5 +316,44 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.classList.add('opacity-70', 'cursor-not-allowed');
         });
     }
+
+    // ================= TIPE PROPERTI =================
+    const tipe = document.querySelector('[name="tipe_properti"]');
+    const kamar = document.querySelector('[name="jumlah_kamar"]');
+
+    if (tipe && kamar) {
+        tipe.addEventListener('change', function () {
+            if (this.value === 'tanah') {
+                kamar.value = '';
+                kamar.disabled = true;
+            } else {
+                kamar.disabled = false;
+            }
+        });
+    }
+
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    let filesArray = [];
+    const input = document.querySelector('input[name="foto_properti[]"]');
+
+    if (input) {
+        input.addEventListener('change', function(e) {
+
+            const newFiles = Array.from(e.target.files);
+            filesArray = filesArray.concat(newFiles);
+
+            const dataTransfer = new DataTransfer();
+            filesArray.forEach(file => dataTransfer.items.add(file));
+
+            input.files = dataTransfer.files;
+
+            let names = filesArray.map(f => f.name).join(', ');
+            document.getElementById('namaFotoProperti').innerText = names;
+        });
+    }
+
 });
 </script>

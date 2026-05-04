@@ -23,7 +23,11 @@ class Properti extends Model
         'is_unggulan',
         'bukti_pembayaran',
         'alasan_penolakan',
+        'tipe_properti',
+        'luas_tanah',
+        'jumlah_kamar',
         'alasan_penolakan_pembayaran' // 🔥 tambahan
+
     ];
 
     public function user()
@@ -36,5 +40,10 @@ class Properti extends Model
     {
         return $query->where('status', 'disetujui')
                      ->where('status_pembayaran', 'valid');
+    }
+
+    public function fotos()
+    {
+        return $this->hasMany(PropertiFoto::class, 'properti_id');
     }
 }

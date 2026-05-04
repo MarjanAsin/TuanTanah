@@ -298,9 +298,15 @@ class="group block bg-white rounded-3xl overflow-hidden border border-gray-100
 
     {{-- BADGE UNGGULAN --}}
     <div class="relative overflow-hidden">
-        <img src="{{ $item->foto_properti ? asset('storage/' . $item->foto_properti) : asset('images/no-image.png') }}"
-            class="w-full h-56 object-cover group-hover:scale-110 transition duration-500">
+        @php
+            $foto = $item->fotos->first();
+        @endphp
 
+        <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+            class="w-full h-56 object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold">
+                {{ ucfirst($item->tipe_properti ?? 'properti') }}
+            </div>
         <div class="absolute top-3 left-3 bg-gradient-to-r from-yellow-600 to-orange-400 text-white text-xs px-3 py-1 rounded-full shadow font-semibold">
             ⭐ Properti Unggulan
         </div>

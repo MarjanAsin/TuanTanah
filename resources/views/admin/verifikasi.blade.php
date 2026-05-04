@@ -26,9 +26,12 @@
 
         {{-- IMAGE --}}
         <div class="overflow-hidden">
-            <img src="{{ asset('storage/' . $item->foto_properti) }}"
-                 class="w-full h-44 object-cover group-hover:scale-105 transition duration-500"
-                 alt="Properti">
+            @php
+                $foto = $item->fotos->first();
+            @endphp
+            <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                class="w-full h-44 object-cover hover:scale-105 transition duration-500"
+                    alt="Properti">
         </div>
 
         {{-- CONTENT --}}

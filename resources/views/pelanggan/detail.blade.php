@@ -11,7 +11,7 @@
                 bg-white border border-gray-200 rounded-full shadow-sm
                 text-sm font-medium text-gray-700
                 hover:bg-indigo-600 hover:text-white hover:shadow-md
-                transition duration-300">
+                transition duration-300 font-inria">
 
         <svg xmlns="http://www.w3.org/2000/svg"
             class="w-4 h-4"
@@ -36,7 +36,7 @@
             @if($properti->fotos && $properti->fotos->count() > 0)
                 @foreach($properti->fotos as $foto)
                     <img src="{{ asset('storage/' . $foto->path) }}"
-                         class="w-full h-[260px] sm:h-[400px] object-cover flex-shrink-0">
+                        class="w-full h-[260px] sm:h-[400px] object-contain bg-black flex-shrink-0">
                 @endforeach
             @else
                 <div class="w-full h-[260px] sm:h-[400px] bg-gray-200 flex items-center justify-center">
@@ -126,7 +126,7 @@
 
                     <div class="p-1 rounded-xl bg-gray-50">
                         <p class="text-gray-400 text-xs font-inria">Kamar</p>
-                        <p class="font-semibold text-gray-400">
+                        <p class="font-semibold text-gray-600">
                             {{ $properti->jumlah_kamar ?? '-' }}
                         </p>
                     </div>
@@ -154,7 +154,7 @@
             {{-- DESKRIPSI --}}
             <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                 <h3 class="font-semibold text-gray-800 mb-3 font-inria">Deskripsi</h3>
-                <p class="text-gray-600  leading-tight break-words">{{ $properti->deskripsi }}</p>
+                <p class="text-gray-600  leading-tight break-words font-inria">{{ $properti->deskripsi }}</p>
             </div>
 
             {{-- MAP --}}
@@ -163,7 +163,7 @@
 
                 <iframe
                     src="https://www.google.com/maps?q={{ urlencode($properti->lokasi) }}&output=embed"
-                    class="w-full h-64 rounded-xl border"
+                    class="w-full h-64 rounded-xl"
                     loading="lazy">
                 </iframe>
             </div>

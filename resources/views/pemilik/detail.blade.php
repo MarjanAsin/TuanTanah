@@ -12,7 +12,7 @@
               bg-white border border-gray-200 rounded-full shadow-sm
               text-sm font-medium text-gray-700
               hover:bg-indigo-600 hover:text-white hover:shadow-md
-              transition duration-300">
+              transition duration-300 font-inria">
 
         <svg xmlns="http://www.w3.org/2000/svg"
              class="w-4 h-4"
@@ -95,7 +95,7 @@
         <hr class="my-4 border-gray-200">
         @if($properti->status_pembayaran == 'ditolak')
             <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded mb-4">
-                <p class="font-semibold mb-1">Pembayaran ditolak</p>
+                <p class="font-semibold mb-1">Alasan Penolakan:</p>
                 <p>{{ $properti->alasan_penolakan_pembayaran }}</p>
             </div>
         @endif

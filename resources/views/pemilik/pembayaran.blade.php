@@ -24,7 +24,7 @@
             </div>
 
         @elseif($item->status_pembayaran == 'ditolak')
-            <div class="absolute top-4 left-4 bg-red-400 text-white text-xs px-3 py-1 rounded-full font-semibold shadow font-inria">
+            <div class="absolute top-4 left-4 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow font-inria">
                 Ditolak
             </div>
         @endif
@@ -53,6 +53,9 @@
 
             {{-- ALASAN PENOLAKAN --}}
             @if($item->status_pembayaran == 'ditolak')
+                <p class="text-[11px] font-semibold text-red-600 mb-1">
+                    Alasan Penolakan:
+                </p>
                 <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-2 rounded mb-4">
                     {{ $item->alasan_penolakan_pembayaran }}
                 </div>

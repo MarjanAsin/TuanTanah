@@ -148,7 +148,7 @@
                         <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold font-inria">
                             {{ ucfirst($item->tipe_properti ?? 'properti') }}
                         </div>
-                        <div class="absolute top-3 left-3 bg-gradient-to-r from-yellow-600 to-orange-400 text-white text-xs px-3 py-1 rounded-full shadow font-semibold">
+                        <div class="absolute top-3 left-3 bg-gradient-to-r from-yellow-600 to-orange-400 text-white text-xs px-3 py-1 rounded-full shadow font-semibold font-inria">
                             ⭐ Properti Unggulan
                         </div>
                     </div>

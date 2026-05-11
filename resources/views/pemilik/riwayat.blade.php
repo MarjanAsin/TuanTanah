@@ -152,7 +152,7 @@
                         @if($item->alasan_penolakan)
                             <div class="mt-3 bg-red-50 border border-red-200 rounded-lg p-2">
                                 <p class="text-[11px] font-semibold text-red-600 mb-1">
-                                    Alasan:
+                                    Alasan Penolakan:
                                 </p>
                                 <p class="text-[11px] text-red-700 line-clamp-2">
                                     {{ $item->alasan_penolakan }}

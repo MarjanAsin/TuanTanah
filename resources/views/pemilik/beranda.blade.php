@@ -14,7 +14,7 @@
                 w-full lg:w-56 text-center
                 shadow-md hover:shadow-xl transition duration-300">
 
-        <h3 class="text-xs uppercase tracking-wide text-gray-200 mb-2 font-bold">
+        <h3 class="text-xs uppercase tracking-wide text-gray-200 mb-2 font-bold font-inria">
             Jumlah Properti
         </h3>
 

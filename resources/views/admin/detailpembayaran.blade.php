@@ -12,7 +12,7 @@
                 bg-white border border-gray-200 rounded-full shadow-sm
                 text-sm font-medium text-gray-700
                 hover:bg-indigo-600 hover:text-white hover:shadow-md
-                transition duration-300">
+                transition duration-300 font-inria">
 
         <svg xmlns="http://www.w3.org/2000/svg"
             class="w-4 h-4"

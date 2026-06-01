@@ -154,7 +154,7 @@
                         </p>
 
                         <div class="flex justify-between items-center mt-4">
-                            <p class="font-bold text-indigo-600 font-inria">
+                            <p class="font-bold text-indigo-600 font-inria text-lg">
                                 Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </p>
                         </div>
@@ -217,7 +217,7 @@
                         </p>
 
                         <div class="flex justify-between items-center mt-4">
-                            <p class="font-bold text-indigo-600 font-inria">
+                            <p class="font-bold text-indigo-600 font-inria text-lg">
                                 Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </p>
                         </div>

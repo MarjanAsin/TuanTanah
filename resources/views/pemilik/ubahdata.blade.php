@@ -50,7 +50,7 @@
             </label>
 
             <div class="mb-5 p-3 rounded-xl bg-yellow-100 text-yellow-700 text-xs text-center font-inria">
-                ⚠️ Upload foto baru akan menghapus semua foto lama
+                Upload foto baru akan menghapus semua foto lama
             </div>
 
             <div class="flex justify-center">
@@ -105,7 +105,7 @@
                     <input type="text" name="nama_properti"
                         value="{{ old('nama_properti', $properti->nama_properti) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                 </div>
 
                 <div>
@@ -113,7 +113,7 @@
                     <input type="text" name="lokasi"
                         value="{{ old('lokasi', $properti->lokasi) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                 </div>
 
                 <div>
@@ -140,8 +140,8 @@
                         placeholder="Contoh: 3"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
-                    <p id="kamarInfo" class="text-xs text-gray-400 mt-1 hidden">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                    <p id="kamarInfo" class="text-xs text-gray-400 mt-1 hidden font-inria">
                         Tidak berlaku untuk tipe tanah
                     </p>
                 </div>
@@ -156,7 +156,7 @@
                             placeholder="Contoh: 120"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                 </div>
 
                 <div>
@@ -169,7 +169,7 @@
                             placeholder="Contoh: 750000000"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                 </div>
 
                 <div>
@@ -177,7 +177,7 @@
                     <input type="text" name="fasilitas"
                         value="{{ old('fasilitas', $properti->fasilitas) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                 </div>
 
                 <div>
@@ -185,8 +185,8 @@
                     <input type="text" name="kontak_whatsapp" id="wa"
                         value="{{ old('kontak_whatsapp', $properti->kontak_whatsapp) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
-                    <p id="waError" class="text-red-500 text-xs mt-1 hidden">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                    <p id="waError" class="text-red-500 text-xs mt-1 hidden font-inria">
                         Nomor harus 11 - 15 digit angka
                     </p>
                 </div>
@@ -195,7 +195,7 @@
                     <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Deskripsi</label>
                     <textarea name="deskripsi" rows="3" maxlength="3000"
                         class="w-full border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition py-3">{{ old('deskripsi', $properti->deskripsi) }}</textarea>
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition py-3 font-inria">{{ old('deskripsi', $properti->deskripsi) }}</textarea>
                 </div>
 
             </div>

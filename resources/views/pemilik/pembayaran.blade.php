@@ -51,10 +51,10 @@
 
             {{-- ALASAN PENOLAKAN --}}
             @if($item->status_pembayaran == 'ditolak')
-                <p class="text-[11px] font-semibold text-red-600 mb-1">
+                <p class="text-[11px] font-semibold text-red-600 mb-1 font-inria">
                     Alasan Penolakan:
                 </p>
-                <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-2 rounded mb-4">
+                <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-2 rounded mb-4 font-inria">
                     {{ $item->alasan_penolakan_pembayaran }}
                 </div>
             @endif

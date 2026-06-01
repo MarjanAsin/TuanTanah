@@ -41,19 +41,19 @@
                 {{ $item->nama_properti }}
             </h3>
 
-            <p class="text-gray-500 text-xs mb-1 truncate">
+            <p class="text-gray-500 text-xs mb-1 truncate font-inria">
                 {{ $item->lokasi }}
             </p>
 
-            <p class="text-gray-500 text-xs truncate">
+            <p class="text-gray-500 text-xs truncate font-inria">
                 {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
             </p>
 
-            <p class="font-bold text-indigo-600 mt-3">
+            <p class="font-bold text-indigo-600 mt-3 font-inria text-lg">
                 Rp {{ number_format($item->harga, 0, ',', '.') }}
             </p>
 
-            <p class="text-xs text-gray-400 mt-2">
+            <p class="text-xs text-gray-400 mt-2 font-inria">
                 Klik untuk melakukan verifikasi
             </p>
 

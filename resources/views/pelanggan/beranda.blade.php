@@ -4,7 +4,7 @@
 
 @section('content')
 
-<section class="relative h-[360px] overflow-hidden">
+<section class="relative h-[360px] md:h-[420px] lg:h-[500px] overflow-hidden">
 
     @if($banner && $banner->gambar_banner)
 
@@ -12,7 +12,7 @@
         <div class="relative w-full h-full">
             <img
                 src="{{ asset('storage/' . $banner->gambar_banner) }}"
-                class="w-full h-full object-cover scale-105"
+                class="w-full h-full object-cover"
                 alt="Banner">
 
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>

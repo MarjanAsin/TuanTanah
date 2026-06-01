@@ -40,7 +40,7 @@
                      class="w-full h-72 object-contain rounded-lg border hover:opacity-90 transition">
             </a>
 
-            <p class="text-xs text-gray-500 mt-2">
+            <p class="text-xs text-gray-500 mt-2 font-inria">
                 Klik untuk memperbesar
             </p>
 
@@ -104,7 +104,7 @@
                         placeholder="Masukkan alasan penolakan..."
                         required
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm
-                            focus:ring-2 focus:ring-red-400 outline-none"></textarea>
+                            focus:ring-2 focus:ring-red-400 outline-none font-inria"></textarea>
 
                     <button type="submit"
                         class="w-full bg-red-500 hover:bg-red-600

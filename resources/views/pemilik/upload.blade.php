@@ -63,9 +63,9 @@
                             placeholder="Contoh: Rumah Minimalis 2 Lantai di Yogyakarta"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    placeholder:text-gray-400
-                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                         @error('nama_properti')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -78,9 +78,9 @@
                             placeholder="Contoh: AC, WiFi, Garasi, Kolam Renang, CCTV"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    placeholder:text-gray-400
-                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                         @error('fasilitas')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -123,7 +123,7 @@
                             </svg>
 
                             <span id="namaFotoProperti"
-                                  class="text-sm text-gray-500 truncate">
+                                  class="text-sm text-gray-500 truncate font-inria">
                                 Belum ada file dipilih
                             </span>
 
@@ -131,9 +131,9 @@
 
                         <div class="mt-2 text-xs text-gray-500 space-y-1">
 
-                            <p class="font-medium text-gray-600">Ketentuan Upload:</p>
+                            <p class="font-bold text-gray-600 font-inria">Ketentuan Upload:</p>
 
-                            <ul class="list-disc pl-4 space-y-0.5">
+                            <ul class="list-disc pl-4 space-y-0.5 font-inria">
                                 <li>Format: JPG, PNG, JPEG</li>
                                 <li>Maksimal ukuran: 5MB per file</li>
                                 <li>Resolusi disarankan: 1200 × 800 px</li>
@@ -143,11 +143,11 @@
                         </div>
 
                         @error('foto_properti')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
 
                         @error('foto_properti.*')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -160,9 +160,9 @@
                             placeholder="Contoh: Jl. ZA Pagar Alam, Yogyakarta"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                    placeholder:text-gray-400
-                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                         @error('lokasi')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -185,12 +185,12 @@
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                     placeholder:text-gray-400
-                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
-                        <p class="text-xs text-gray-500 mt-1">
+                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                        <p class="text-xs text-gray-500 mt-1 font-inria">
                             Masukkan tanpa titik atau koma
                         </p>
                         @error('harga')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -208,13 +208,13 @@
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
                                     placeholder:text-gray-400
-                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                                    focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria"
                             value="{{ old('kontak_whatsapp') }}">
-                        <p class="text-xs text-gray-500 mt-1">
+                        <p class="text-xs text-gray-500 mt-1 font-inria">
                             Gunakan format 08xxxxxxxxxx
                         </p>
                         @error('kontak_whatsapp')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -251,7 +251,7 @@
                             placeholder="Contoh: 120"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
                     </div>
 
                 </div>
@@ -270,9 +270,9 @@
                         placeholder="Contoh: 3"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-full h-[42px] border border-gray-200 rounded-lg px-4 text-sm
-                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
 
-                    <p id="kamarInfo" class="text-xs text-gray-400 mt-1 hidden">
+                    <p id="kamarInfo" class="text-xs text-gray-400 mt-1 hidden font-inria">
                         Tidak berlaku untuk tipe tanah
                     </p>
                 </div>
@@ -285,9 +285,9 @@
                         placeholder="Jelaskan detail properti seperti luas tanah, kondisi bangunan, akses jalan, lingkungan sekitar, dll."
                         class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm
                                placeholder:text-gray-400
-                               focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">{{ old('deskripsi') }}</textarea>
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">{{ old('deskripsi') }}</textarea>
                     @error('deskripsi')
-                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                     @enderror
                 </div>
 

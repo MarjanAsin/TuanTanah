@@ -76,14 +76,14 @@
                 <p class="text-2xl font-bold text-indigo-600 font-inria">
                     Rp 10.000
                 </p>
-                <p class="text-xs text-gray-400">
+                <p class="text-xs text-gray-400 font-inria">
                     Biaya untuk mempublikasikan properti
                 </p>
             </div>
 
             <div>
                 <p class="text-gray-500 font-inria font-bold">Transfer ke</p>
-                <p class="font-medium text-gray-800">
+                <p class="font-bold text-gray-800 font-inria">
                     BCA 123456789 <br>
                     a.n TuanTanah
                 </p>
@@ -93,7 +93,7 @@
 
         <hr class="my-4 border-gray-200">
         @if($properti->status_pembayaran == 'ditolak')
-            <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded mb-4">
+            <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded mb-4 font-inria">
                 <p class="font-semibold mb-1">Alasan Penolakan:</p>
                 <p>{{ $properti->alasan_penolakan_pembayaran }}</p>
             </div>
@@ -139,14 +139,14 @@
                     </svg>
 
                     <span id="namaBukti"
-                          class="text-sm text-gray-500 truncate">
+                          class="text-sm text-gray-500 truncate font-inria">
                         Belum ada file dipilih
                     </span>
 
                 </label>
 
                 {{-- INFO --}}
-                <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                <p class="text-xs text-gray-500 mt-2 leading-relaxed font-inria">
                     Format: JPG, JPEG, PNG, PDF <br>
                     Maksimal: 2MB <br>
                     Pastikan bukti terlihat jelas.
@@ -155,7 +155,7 @@
                 {{-- ERROR --}}
                 <div class="min-h-[18px] mt-1">
                     @error('bukti_pembayaran')
-                        <p class="text-red-500 text-xs">
+                        <p class="text-red-500 text-xs font-inria">
                             {{ $message }}
                         </p>
                     @enderror

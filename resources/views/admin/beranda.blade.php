@@ -7,7 +7,7 @@
 {{-- STATISTIK --}}
 <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
         <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Total Properti
         </h3>
@@ -16,7 +16,7 @@
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
         <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Properti Aktif
         </h3>
@@ -25,7 +25,7 @@
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
         <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Pemilik Properti
         </h3>
@@ -34,7 +34,7 @@
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
         <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Menunggu Verifikasi
         </h3>
@@ -43,7 +43,7 @@
         </p>
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold col-span-2 sm:col-span-1">
+    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold col-span-2 sm:col-span-1 font-inria">
         <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Validasi Pembayaran
         </h3>
@@ -71,7 +71,7 @@
             <button
                 class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700
                        text-white px-6 py-2.5 rounded-lg text-sm
-                       font-medium shadow-md transition duration-200
+                       font-bold shadow-md transition duration-200
                        cursor-pointer font-inria">
                 Simpan
             </button>
@@ -98,15 +98,15 @@
                         {{ $item->nama_properti }}
                     </h3>
 
-                    <p class="text-gray-500 text-xs mb-1">
+                    <p class="text-gray-500 text-xs mb-1 font-inria">
                         {{ $item->lokasi }}
                     </p>
 
-                    <p class="text-gray-500 text-xs truncate">
+                    <p class="text-gray-500 text-xs truncate font-inria">
                         {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
                     </p>
 
-                    <p class="font-bold text-indigo-600 mb-3">
+                    <p class="font-bold text-indigo-600 mb-3 font-inria text-lg">
                         Rp {{ number_format($item->harga, 0, ',', '.') }}
                     </p>
 

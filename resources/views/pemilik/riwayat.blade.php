@@ -52,19 +52,19 @@
                             {{ $item->nama_properti }}
                         </h3>
 
-                        <p class="text-gray-500 text-xs mb-1 truncate">
+                        <p class="text-gray-500 text-xs mb-1 truncate font-inria">
                             {{ $item->lokasi }}
                         </p>
 
-                        <p class="text-gray-500 text-xs truncate">
+                        <p class="text-gray-500 text-xs truncate font-inria">
                             {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
                         </p>
 
-                        <p class="font-bold text-indigo-600 mt-3">
+                        <p class="font-bold text-indigo-600 mt-3 font-inria text-lg">
                             Rp {{ number_format($item->harga, 0, ',', '.') }}
                         </p>
 
-                        <p class="text-xs text-gray-400 mt-2">
+                        <p class="text-xs text-gray-400 mt-2 font-inria">
                             Klik untuk mengubah data
                         </p>
 
@@ -130,31 +130,31 @@
                             {{ $item->nama_properti }}
                         </h3>
 
-                        <p class="text-gray-500 text-xs mb-1 truncate">
+                        <p class="text-gray-500 text-xs mb-1 truncate font-inria">
                             {{ $item->lokasi }}
                         </p>
 
-                        <p class="text-gray-500 text-xs truncate">
+                        <p class="text-gray-500 text-xs truncate font-inria">
                             {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
                         </p>
 
-                        <p class="font-bold text-indigo-600 mt-3">
+                        <p class="font-bold text-indigo-600 mt-3 font-inria text-lg">
                             Rp {{ number_format($item->harga, 0, ',', '.') }}
                         </p>
 
                         {{-- Alasan Penolakan --}}
                         @if($item->alasan_penolakan)
                             <div class="mt-3 bg-red-50 border border-red-200 rounded-lg p-2">
-                                <p class="text-[11px] font-semibold text-red-600 mb-1">
+                                <p class="text-[11px] font-semibold text-red-600 mb-1 font-inria">
                                     Alasan Penolakan:
                                 </p>
-                                <p class="text-[11px] text-red-700 line-clamp-2">
+                                <p class="text-[11px] text-red-700 line-clamp-2 font-inria">
                                     {{ $item->alasan_penolakan }}
                                 </p>
                             </div>
                         @endif
 
-                        <p class="text-xs text-gray-400 mt-2">
+                        <p class="text-xs text-gray-400 mt-2 font-inria">
                             Klik untuk memperbaiki data
                         </p>
 

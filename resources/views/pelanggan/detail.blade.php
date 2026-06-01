@@ -110,23 +110,23 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
 
-                    <div class="p-1 rounded-xl bg-gray-50">
+                    <div class="p-3 rounded-xl bg-gray-50">
                         <p class="text-gray-400 text-xs font-inria">Tipe</p>
                         <p class="font-semibold text-gray-600 font-inria">
                             {{ ucfirst($properti->tipe_properti ?? '-') }}
                         </p>
                     </div>
 
-                    <div class="p-1 rounded-xl bg-gray-50">
+                    <div class="p-3 rounded-xl bg-gray-50">
                         <p class="text-gray-400 text-xs font-inria">Luas</p>
-                        <p class="font-semibold text-gray-600">
+                        <p class="font-semibold text-gray-600 font-inria">
                             {{ $properti->luas_tanah ?? '-' }} m²
                         </p>
                     </div>
 
-                    <div class="p-1 rounded-xl bg-gray-50">
+                    <div class="p-3 rounded-xl bg-gray-50">
                         <p class="text-gray-400 text-xs font-inria">Kamar</p>
-                        <p class="font-semibold text-gray-600">
+                        <p class="font-semibold text-gray-600 font-inria">
                             {{ $properti->jumlah_kamar ?? '-' }}
                         </p>
                     </div>
@@ -231,7 +231,7 @@
                                     {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
                                 </p>
 
-                                <p class="text-indigo-600 font-bold mt-2 text-sm">
+                                <p class="text-indigo-600 font-bold mt-2 text-sm font-inria">
                                     Rp {{ number_format($item->harga, 0, ',', '.') }}
                                 </p>
 

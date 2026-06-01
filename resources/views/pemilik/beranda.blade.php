@@ -10,7 +10,7 @@
                 w-full lg:w-56 text-center
                 shadow-md hover:shadow-xl transition duration-300">
 
-        <h3 class="text-xs uppercase tracking-wide text-gray-200 mb-2 font-bold font-inria">
+        <h3 class="text-base uppercase tracking-wide text-gray-200 mb-2 font-semibold font-inria">
             Jumlah Properti
         </h3>
 
@@ -37,7 +37,7 @@
                 <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold">
                     Belum Dibayar
                 </p>
-                <p class="text-xl sm:text-2xl font-bold mt-1">
+                <p class="text-xl sm:text-2xl font-bold mt-1 font-inria">
                     {{ $menungguPembayaran }}
                 </p>
             </div>
@@ -126,19 +126,19 @@
             {{ $item->nama_properti }}
         </h3>
 
-        <p class="text-gray-500 text-xs mb-1">
+        <p class="text-gray-500 text-xs mb-1 font-inria">
             {{ $item->lokasi }}
         </p>
 
-        <p class="text-gray-500 text-xs truncate">
+        <p class="text-gray-500 text-xs truncate font-inria">
             {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
         </p>
 
-        <p class="font-bold text-indigo-600 mt-3">
+        <p class="font-bold text-indigo-600 mt-3 font-inria text-lg">
             Rp {{ number_format($item->harga, 0, ',', '.') }}
         </p>
 
-        <p class="text-xs text-gray-400 mt-3">
+        <p class="text-xs text-gray-400 mt-3 font-inria">
             Klik untuk mengubah data
         </p>
 

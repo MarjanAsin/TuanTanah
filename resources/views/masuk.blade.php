@@ -51,7 +51,7 @@
                               focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
 
                 @error('email')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                    <p class="text-red-400 text-xs mt-1 font-inria">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -68,7 +68,7 @@
                               focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
 
                 @error('password')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                    <p class="text-red-400 text-xs mt-1 font-inria">{{ $message }}</p>
                 @enderror
             </div>
 

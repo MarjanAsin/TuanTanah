@@ -109,8 +109,8 @@
                                              focus:ring-2 focus:ring-red-500"></textarea>
 
                             <button type="submit"
-                                    class="w-full bg-red-700 hover:bg-red-800
-                                           text-white py-2 rounded-xl
+                                    class="w-full bg-red-600 hover:bg-red-800
+                                           text-white py-3 rounded-xl
                                            text-sm font-semibold
                                            transition duration-300
                                            cursor-pointer font-inria">
@@ -166,7 +166,7 @@
                             Lokasi
                         </p>
 
-                        <p class="text-gray-600 break-words">
+                        <p class="text-gray-600 break-words font-inria">
                             {{ $properti->lokasi }}
                         </p>
 
@@ -180,9 +180,9 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
 
-                            <div class="p-3 rounded-xl bg-gray-50">
+                            <div class="p-3 rounded-xl bg-gray-50 font-inria">
 
-                                <p class="text-gray-500 text-xs font-inria mb-1">
+                                <p class="text-gray-500 text-xs mb-1">
                                     Tipe
                                 </p>
 
@@ -192,9 +192,9 @@
 
                             </div>
 
-                            <div class="p-3 rounded-xl bg-gray-50">
+                            <div class="p-3 rounded-xl bg-gray-50 font-inria">
 
-                                <p class="text-gray-500 text-xs font-inria mb-1">
+                                <p class="text-gray-500 text-xs mb-1">
                                     Luas
                                 </p>
 
@@ -204,9 +204,9 @@
 
                             </div>
 
-                            <div class="p-3 rounded-xl bg-gray-50">
+                            <div class="p-3 rounded-xl bg-gray-50 font-inria">
 
-                                <p class="text-gray-500 text-xs font-inria mb-1">
+                                <p class="text-gray-500 text-xs mb-1">
                                     Kamar
                                 </p>
 
@@ -227,7 +227,7 @@
                         </p>
 
                         <ul class="list-disc list-inside text-gray-600
-                                   grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
+                                   grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 font-inria">
 
                             @foreach(explode(',', $properti->fasilitas) as $item)
 
@@ -251,7 +251,7 @@
                             Harga
                         </p>
 
-                        <p class="text-gray-800 font-semibold break-words">
+                        <p class="text-gray-800 font-semibold break-words font-inria text-lg">
                             Rp {{ number_format($properti->harga, 0, ',', '.') }}
                         </p>
 
@@ -263,7 +263,7 @@
                             Deskripsi
                         </p>
 
-                        <p class="text-gray-600 leading-relaxed break-words">
+                        <p class="text-gray-600 leading-relaxed break-words font-inria">
                             {{ $properti->deskripsi }}
                         </p>
 
@@ -275,7 +275,7 @@
                             Kontak WhatsApp
                         </p>
 
-                        <p class="text-gray-600 break-all">
+                        <p class="text-gray-600 break-all font-inria">
                             {{ $properti->kontak_whatsapp }}
                         </p>
 

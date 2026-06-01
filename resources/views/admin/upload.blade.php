@@ -52,21 +52,21 @@
                             </svg>
 
                             <span id="namaFile"
-                                  class="text-xs text-gray-500 truncate">
+                                  class="text-xs text-gray-500 truncate font-inria">
                                 Belum ada file dipilih
                             </span>
                         </label>
                     </div>
 
-                    <div class="mt-3 text-[12px] text-gray-500 leading-relaxed">
+                    <div class="mt-3 text-[12px] text-gray-500 leading-relaxed font-inria">
                         <p>Format: JPG, PNG, atau JPEG</p>
                         <p>Ukuran maksimal: 5MB</p>
-                        <p>Ukuran ideal: 1920 × 360 px (rasio 16:3)</p>
+                        <p>Ukuran ideal: 1920 × 500 px</p>
                     </div>
 
                     <div class="min-h-[20px]">
                         @error('gambar_banner')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -83,11 +83,11 @@
                            value="{{ old('tanggal_mulai') }}"
                            class="w-full border border-gray-200 rounded-lg px-3 py-3 bg-gray-50 text-xs
                                   focus:outline-none focus:ring-2 focus:ring-indigo-500
-                                  focus:border-indigo-500 transition cursor-pointer">
+                                  focus:border-indigo-500 transition cursor-pointer font-inria">
 
                     <div class="min-h-[20px]">
                         @error('tanggal_mulai')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -104,11 +104,11 @@
                            value="{{ old('tanggal_selesai') }}"
                            class="w-full border border-gray-200 rounded-lg px-3 py-3 bg-gray-50 text-xs
                                   focus:outline-none focus:ring-2 focus:ring-indigo-500
-                                  focus:border-indigo-500 transition cursor-pointer">
+                                  focus:border-indigo-500 transition cursor-pointer font-inria">
 
                     <div class="min-h-[20px]">
                         @error('tanggal_selesai')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>

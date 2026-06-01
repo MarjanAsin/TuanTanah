@@ -227,11 +227,11 @@
                                 <p class="text-xs text-gray-500 mt-1 font-inria">
                                     {{ $item->lokasi }}
                                 </p>
-                                 <p class="text-xs text-gray-500 mt-1 font-inria">
+                                 <p class="text-xs text-gray-500 mt-1 truncate font-inria">
                                     {{ implode(' • ', array_map('trim', explode(',', $item->fasilitas))) }}
                                 </p>
 
-                                <p class="text-indigo-600 font-bold mt-2 text-sm font-inria">
+                                <p class="text-indigo-600 font-bold mt-2 text-lg font-inria">
                                     Rp {{ number_format($item->harga, 0, ',', '.') }}
                                 </p>
 

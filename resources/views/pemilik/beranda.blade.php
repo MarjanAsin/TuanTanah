@@ -37,7 +37,7 @@
                 <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold">
                     Belum Dibayar
                 </p>
-                <p class="text-xl sm:text-2xl font-bold mt-1 font-inria">
+                <p class="text-xl sm:text-2xl font-bold mt-1">
                     {{ $menungguPembayaran }}
                 </p>
             </div>

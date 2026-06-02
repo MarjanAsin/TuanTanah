@@ -178,42 +178,66 @@
                             Informasi Properti
                         </h3>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
 
                             <div class="p-3 rounded-xl bg-gray-50 font-inria">
-
                                 <p class="text-gray-500 text-xs mb-1">
-                                    Tipe
+                                    Tipe Properti
                                 </p>
 
                                 <p class="font-semibold text-gray-700 break-words">
                                     {{ ucfirst($properti->tipe_properti ?? '-') }}
                                 </p>
-
                             </div>
 
                             <div class="p-3 rounded-xl bg-gray-50 font-inria">
-
                                 <p class="text-gray-500 text-xs mb-1">
-                                    Luas
+                                    Luas Tanah
                                 </p>
 
                                 <p class="font-semibold text-gray-700">
-                                    {{ $properti->luas_tanah ?? '-' }} m²
+                                    {{ $properti->luas_tanah ? $properti->luas_tanah . ' ' : '-' }}
                                 </p>
-
                             </div>
 
                             <div class="p-3 rounded-xl bg-gray-50 font-inria">
-
                                 <p class="text-gray-500 text-xs mb-1">
-                                    Kamar
+                                    Luas Bangunan
+                                </p>
+
+                                <p class="font-semibold text-gray-700">
+                                    {{ $properti->luas_bangunan ? $properti->luas_bangunan . ' ' : '-' }}
+                                </p>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-gray-50 font-inria">
+                                <p class="text-gray-500 text-xs mb-1">
+                                    Kamar Tidur
                                 </p>
 
                                 <p class="font-semibold text-gray-700">
                                     {{ $properti->jumlah_kamar ?? '-' }}
                                 </p>
+                            </div>
 
+                            <div class="p-3 rounded-xl bg-gray-50 font-inria">
+                                <p class="text-gray-500 text-xs mb-1">
+                                    Kamar Mandi
+                                </p>
+
+                                <p class="font-semibold text-gray-700">
+                                    {{ $properti->kamar_mandi ?? '-' }}
+                                </p>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-gray-50 font-inria">
+                                <p class="text-gray-500 text-xs mb-1">
+                                    Daya Listrik
+                                </p>
+
+                                <p class="font-semibold text-gray-700">
+                                    {{ $properti->daya_listrik ? $properti->daya_listrik . ' VA' : '-' }}
+                                </p>
                             </div>
 
                         </div>
@@ -259,13 +283,33 @@
 
                     <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
 
-                        <p class="font-semibold text-gray-700 mb-2 font-inria">
+                        <p class="font-semibold text-gray-700 mb-3 font-inria">
                             Deskripsi
                         </p>
 
-                        <p class="text-gray-600 leading-relaxed break-words font-inria">
-                            {{ $properti->deskripsi }}
-                        </p>
+                        <ul class="space-y-2">
+
+                            @foreach(explode(',', $properti->deskripsi) as $item)
+
+                                <li class="flex items-start gap-2 text-gray-600 font-inria">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor">
+
+                                        <path stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+
+                                    <span>{{ trim($item) }}</span>
+                                </li>
+
+                            @endforeach
+
+                        </ul>
 
                     </div>
 

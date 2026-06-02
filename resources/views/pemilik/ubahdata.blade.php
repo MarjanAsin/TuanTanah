@@ -85,16 +85,6 @@
 
         </div>
 
-        @if ($errors->any())
-            <div class="mb-6 bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl">
-                <ul class="text-sm space-y-1">
-                    @foreach ($errors->all() as $error)
-                        <li>• {{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         {{-- FORM --}}
         <div class="bg-white p-6 rounded-2xl shadow-sm">
 
@@ -102,61 +92,183 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Nama Properti</label>
-                    <input type="text" name="nama_properti"
+                    <input type="text" name="nama_properti" placeholder="Contoh: Rumah Minimalis 2 Lantai di Yogyakarta"
                         value="{{ old('nama_properti', $properti->nama_properti) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
                                 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                    @error('nama_properti')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Lokasi</label>
-                    <input type="text" name="lokasi"
+                    <input type="text" name="lokasi" placeholder="Contoh: Jl. ZA Pagar Alam, Yogyakarta"
                         value="{{ old('lokasi', $properti->lokasi) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
                                 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                    @error('lokasi')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
+                {{-- ROW 1 --}}
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Tipe Properti</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                        Tipe Properti
+                    </label>
+
                     <select name="tipe_properti" id="tipe"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition cursor-pointer font-inria">
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition cursor-pointer font-inria">
+
                         <option value="">Pilih tipe</option>
-                        <option value="rumah" {{ old('tipe_properti', $properti->tipe_properti)=='rumah' ? 'selected' : '' }}>Rumah</option>
-                        <option value="tanah" {{ old('tipe_properti', $properti->tipe_properti)=='tanah' ? 'selected' : '' }}>Tanah</option>
-                        <option value="ruko" {{ old('tipe_properti', $properti->tipe_properti)=='ruko' ? 'selected' : '' }}>Ruko</option>
-                        <option value="apartemen" {{ old('tipe_properti', $properti->tipe_properti)=='apartemen' ? 'selected' : '' }}>Apartemen</option>
+
+                        <option value="rumah"
+                            {{ old('tipe_properti', $properti->tipe_properti) == 'rumah' ? 'selected' : '' }}>
+                            Rumah
+                        </option>
+
+                        <option value="tanah"
+                            {{ old('tipe_properti', $properti->tipe_properti) == 'tanah' ? 'selected' : '' }}>
+                            Tanah
+                        </option>
+
+                        <option value="ruko"
+                            {{ old('tipe_properti', $properti->tipe_properti) == 'ruko' ? 'selected' : '' }}>
+                            Ruko
+                        </option>
+
+                        <option value="apartemen"
+                            {{ old('tipe_properti', $properti->tipe_properti) == 'apartemen' ? 'selected' : '' }}>
+                            Apartemen
+                        </option>
+
                     </select>
+
+                    @error('tipe_properti')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Jumlah Kamar</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                        Luas Tanah (m²)
+                    </label>
+
+                    <input type="text"
+                        inputmode="numeric"
+                        maxlength="5"
+                        name="luas_tanah"
+                        value="{{ old('luas_tanah', $properti->luas_tanah) }}"
+                        placeholder="Contoh: 120"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+
+                    @error('luas_tanah')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                        Luas Bangunan (m²)
+                    </label>
+
+                    <input type="text"
+                        inputmode="numeric"
+                        maxlength="5"
+                        name="luas_bangunan"
+                        id="luas_bangunan"
+                        value="{{ old('luas_bangunan', $properti->luas_bangunan) }}"
+                        placeholder="Contoh: 90"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+
+                    <p class="text-xs text-gray-400 mt-1 hidden font-inria" id="lbInfo">
+                        Tidak berlaku untuk tipe tanah
+                    </p>
+
+                    @error('luas_bangunan')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                        Kamar Tidur
+                    </label>
+
                     <input type="text"
                         inputmode="numeric"
                         maxlength="2"
                         name="jumlah_kamar"
-                        id="kamar"
+                        id="kamar_tidur"
                         value="{{ old('jumlah_kamar', $properti->jumlah_kamar) }}"
                         placeholder="Contoh: 3"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
-                    <p id="kamarInfo" class="text-xs text-gray-400 mt-1 hidden font-inria">
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+
+                    <p class="text-xs text-gray-400 mt-1 hidden font-inria" id="ktInfo">
                         Tidak berlaku untuk tipe tanah
                     </p>
+
+                    @error('jumlah_kamar')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Luas Tanah</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                        Kamar Mandi
+                    </label>
+
                     <input type="text"
-                            inputmode="numeric"
-                            maxlength="5"
-                            name="luas_tanah"
-                            value="{{ old('luas_tanah', $properti->luas_tanah) }}"
-                            placeholder="Contoh: 120"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        inputmode="numeric"
+                        maxlength="2"
+                        name="kamar_mandi"
+                        id="kamar_mandi"
+                        value="{{ old('kamar_mandi', $properti->kamar_mandi) }}"
+                        placeholder="Contoh: 2"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+
+                    <p class="text-xs text-gray-400 mt-1 hidden font-inria" id="kmInfo">
+                        Tidak berlaku untuk tipe tanah
+                    </p>
+
+                    @error('kamar_mandi')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                        Daya Listrik (VA)
+                    </label>
+
+                    <input type="text"
+                        inputmode="numeric"
+                        maxlength="5"
+                        name="daya_listrik"
+                        id="daya_listrik"
+                        value="{{ old('daya_listrik', $properti->daya_listrik) }}"
+                        placeholder="Contoh: 2200"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+
+                    <p class="text-xs text-gray-400 mt-1 hidden font-inria" id="listrikInfo">
+                        Tidak berlaku untuk tipe tanah
+                    </p>
+
+                    @error('daya_listrik')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
@@ -170,34 +282,69 @@
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
                                 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                    @error('harga')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Fasilitas</label>
-                    <input type="text" name="fasilitas"
+                    <input type="text" name="fasilitas" placeholder="Contoh: AC, WiFi, Garasi, Kolam Renang, CCTV"
                         value="{{ old('fasilitas', $properti->fasilitas) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
                                 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+
+                    <p class="text-xs text-gray-400 mt-2 font-inria">
+                        Pisahkan setiap fasilitas menggunakan tanda koma (,)
+                    </p>
+
+                    @error('fasilitas')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">WhatsApp</label>
-                    <input type="text" name="kontak_whatsapp" id="wa"
+                    <input type="text" name="kontak_whatsapp" id="wa" placeholder="Contoh: 081234567890"
                         value="{{ old('kontak_whatsapp', $properti->kontak_whatsapp) }}"
                         class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
                                 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
+                    <p class="text-xs text-gray-500 mt-1 font-inria">
+                        Gunakan format 08xxxxxxxxxx
+                    </p>
                     <p id="waError" class="text-red-500 text-xs mt-1 hidden font-inria">
                         Nomor harus 11 - 15 digit angka
                     </p>
+                    @error('kontak_whatsapp')
+                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Deskripsi</label>
-                    <textarea name="deskripsi" rows="3" maxlength="3000"
-                        class="w-full border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition py-3 font-inria">{{ old('deskripsi', $properti->deskripsi) }}</textarea>
-                </div>
 
+                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">
+                        Deskripsi
+                    </label>
+
+                    <textarea
+                        name="deskripsi"
+                        rows="4"
+                        maxlength="3000"
+                        placeholder="Contoh: Dekat sekolah, Dekat pasar, Akses jalan 2 mobil, Air PDAM, SHM, Bebas banjir"
+                        class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm
+                            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">{{ old('deskripsi', $properti->deskripsi) }}</textarea>
+
+                    <p class="text-xs text-gray-400 mt-2 font-inria">
+                        Pisahkan setiap poin menggunakan tanda koma (,)
+                    </p>
+
+                    @error('deskripsi')
+                        <p class="text-red-500 text-xs mt-2 font-inria">
+                            {{ $message }}
+                        </p>
+                    @enderror
+
+                </div>
             </div>
 
             <button type="submit" id="btnSubmit"
@@ -222,8 +369,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById('btnSubmit');
 
     const tipe = document.getElementById('tipe');
-    const kamar = document.getElementById('kamar');
-    const kamarInfo = document.getElementById('kamarInfo');
 
     const wa = document.getElementById('wa');
     const waError = document.getElementById('waError');
@@ -334,24 +479,60 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // TIPE TANAH
-    function toggleKamar() {
-        if (tipe.value === 'tanah') {
-            kamar.value = '';
-            kamar.disabled = true;
+// TIPE TANAH
+function togglePropertyFields() {
 
-            kamar.classList.add('bg-gray-100','cursor-not-allowed');
-            kamarInfo.classList.remove('hidden');
-        } else {
-            kamar.disabled = false;
+    const isTanah = tipe.value === 'tanah';
 
-            kamar.classList.remove('bg-gray-100','cursor-not-allowed');
-            kamarInfo.classList.add('hidden');
+    const fields = [
+        {
+            input: document.getElementById('luas_bangunan'),
+            info: document.getElementById('lbInfo')
+        },
+        {
+            input: document.getElementById('daya_listrik'),
+            info: document.getElementById('listrikInfo')
+        },
+        {
+            input: document.getElementById('kamar_tidur'),
+            info: document.getElementById('ktInfo')
+        },
+        {
+            input: document.getElementById('kamar_mandi'),
+            info: document.getElementById('kmInfo')
         }
-    }
+    ];
 
-    tipe.addEventListener('change', toggleKamar);
-    toggleKamar();
+    fields.forEach(field => {
+
+        if (isTanah) {
+
+            field.input.value = '';
+            field.input.disabled = true;
+
+            field.input.classList.add(
+                'bg-gray-100',
+                'cursor-not-allowed'
+            );
+
+            field.info.classList.remove('hidden');
+
+        } else {
+
+            field.input.disabled = false;
+
+            field.input.classList.remove(
+                'bg-gray-100',
+                'cursor-not-allowed'
+            );
+
+            field.info.classList.add('hidden');
+        }
+    });
+}
+
+tipe.addEventListener('change', togglePropertyFields);
+togglePropertyFields();
 
 
     // WA VALIDATION

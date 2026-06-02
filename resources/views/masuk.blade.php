@@ -48,7 +48,7 @@
                        placeholder="Masukkan email Anda"
                        class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
                               placeholder:text-gray-400
-                              focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                              focus:outline-none focus:ring-2 focus:ring-indigo-400 transition font-inria">
 
                 @error('email')
                     <p class="text-red-400 text-xs mt-1 font-inria">{{ $message }}</p>
@@ -65,7 +65,7 @@
                        placeholder="Masukkan password Anda"
                        class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
                               placeholder:text-gray-400
-                              focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                              focus:outline-none focus:ring-2 focus:ring-indigo-400 transition font-inria">
 
                 @error('password')
                     <p class="text-red-400 text-xs mt-1 font-inria">{{ $message }}</p>

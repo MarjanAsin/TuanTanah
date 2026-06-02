@@ -25,7 +25,10 @@ class Properti extends Model
         'alasan_penolakan',
         'tipe_properti',
         'luas_tanah',
+        'luas_bangunan',
         'jumlah_kamar',
+        'kamar_mandi',
+        'daya_listrik',
         'alasan_penolakan_pembayaran'
 
     ];

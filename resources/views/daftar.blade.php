@@ -46,7 +46,7 @@
                    placeholder="Masukkan nama lengkap"
                    class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
                           placeholder:text-gray-400
-                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition font-inria">
             @error('name')
                 <p class="text-red-400 text-xs mt-1 font-inria">{{ $message }}</p>
             @enderror
@@ -62,7 +62,7 @@
                    placeholder="Masukkan alamat email aktif"
                    class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
                           placeholder:text-gray-400
-                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition font-inria">
             @error('email')
                 <p class="text-red-400 text-xs mt-1 font-inria">{{ $message }}</p>
             @enderror
@@ -77,7 +77,7 @@
                    placeholder="Masukkan password"
                    class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
                           placeholder:text-gray-400
-                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition font-inria">
             @error('password')
                 <p class="text-red-400 text-xs mt-1 font-inria">{{ $message }}</p>
             @enderror
@@ -92,7 +92,7 @@
                    placeholder="Ulangi password"
                    class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
                           placeholder:text-gray-400
-                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+                          focus:outline-none focus:ring-2 focus:ring-indigo-400 transition font-inria">
         </div>
 
         <button type="submit"

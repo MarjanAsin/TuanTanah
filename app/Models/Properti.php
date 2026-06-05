@@ -16,7 +16,6 @@ class Properti extends Model
         'lokasi',
         'deskripsi',
         'fasilitas',
-        'kontak_whatsapp',
         'foto_properti',
         'status',
         'status_pembayaran',
@@ -29,7 +28,6 @@ class Properti extends Model
         'jumlah_kamar',
         'kamar_mandi',
         'daya_listrik',
-        'alasan_penolakan_pembayaran'
 
     ];
 

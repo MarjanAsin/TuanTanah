@@ -108,10 +108,7 @@ class PemilikController extends Controller
         $namaProperti = trim($request->nama_properti);
         $lokasi = trim($request->lokasi);
 
-        $fasilitas = collect(explode(',', $request->fasilitas))
-            ->map(fn($item) => trim($item))
-            ->filter()
-            ->implode(', ');
+        $fasilitas = implode(', ', $request->fasilitas);
 
         $request->merge([
             'nama_properti' => $namaProperti,
@@ -144,14 +141,9 @@ class PemilikController extends Controller
                 'regex:/.*\S.*/'
             ],
 
-            'fasilitas' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/.*\S.*/'
-            ],
+            'fasilitas' => 'required|array|min:1',
 
-            'harga' => 'required|numeric|min:0|max:999999999999',
+            'harga' => 'required|numeric|min:1|max:999999999999999',
 
             'deskripsi' => [
                 'required',
@@ -159,8 +151,6 @@ class PemilikController extends Controller
                 'max:3000',
                 'regex:/.*\S.*/'
             ],
-
-            'kontak_whatsapp' => 'required|digits_between:10,15',
 
             'tipe_properti' => 'required|in:rumah,tanah,ruko,apartemen',
 
@@ -172,7 +162,7 @@ class PemilikController extends Controller
 
             'kamar_mandi' => 'nullable|integer|min:1',
 
-            'daya_listrik' => 'nullable|integer|min:450',
+            'daya_listrik' => 'nullable|integer|min:1',
 
             //  MULTI FOTO
             'foto_properti' => 'nullable|array|max:5',
@@ -192,7 +182,7 @@ class PemilikController extends Controller
 
             $rules['kamar_mandi'] = 'required|integer|min:1';
 
-            $rules['daya_listrik'] = 'required|integer|min:450';
+            $rules['daya_listrik'] = 'required|integer|min:1';
         }
         $request->validate($rules, [
             'nama_properti.required' => 'Nama properti wajib diisi.',
@@ -203,21 +193,17 @@ class PemilikController extends Controller
             'lokasi.regex' => 'Lokasi tidak boleh hanya berisi spasi.',
             'lokasi.max' => 'Lokasi maksimal 255 karakter.',
 
-            'fasilitas.required' => 'Fasilitas wajib diisi.',
-            'fasilitas.regex' => 'Fasilitas tidak boleh kosong.',
-            'fasilitas.max' => 'Fasilitas maksimal 255 karakter.',
+            'fasilitas.required' => 'Pilih minimal satu fasilitas.',
+            'fasilitas.min' => 'Pilih minimal satu fasilitas.',
 
             'harga.required' => 'Harga wajib diisi.',
             'harga.numeric' => 'Harga harus berupa angka.',
-            'harga.min' => 'Harga tidak boleh kurang dari 0.',
-            'harga.max' => 'Harga maksimal 999 miliar.',
+            'harga.min' => 'Harga tidak boleh kurang dari 1.',
+            'harga.max' => 'Harga maksimal 999 triliun.',
 
             'deskripsi.required' => 'Deskripsi wajib diisi.',
             'deskripsi.regex' => 'Deskripsi tidak boleh hanya berisi spasi.',
             'deskripsi.max' => 'Deskripsi maksimal 3000 karakter.',
-
-            'kontak_whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
-            'kontak_whatsapp.digits_between' => 'Nomor WhatsApp harus 10–15 digit.',
 
             'tipe_properti.required' => 'Tipe properti wajib dipilih.',
             'tipe_properti.in' => 'Tipe properti tidak valid.',
@@ -240,7 +226,7 @@ class PemilikController extends Controller
 
             'daya_listrik.required' => 'Daya listrik wajib diisi.',
             'daya_listrik.integer' => 'Daya listrik harus berupa angka.',
-            'daya_listrik.min' => 'Daya listrik minimal 450 VA.',
+            'daya_listrik.min' => 'Daya listrik minimal 1 VA.',
 
             'foto_properti.array' => 'Format upload foto tidak valid.',
             'foto_properti.max' => 'Maksimal upload 5 foto.',
@@ -274,7 +260,6 @@ class PemilikController extends Controller
                 'fasilitas' => $fasilitas,
                 'harga' => $request->harga,
                 'deskripsi' => $deskripsi,
-                'kontak_whatsapp' => $request->kontak_whatsapp,
                 'tipe_properti' => $request->tipe_properti,
                 'luas_tanah' => $request->luas_tanah,
                 'luas_bangunan' => $luasBangunan,
@@ -340,10 +325,7 @@ class PemilikController extends Controller
         $namaProperti = trim($request->nama_properti);
         $lokasi = trim($request->lokasi);
 
-        $fasilitas = collect(explode(',', $request->fasilitas))
-            ->map(fn($item) => trim($item))
-            ->filter()
-            ->implode(', ');
+        $fasilitas = implode(', ', $request->fasilitas);
 
         $request->merge([
             'nama_properti' => $namaProperti,
@@ -374,12 +356,7 @@ class PemilikController extends Controller
                     'regex:/.*\S.*/'
                 ],
 
-                'fasilitas' => [
-                    'required',
-                    'string',
-                    'max:255',
-                    'regex:/.*\S.*/'
-                ],
+                'fasilitas' => 'required|array|min:1',
 
                 'foto_properti' => 'required|array|min:1|max:5',
 
@@ -396,9 +373,7 @@ class PemilikController extends Controller
                     'regex:/.*\S.*/'
                 ],
 
-                'harga' => 'required|numeric|min:0|max:999999999999',
-
-                'kontak_whatsapp' => 'required|digits_between:10,15',
+                'harga' => 'required|numeric|min:1|max:999999999999999',
 
                 'tipe_properti' => 'required|in:rumah,tanah,ruko,apartemen',
 
@@ -410,7 +385,7 @@ class PemilikController extends Controller
 
                 'kamar_mandi' => 'nullable|integer|min:1',
 
-                'daya_listrik' => 'nullable|integer|min:450',
+                'daya_listrik' => 'nullable|integer|min:1',
 
                 'deskripsi' => [
                     'required',
@@ -428,7 +403,7 @@ class PemilikController extends Controller
 
                 $rules['kamar_mandi'] = 'required|integer|min:1';
 
-                $rules['daya_listrik'] = 'required|integer|min:450';
+                $rules['daya_listrik'] = 'required|integer|min:1';
             }
 
             $request->validate($rules, [
@@ -437,9 +412,8 @@ class PemilikController extends Controller
                 'nama_properti.regex' => 'Nama properti tidak boleh hanya berisi spasi.',
                 'nama_properti.max' => 'Nama properti maksimal 255 karakter.',
 
-                'fasilitas.required' => 'Fasilitas wajib diisi.',
-                'fasilitas.regex' => 'Fasilitas tidak boleh kosong.',
-                'fasilitas.max' => 'Fasilitas maksimal 255 karakter.',
+                'fasilitas.required' => 'Pilih minimal satu fasilitas.',
+                'fasilitas.min' => 'Pilih minimal satu fasilitas.',
 
                 'foto_properti.required' => 'Minimal satu foto properti harus diupload.',
                 'foto_properti.array' => 'Format upload foto tidak valid.',
@@ -456,11 +430,8 @@ class PemilikController extends Controller
 
                 'harga.required' => 'Harga wajib diisi.',
                 'harga.numeric' => 'Harga harus berupa angka.',
-                'harga.min' => 'Harga tidak boleh kurang dari 0.',
-                'harga.max' => 'Harga maksimal 999 miliar.',
-
-                'kontak_whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
-                'kontak_whatsapp.digits_between' => 'Nomor WhatsApp harus 10–15 digit.',
+                'harga.min' => 'Harga tidak boleh kurang dari 1.',
+                'harga.max' => 'Harga maksimal 999 triliun.',
 
                 'tipe_properti.required' => 'Tipe properti wajib dipilih.',
                 'tipe_properti.in' => 'Tipe properti tidak valid.',
@@ -483,7 +454,7 @@ class PemilikController extends Controller
 
                 'daya_listrik.required' => 'Daya listrik wajib diisi.',
                 'daya_listrik.integer' => 'Daya listrik harus berupa angka.',
-                'daya_listrik.min' => 'Daya listrik minimal 450 VA.',
+                'daya_listrik.min' => 'Daya listrik minimal 1 VA.',
 
                 'deskripsi.required' => 'Deskripsi wajib diisi.',
                 'deskripsi.regex' => 'Deskripsi tidak boleh hanya berisi spasi.',
@@ -517,7 +488,6 @@ class PemilikController extends Controller
                 'fasilitas' => $fasilitas,
                 'lokasi' => $request->lokasi,
                 'harga' => $request->harga,
-                'kontak_whatsapp' => $request->kontak_whatsapp,
                 'deskripsi' => $deskripsi,
                 'status' => 'menunggu',
                 'status_pembayaran' => $statusPembayaran,

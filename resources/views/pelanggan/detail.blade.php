@@ -155,20 +155,59 @@
                 </div>
             </div>
 
-            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                <h3 class="font-semibold text-gray-800 mb-4 font-inria">Fasilitas</h3>
+            @php
+                $icons = [
+                    'AC' => '❄️',
+                    'WiFi' => '📶',
+                    'Garasi' => '🚗',
+                    'Carport' => '🚘',
+                    'CCTV' => '📹',
+                    'Kolam Renang' => '🏊',
+                    'Taman' => '🌳',
+                    'PDAM' => '💧',
+                    'Keamanan 24 Jam' => '🛡️',
+                    'Mushola' => '🕌',
+                    'Balkon' => '🏠',
+                    'Gudang' => '📦',
+                ];
+            @endphp
 
-                <div class="flex flex-wrap gap-3">
-                    @foreach(explode(',', $properti->fasilitas) as $item)
-                        @if(trim($item) !== '')
-                            <span class="px-4 py-2 text-xs font-medium
-                                         bg-indigo-50 text-indigo-600
-                                         rounded-full shadow-sm font-inria">
-                                {{ trim($item) }}
-                            </span>
+            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+
+                <h3 class="font-semibold text-gray-800 mb-4 font-inria">
+                    Fasilitas
+                </h3>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+
+                    @foreach(explode(',', $properti->fasilitas ?? '') as $item)
+
+                        @php
+                            $item = trim($item);
+                        @endphp
+
+                        @if($item)
+
+                            <div class="flex items-center gap-3
+                                        p-3 rounded-xl
+                                        bg-gray-50 border border-gray-100">
+
+                                <span class="text-lg">
+                                    {{ $icons[$item] ?? '🏢' }}
+                                </span>
+
+                                <span class="text-sm text-gray-700 font-inria">
+                                    {{ $item }}
+                                </span>
+
+                            </div>
+
                         @endif
+
                     @endforeach
+
                 </div>
+
             </div>
 
             <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
@@ -226,7 +265,18 @@
                     Diposting {{ $properti->created_at->diffForHumans() }}
                 </p>
 
-                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $properti->kontak_whatsapp) }}"
+                @php
+                    $pesan = urlencode(
+                        "Halo, saya tertarik dengan properti:\n\n" .
+                        "Nama Properti: {$properti->nama_properti}\n" .
+                        "Lokasi: {$properti->lokasi}\n\n" .
+                        "Link Properti:\n" .
+                        url()->current() . "\n\n" .
+                        "Apakah properti ini masih tersedia?"
+                    );
+                @endphp
+
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $properti->user->nomor_whatsapp) }}?text={{ $pesan }}"
                 target="_blank"
                 class="w-full flex items-center justify-center gap-3
                         bg-green-600 hover:bg-green-700

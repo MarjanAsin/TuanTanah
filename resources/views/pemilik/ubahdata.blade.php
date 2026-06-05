@@ -158,7 +158,6 @@
 
                     <input type="text"
                         inputmode="numeric"
-                        maxlength="5"
                         name="luas_tanah"
                         value="{{ old('luas_tanah', $properti->luas_tanah) }}"
                         placeholder="Contoh: 120"
@@ -178,7 +177,6 @@
 
                     <input type="text"
                         inputmode="numeric"
-                        maxlength="5"
                         name="luas_bangunan"
                         id="luas_bangunan"
                         value="{{ old('luas_bangunan', $properti->luas_bangunan) }}"
@@ -203,7 +201,6 @@
 
                     <input type="text"
                         inputmode="numeric"
-                        maxlength="2"
                         name="jumlah_kamar"
                         id="kamar_tidur"
                         value="{{ old('jumlah_kamar', $properti->jumlah_kamar) }}"
@@ -228,7 +225,6 @@
 
                     <input type="text"
                         inputmode="numeric"
-                        maxlength="2"
                         name="kamar_mandi"
                         id="kamar_mandi"
                         value="{{ old('kamar_mandi', $properti->kamar_mandi) }}"
@@ -253,7 +249,6 @@
 
                     <input type="text"
                         inputmode="numeric"
-                        maxlength="5"
                         name="daya_listrik"
                         id="daya_listrik"
                         value="{{ old('daya_listrik', $properti->daya_listrik) }}"
@@ -276,7 +271,7 @@
                     <input type="text"
                             name="harga"
                             inputmode="numeric"
-                            maxlength="12"
+                            maxlength="15"
                             value="{{ old('harga', (int) $properti->harga) }}"
                             placeholder="Contoh: 750000000"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
@@ -288,36 +283,102 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">Fasilitas</label>
-                    <input type="text" name="fasilitas" placeholder="Contoh: AC, WiFi, Garasi, Kolam Renang, CCTV"
-                        value="{{ old('fasilitas', $properti->fasilitas) }}"
-                        class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
 
-                    <p class="text-xs text-gray-400 mt-2 font-inria">
-                        Pisahkan setiap fasilitas menggunakan tanda koma (,)
-                    </p>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 font-inria">
+                        Fasilitas
+                    </label>
+
+                    @php
+                        $oldFasilitas = old(
+                            'fasilitas',
+                            $properti->fasilitas
+                                ? array_map('trim', explode(',', $properti->fasilitas))
+                                : []
+                        );
+                    @endphp
+
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="AC"
+                                {{ in_array('AC', $oldFasilitas) ? 'checked' : '' }}>
+                            AC
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="WiFi"
+                                {{ in_array('WiFi', $oldFasilitas) ? 'checked' : '' }}>
+                            WiFi
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Garasi"
+                                {{ in_array('Garasi', $oldFasilitas) ? 'checked' : '' }}>
+                            Garasi
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Carport"
+                                {{ in_array('Carport', $oldFasilitas) ? 'checked' : '' }}>
+                            Carport
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="CCTV"
+                                {{ in_array('CCTV', $oldFasilitas) ? 'checked' : '' }}>
+                            CCTV
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Kolam Renang"
+                                {{ in_array('Kolam Renang', $oldFasilitas) ? 'checked' : '' }}>
+                            Kolam Renang
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Taman"
+                                {{ in_array('Taman', $oldFasilitas) ? 'checked' : '' }}>
+                            Taman
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="PDAM"
+                                {{ in_array('PDAM', $oldFasilitas) ? 'checked' : '' }}>
+                            PDAM
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Keamanan 24 Jam"
+                                {{ in_array('Keamanan 24 Jam', $oldFasilitas) ? 'checked' : '' }}>
+                            Keamanan 24 Jam
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Mushola"
+                                {{ in_array('Mushola', $oldFasilitas) ? 'checked' : '' }}>
+                            Mushola
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Balkon"
+                                {{ in_array('Balkon', $oldFasilitas) ? 'checked' : '' }}>
+                            Balkon
+                        </label>
+
+                        <label class="flex items-center gap-2 cursor-pointer font-inria">
+                            <input type="checkbox" name="fasilitas[]" value="Gudang"
+                                {{ in_array('Gudang', $oldFasilitas) ? 'checked' : '' }}>
+                            Gudang
+                        </label>
+
+                    </div>
 
                     @error('fasilitas')
-                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
+                        <p class="text-red-500 text-xs mt-2 font-inria">
+                            {{ $message }}
+                        </p>
                     @enderror
-                </div>
 
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2 font-inria">WhatsApp</label>
-                    <input type="text" name="kontak_whatsapp" id="wa" placeholder="Contoh: 081234567890"
-                        value="{{ old('kontak_whatsapp', $properti->kontak_whatsapp) }}"
-                        class="w-full h-11 border border-gray-200 rounded-lg px-4 text-sm
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-inria">
-                    <p class="text-xs text-gray-500 mt-1 font-inria">
-                        Gunakan format 08xxxxxxxxxx
-                    </p>
-                    <p id="waError" class="text-red-500 text-xs mt-1 hidden font-inria">
-                        Nomor harus 11 - 15 digit angka
-                    </p>
-                    @error('kontak_whatsapp')
-                        <p class="text-red-500 text-xs mt-2 font-inria">{{ $message }}</p>
-                    @enderror
                 </div>
 
                 <div class="md:col-span-2">

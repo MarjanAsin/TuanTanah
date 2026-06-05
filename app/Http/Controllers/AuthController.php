@@ -19,6 +19,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'nomor_whatsapp' =>'required|digits_between:10,15|unique:users,nomor_whatsapp',
             'password' => 'required|min:6|confirmed',
         ], [
             'name.required' => 'Nama wajib diisi.',
@@ -29,6 +30,10 @@ class AuthController extends Controller
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah terdaftar.',
 
+            'nomor_whatsapp.required' =>'Nomor WhatsApp wajib diisi.',
+            'nomor_whatsapp.digits_between' =>'Nomor WhatsApp harus 10–15 digit.',
+            'nomor_whatsapp.unique' =>'Nomor WhatsApp sudah terdaftar.',
+
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password minimal 6 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
@@ -37,6 +42,7 @@ class AuthController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'nomor_whatsapp' => $request->nomor_whatsapp,
             'password' => Hash::make($request->password),
             'role' => 'pemilik',
         ]);

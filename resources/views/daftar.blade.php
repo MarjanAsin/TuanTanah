@@ -70,6 +70,32 @@
 
         <div>
             <label class="text-xs uppercase tracking-wide text-gray-300 font-inria">
+                Nomor WhatsApp
+            </label>
+            <p class="text-[11px] text-gray-400 mt-1 font-inria">
+                Gunakan nomor WhatsApp aktif.
+            </p>
+
+            <input type="text"
+                name="nomor_whatsapp"
+                value="{{ old('nomor_whatsapp') }}"
+                placeholder="Contoh: 081234567890"
+                inputmode="numeric"
+                maxlength="15"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                class="w-full mt-2 px-4 py-2.5 rounded-lg bg-white text-black text-sm
+                        placeholder:text-gray-400
+                        focus:outline-none focus:ring-2 focus:ring-indigo-400 transition font-inria">
+
+            @error('nomor_whatsapp')
+                <p class="text-red-400 text-xs mt-1 font-inria">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+        <div>
+            <label class="text-xs uppercase tracking-wide text-gray-300 font-inria">
                 Password
             </label>
             <input type="password"

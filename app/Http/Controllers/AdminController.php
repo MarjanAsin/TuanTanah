@@ -38,11 +38,6 @@ class AdminController extends Controller
             ->where('status', 'disetujui')
             ->count();
 
-        //  MENUNGGU VALIDASI PEMBAYARAN
-        $menungguPembayaran = Properti::where('status_pembayaran', 'pending')
-            ->whereNotNull('bukti_pembayaran')
-            ->count();
-
         //  LIST PROPERTI (YANG SUDAH SIAP TAMPIL)
         $properti = Properti::with('fotos')
             ->where('status_pembayaran', 'valid')
@@ -55,7 +50,6 @@ class AdminController extends Controller
             'totalPemilik',
             'totalAktif',
             'menunggu',
-            'menungguPembayaran',
             'properti'
         ));
     }
@@ -81,7 +75,6 @@ class AdminController extends Controller
     {
         $properti = Properti::with('fotos')
             ->where('status', 'menunggu')
-            ->where('status_pembayaran', 'valid')
             ->latest()
             ->get();
 
@@ -91,9 +84,9 @@ class AdminController extends Controller
     // DETAIL PROPERTI
     public function detail($id)
     {
-        $properti = Properti::with('fotos')
+        $properti = Properti::with(['fotos', 'user'])
             ->where('properti_id', $id)
-            ->where('status_pembayaran', 'valid')
+            ->where('status', 'menunggu')
             ->firstOrFail();
 
         return view('admin.detail', compact('properti'));
@@ -103,13 +96,30 @@ class AdminController extends Controller
     {
         $properti = Properti::where('properti_id', $id)
             ->where('status', 'menunggu')
-            ->where('status_pembayaran', 'valid')
             ->firstOrFail();
 
         if ($aksi === 'setujui') {
+
             $properti->update([
                 'status' => 'disetujui',
+                'status_pembayaran' => 'valid',
                 'alasan_penolakan' => null
+            ]);
+        }
+
+        if ($aksi === 'tolak-pembayaran') {
+
+            $request->validate([
+                'alasan_penolakan' => 'required|string'
+            ], [
+                'alasan_penolakan.required' => 'Alasan penolakan pembayaran wajib diisi.',
+                'alasan_penolakan.string' => 'Alasan penolakan harus berupa teks.'
+            ]);
+
+            $properti->update([
+                'status' => 'menunggu',
+                'status_pembayaran' => 'ditolak',
+                'alasan_penolakan' => $request->alasan_penolakan
             ]);
         }
 
@@ -118,7 +128,7 @@ class AdminController extends Controller
             $request->validate([
                 'alasan_penolakan' => 'required|string'
             ], [
-                'alasan_penolakan.required' => 'Alasan penolakan wajib diisi.',
+                'alasan_penolakan.required' => 'Alasan penolakan properti wajib diisi.',
                 'alasan_penolakan.string' => 'Alasan penolakan harus berupa teks.'
             ]);
 
@@ -173,65 +183,4 @@ class AdminController extends Controller
             ->with('success', 'Banner berhasil diupload.');
     }
 
-    // LIST PEMBAYARAN (SUDAH UPLOAD BUKTI)
-    public function pembayaran()
-    {
-        $properti = Properti::with('fotos')
-            ->where('status_pembayaran', 'pending')
-            ->whereNotNull('bukti_pembayaran')
-            ->latest()
-            ->get();
-
-        return view('admin.pembayaran', compact('properti'));
-    }
-
-    public function detailPembayaran($id)
-    {
-        $properti = Properti::with('fotos')
-            ->where('properti_id', $id)
-            ->where('status_pembayaran', 'pending')
-            ->whereNotNull('bukti_pembayaran')
-            ->firstOrFail();
-
-        return view('admin.detailpembayaran', compact('properti'));
-    }
-
-    public function validasiPembayaran($id)
-    {
-        $properti = Properti::where('properti_id', $id)
-            ->where('status_pembayaran', 'pending')
-            ->whereNotNull('bukti_pembayaran')
-            ->firstOrFail();
-
-        $properti->update([
-            'status_pembayaran' => 'valid',
-            'status' => 'menunggu'
-        ]);
-
-        return redirect()->route('admin.pembayaran')
-            ->with('success', 'Pembayaran berhasil divalidasi.');
-    }
-
-    public function tolakPembayaran(Request $request, $id)
-    {
-        $request->validate([
-            'alasan' => 'required|string'
-        ], [
-            'alasan.required' => 'Alasan wajib diisi.',
-            'alasan.string' => 'Alasan harus berupa teks.'
-        ]);
-
-        $properti = Properti::where('properti_id', $id)
-            ->where('status_pembayaran', 'pending')
-            ->whereNotNull('bukti_pembayaran')
-            ->firstOrFail();
-
-        $properti->update([
-            'status_pembayaran' => 'ditolak',
-            'alasan_penolakan_pembayaran' => $request->alasan
-        ]);
-
-        return redirect()->route('admin.pembayaran')
-            ->with('success', 'Pembayaran ditolak.');
-    }
 }

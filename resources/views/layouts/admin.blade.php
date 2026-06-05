@@ -22,7 +22,6 @@
                 $menus = [
                     ['route' => 'admin.beranda', 'label' => 'Beranda'],
                     ['route' => 'admin.verifikasi', 'label' => 'Verifikasi'],
-                    ['route' => 'admin.pembayaran', 'label' => 'Validasi'],
                     ['route' => 'admin.upload', 'label' => 'Banner'],
                 ];
             @endphp

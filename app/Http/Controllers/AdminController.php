@@ -38,7 +38,7 @@ class AdminController extends Controller
             ->where('status_pembayaran', 'valid')
             ->where('status', 'disetujui')
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return view('admin.beranda', compact(
             'totalPemilik',
@@ -82,7 +82,7 @@ class AdminController extends Controller
 
             })
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return view('admin.verifikasi', compact('properti'));
     }

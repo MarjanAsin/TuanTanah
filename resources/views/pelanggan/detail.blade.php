@@ -34,7 +34,7 @@
 
             @if($properti->fotos && $properti->fotos->count() > 0)
                 @foreach($properti->fotos as $foto)
-                    <img src="{{ asset('storage/' . $foto->path) }}"
+                    <img loading="lazy" src="{{ asset('storage/' . $foto->path) }}"
                         class="w-full h-[260px] sm:h-[400px] object-contain bg-black flex-shrink-0">
                 @endforeach
             @else
@@ -266,7 +266,7 @@
                         class="block border border-gray-100 rounded-xl overflow-hidden
                                 hover:shadow-md transition">
 
-                            <img
+                            <img loading="lazy"
                                 src="{{ $item->fotos->first()
                                         ? asset('storage/'.$item->fotos->first()->path)
                                         : asset('images/no-image.jpg') }}"

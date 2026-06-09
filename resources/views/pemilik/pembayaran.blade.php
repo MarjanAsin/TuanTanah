@@ -37,7 +37,7 @@
             @php
                 $foto = $item->fotos->first();
             @endphp
-            <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+            <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                 class="w-full h-44 object-cover hover:scale-105 transition duration-300">
         </div>
 
@@ -93,5 +93,11 @@
     </div>
 
 </div>
+
+@if($properti->hasPages())
+    <div class="mt-8 flex justify-center">
+        {{ $properti->links() }}
+    </div>
+@endif
 
 @endsection

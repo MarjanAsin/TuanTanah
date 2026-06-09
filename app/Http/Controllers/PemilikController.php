@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Properti;
 use App\Models\PropertiFoto;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class PemilikController extends Controller
 {
@@ -75,7 +77,7 @@ class PemilikController extends Controller
             ->where('status_pembayaran', 'valid')
             ->where('status', 'disetujui')
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return view('pemilik.beranda', compact(
             'total',
@@ -282,9 +284,24 @@ class PemilikController extends Controller
                 }
 
                 // simpan foto baru
+                $manager = new ImageManager(new Driver());
+
                 foreach ($request->file('foto_properti') as $file) {
 
-                    $path = $file->store('properti', 'public');
+                    $filename = uniqid() . '.jpg';
+                    $path = 'properti/' . $filename;
+
+                    $image = $manager->decode($file);
+
+                    // Hanya resize jika lebih besar dari 1600px
+                    if ($image->width() > 1600) {
+                        $image->scale(width: 1600);
+                    }
+
+                    $image->save(
+                        storage_path('app/public/' . $path),
+                        quality: 75
+                    );
 
                     PropertiFoto::create([
                         'properti_id' => $properti->properti_id,
@@ -501,11 +518,26 @@ class PemilikController extends Controller
             //  SIMPAN FOTO
             if ($request->hasFile('foto_properti')) {
 
+                $manager = new ImageManager(new Driver());
+
                 foreach ($request->file('foto_properti') as $file) {
 
-                    $path = $file->store('properti', 'public');
+                    $filename = uniqid() . '.jpg';
+                    $path = 'properti/' . $filename;
 
-                    \App\Models\PropertiFoto::create([
+                    $image = $manager->decode($file);
+
+                    // Hanya resize jika lebih besar dari 1600px
+                    if ($image->width() > 1600) {
+                        $image->scale(width: 1600);
+                    }
+
+                    $image->save(
+                        storage_path('app/public/' . $path),
+                        quality: 75
+                    );
+
+                    PropertiFoto::create([
                         'properti_id' => $properti->properti_id,
                         'path' => $path
                     ]);
@@ -557,14 +589,14 @@ class PemilikController extends Controller
 
             })
             ->latest()
-            ->get();
+            ->paginate(20, ['*'], 'menunggu_page');
 
         //  DITOLAK OLEH ADMIN
         $ditolak = Properti::with('fotos')
             ->where('user_id', $userId)
             ->where('status', 'ditolak')
             ->latest()
-            ->get();
+            ->paginate(20, ['*'], 'ditolak_page');
 
         return view('pemilik.properti', compact('menunggu', 'ditolak'));
     }
@@ -587,7 +619,7 @@ class PemilikController extends Controller
 
             })
             ->latest()
-            ->get();
+            ->paginate(20);
 
         return view('pemilik.pembayaran', compact('properti'));
     }

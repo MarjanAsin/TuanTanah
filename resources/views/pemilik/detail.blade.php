@@ -61,7 +61,7 @@
             $foto = $properti->fotos->first();
         @endphp
 
-        <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+        <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
             class="w-16 h-16 rounded-lg object-cover">
 
         <div>

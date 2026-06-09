@@ -113,7 +113,7 @@
     @endphp
 
     <div class="overflow-hidden">
-        <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+        <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
             class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
     </div>
     <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold font-inria">
@@ -153,5 +153,11 @@
 @endforelse
 
 </div>
+
+@if($properti->hasPages())
+    <div class="mt-8 flex justify-center">
+        {{ $properti->links() }}
+    </div>
+@endif
 
 @endsection

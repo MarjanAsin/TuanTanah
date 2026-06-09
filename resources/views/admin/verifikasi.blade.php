@@ -29,7 +29,7 @@
             @php
                 $foto = $item->fotos->first();
             @endphp
-            <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+            <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                 class="w-full h-44 object-cover hover:scale-105 transition duration-500"
                     alt="Properti">
         </div>
@@ -68,5 +68,11 @@
     @endforelse
 
 </div>
+
+@if($properti->hasPages())
+    <div class="mt-8">
+        {{ $properti->links() }}
+    </div>
+@endif
 
 @endsection

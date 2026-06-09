@@ -15,12 +15,13 @@ class PelangganController extends Controller
                         ->latest()
                         ->first();
 
-        $properti = Properti::where('status', 'disetujui')
-                            ->where('status_pembayaran', 'valid')
-                            ->where('is_unggulan', 1)
-                            ->latest()
-                            ->take(6)
-                            ->get();
+        $properti = Properti::with('fotos')
+            ->where('status', 'disetujui')
+            ->where('status_pembayaran', 'valid')
+            ->where('is_unggulan', 1)
+            ->latest()
+            ->take(6)
+            ->get();
 
         return view('pelanggan.beranda', compact('banner', 'properti'));
     }
@@ -50,15 +51,17 @@ class PelangganController extends Controller
         }
 
         //  DATA
-        $properti = (clone $query)
-            ->where('is_unggulan', 0)
-            ->latest()
-            ->get();
-
         $unggulan = (clone $query)
             ->where('is_unggulan', 1)
             ->latest()
-            ->get();
+            ->paginate(6, ['*'], 'unggulan_page')
+            ->withQueryString();
+
+        $properti = (clone $query)
+            ->where('is_unggulan', 0)
+            ->latest()
+            ->paginate(12, ['*'], 'properti_page')
+            ->withQueryString();
 
         return view('pelanggan.properti', compact('unggulan', 'properti'));
     }
@@ -66,13 +69,13 @@ class PelangganController extends Controller
     // DETAIL PROPERTI
     public function detail($id)
     {
-        $properti = Properti::with('fotos')
+        $properti = Properti::with(['fotos','user'])
             ->where('properti_id', $id)
             ->where('status', 'disetujui')
             ->where('status_pembayaran', 'valid')
             ->firstOrFail();
 
-        // 🔥 PROPERTI LAINNYA
+        //  PROPERTI LAINNYA
         $propertiLainnya = Properti::with('fotos')
             ->where('properti_id', '!=', $properti->properti_id)
             ->where('status', 'disetujui')

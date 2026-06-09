@@ -36,7 +36,7 @@
                         @endphp
 
                         <div class="overflow-hidden">
-                            <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                            <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                                 class="w-full h-44 object-cover group-hover:scale-105 transition duration-500"
                                 alt="Properti">
                         </div>
@@ -82,6 +82,12 @@
         </div>
     </section>
 
+    @if($menunggu->hasPages())
+        <div class="mt-8 flex justify-center">
+            {{ $menunggu->links() }}
+        </div>
+    @endif
+
 
     {{-- DITOLAK --}}
     <section class="pt-12">
@@ -114,7 +120,7 @@
                         @endphp
 
                         <div class="overflow-hidden">
-                            <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                            <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                                 class="w-full h-44 object-cover group-hover:scale-105 transition duration-500"
                                 alt="Properti">
                         </div>
@@ -171,6 +177,12 @@
             </div>
         </div>
     </section>
+
+    @if($menunggu->hasPages())
+        <div class="mt-8 flex justify-center">
+            {{ $menunggu->links() }}
+        </div>
+    @endif
 
 </div>
 

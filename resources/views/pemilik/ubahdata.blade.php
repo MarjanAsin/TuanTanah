@@ -557,7 +557,7 @@
 
                             <div class="snap-center flex-shrink-0 relative">
 
-                                <img
+                                <img loading="lazy"
                                     src="{{ asset('storage/' . $foto->path) }}"
                                     class="h-56 w-96 object-cover rounded-2xl shadow-md">
 
@@ -688,9 +688,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById('btnSubmit');
 
     const tipe = document.getElementById('tipe');
-
-    const wa = document.getElementById('wa');
-    const waError = document.getElementById('waError');
 
     const input = document.getElementById('fotoInput');
     const preview = document.getElementById('previewContainer');
@@ -866,21 +863,6 @@ function togglePropertyFields() {
 
 tipe.addEventListener('change', togglePropertyFields);
 togglePropertyFields();
-
-
-    // WA VALIDATION
-    wa.addEventListener('input', function () {
-
-        this.value = this.value.replace(/[^0-9]/g, '').slice(0,15);
-
-        if (this.value.length > 0 && this.value.length < 11) {
-            waError.classList.remove('hidden');
-            this.classList.add('border-red-500');
-        } else {
-            waError.classList.add('hidden');
-            this.classList.remove('border-red-500');
-        }
-    });
 
 });
 </script>

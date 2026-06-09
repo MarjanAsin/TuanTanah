@@ -44,7 +44,7 @@
 
                             <div class="flex-shrink-0 snap-center">
 
-                                <img src="{{ asset('storage/' . $foto->path) }}"
+                                <img loading="lazy" src="{{ asset('storage/' . $foto->path) }}"
                                      class="h-56 sm:h-64 w-[280px] sm:w-96
                                             object-cover rounded-xl shadow">
 
@@ -78,7 +78,7 @@
                 <a href="{{ asset('storage/' . $properti->bukti_pembayaran) }}"
                 target="_blank">
 
-                    <img
+                    <img loading="lazy"
                         src="{{ asset('storage/' . $properti->bukti_pembayaran) }}"
                         class="w-full h-80 object-contain rounded-2xl border border-gray-200 hover:opacity-90 transition">
 

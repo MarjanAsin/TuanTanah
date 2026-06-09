@@ -128,7 +128,7 @@
                             $foto = $item->fotos->first();
                         @endphp
 
-                        <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                        <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                             class="w-full h-44 object-cover group-hover:scale-105 transition duration-300">
 
                         <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold font-inria">
@@ -173,6 +173,12 @@
         </div>
     </section>
 
+    @if($unggulan->hasPages())
+        <div class="mt-8 flex justify-center">
+            {{ $unggulan->links() }}
+        </div>
+    @endif
+
     <section class="py-7">
         <div class="max-w-7xl mx-auto px-6">
 
@@ -194,7 +200,7 @@
                             $foto = $item->fotos->first();
                         @endphp
 
-                        <img src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                        <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                             class="w-full h-44 object-cover group-hover:scale-105 transition duration-300">
 
                         <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold font-inria">
@@ -235,6 +241,12 @@
             </div>
         </div>
     </section>
+
+    @if($properti->hasPages())
+        <div class="mt-8 flex justify-center">
+            {{ $properti->links() }}
+        </div>
+    @endif
 
 </div>
 

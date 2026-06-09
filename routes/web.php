@@ -91,8 +91,8 @@ Route::middleware(['auth', 'role:pemilik'])->prefix('pemilik')->group(function (
     Route::post('/upload', [PemilikController::class, 'store'])
         ->name('pemilik.store');
 
-    Route::get('/riwayat', [PemilikController::class, 'riwayat'])
-        ->name('pemilik.riwayat');
+    Route::get('/properti', [PemilikController::class, 'properti'])
+        ->name('pemilik.properti');
 
     Route::get('/pembayaran', [PemilikController::class, 'pembayaran'])
         ->name('pemilik.pembayaran');

@@ -21,9 +21,9 @@
             @php
                 $menus = [
                     ['route' => 'pemilik.beranda', 'label' => 'Beranda'],
+                    ['route' => 'pemilik.properti', 'label' => 'Properti'],
                     ['route' => 'pemilik.upload', 'label' => 'Upload'],
                     ['route' => 'pemilik.pembayaran', 'label' => 'Pembayaran'],
-                    ['route' => 'pemilik.riwayat', 'label' => 'Riwayat'],
                 ];
             @endphp
 

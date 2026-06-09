@@ -51,6 +51,7 @@ class User extends Authenticatable
             ['email' => env('ADMIN_EMAIL', 'admin1@gmail.com')],
             [
                 'name' => 'Admin',
+                'nomor_whatsapp' => '085200009999',
                 'password' => Hash::make(env('ADMIN_PASSWORD', 'admin1')),
                 'role' => 'admin',
             ]

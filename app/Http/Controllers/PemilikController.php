@@ -108,12 +108,9 @@ class PemilikController extends Controller
         $namaProperti = trim($request->nama_properti);
         $lokasi = trim($request->lokasi);
 
-        $fasilitas = implode(', ', $request->fasilitas);
-
         $request->merge([
             'nama_properti' => $namaProperti,
             'lokasi' => $lokasi,
-            'fasilitas' => $fasilitas,
         ]);
 
         $deskripsi = collect(explode(',', $request->deskripsi))
@@ -235,6 +232,7 @@ class PemilikController extends Controller
             'foto_properti.*.mimes' => 'Format gambar harus JPG, JPEG, atau PNG.',
             'foto_properti.*.max' => 'Ukuran gambar maksimal 5MB.',
         ]);
+        $fasilitas = implode(', ', $request->fasilitas);
 
         $jumlahKamar = $request->jumlah_kamar;
         $kamarMandi = $request->kamar_mandi;
@@ -269,6 +267,7 @@ class PemilikController extends Controller
 
                 //  WAJIB VERIFIKASI ULANG
                 'status' => 'menunggu',
+                'alasan_penolakan' => null,
             ]);
 
             //  UPDATE FOTO
@@ -306,7 +305,7 @@ class PemilikController extends Controller
         }
 
         return redirect()
-            ->route('pemilik.beranda')
+            ->route('pemilik.properti')
             ->with('success', 'Properti berhasil diperbarui dan menunggu verifikasi ulang.');
     }
 
@@ -321,16 +320,13 @@ class PemilikController extends Controller
     {
         $userId = Auth::id();
 
-        //  BERSIHKAN INPUT
+        // BERSIHKAN INPUT
         $namaProperti = trim($request->nama_properti);
         $lokasi = trim($request->lokasi);
-
-        $fasilitas = implode(', ', $request->fasilitas);
 
         $request->merge([
             'nama_properti' => $namaProperti,
             'lokasi' => $lokasi,
-            'fasilitas' => $fasilitas,
         ]);
 
         $deskripsi = collect(explode(',', $request->deskripsi))
@@ -460,6 +456,8 @@ class PemilikController extends Controller
                 'deskripsi.regex' => 'Deskripsi tidak boleh hanya berisi spasi.',
                 'deskripsi.max' => 'Deskripsi maksimal 3000 karakter.',
             ]);
+            
+        $fasilitas = implode(', ', $request->fasilitas);
 
         $jumlahKamar = $request->jumlah_kamar;
         $kamarMandi = $request->kamar_mandi;
@@ -538,27 +536,37 @@ class PemilikController extends Controller
             ->with('success', 'Properti pertama berhasil diupload secara gratis.');
     }
 
-    public function riwayat()
+    public function properti()
     {
         $userId = Auth::id();
 
         //  MENUNGGU VERIFIKASI
         $menunggu = Properti::with('fotos')
             ->where('user_id', $userId)
-            ->where('status_pembayaran', 'valid')
             ->where('status', 'menunggu')
+            ->where(function ($query) {
+
+                $query->where('status_pembayaran', 'valid')
+
+                    ->orWhere(function ($q) {
+
+                        $q->where('status_pembayaran', 'pending')
+                            ->whereNotNull('bukti_pembayaran');
+
+                    });
+
+            })
             ->latest()
             ->get();
 
         //  DITOLAK OLEH ADMIN
         $ditolak = Properti::with('fotos')
             ->where('user_id', $userId)
-            ->where('status_pembayaran', 'valid')
             ->where('status', 'ditolak')
             ->latest()
             ->get();
 
-        return view('pemilik.riwayat', compact('menunggu', 'ditolak'));
+        return view('pemilik.properti', compact('menunggu', 'ditolak'));
     }
 
     // INDEX PEMBAYARAN
@@ -622,10 +630,11 @@ class PemilikController extends Controller
 
         $properti->update([
             'bukti_pembayaran' => $path,
-            'status_pembayaran' => 'pending'
+            'status_pembayaran' => 'pending',
+            'alasan_penolakan' => null,
         ]);
 
-        return redirect()->route('pemilik.beranda')
+        return redirect()->route('pemilik.properti')
             ->with('success', 'Bukti pembayaran berhasil dikirim.');
     }
 }

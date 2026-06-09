@@ -16,6 +16,7 @@ class PropertiSeeder extends Seeder
         $user = User::create([
             'name' => 'Pemilik Demo',
             'email' => 'a@gmail.com',
+            'nomor_whatsapp' => '081234567891',
             'password' => Hash::make('123456'),
         ]);
 
@@ -57,7 +58,6 @@ class PropertiSeeder extends Seeder
                 'lokasi' => ['Jakarta','Bogor','Depok','Bekasi'][rand(0,3)],
                 'deskripsi' => 'Properti strategis dan nyaman untuk keluarga.',
                 'fasilitas' => 'AC,Wifi,Parkir',
-                'kontak_whatsapp' => '081234567890',
                 'status' => $item['status'],
                 'status_pembayaran' => $item['bayar'],
                 'is_unggulan' => rand(0,1),
@@ -66,7 +66,6 @@ class PropertiSeeder extends Seeder
                 'jumlah_kamar' => rand(1, 5),
                 'bukti_pembayaran' => $item['bayar'] == 'pending' ? 'dummy/bukti.jpg' : null,
                 'alasan_penolakan' => $item['tolak'] ?? null,
-                'alasan_penolakan_pembayaran' => $item['tolak_bayar'] ?? null,
             ]);
 
             // ================= FOTO =================

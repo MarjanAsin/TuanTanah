@@ -36,15 +36,21 @@
         {{-- STATUS --}}
         <div class="mb-4">
 
-            @if($properti->status_pembayaran == 'pending' && is_null($properti->bukti_pembayaran))
+            @if($properti->status_pembayaran == 'ditolak')
+
+                <span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full font-semibold font-inria">
+                    Pembayaran Ditolak
+                </span>
+
+            @elseif(
+                $properti->status_pembayaran == 'pending'
+                && is_null($properti->bukti_pembayaran)
+            )
+
                 <span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full font-semibold font-inria">
                     Belum Dibayar
                 </span>
 
-            @elseif($properti->status_pembayaran == 'ditolak')
-                <span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full font-semibold font-inria">
-                    Ditolak
-                </span>
             @endif
 
         </div>
@@ -95,7 +101,7 @@
         @if($properti->status_pembayaran == 'ditolak')
             <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded mb-4 font-inria">
                 <p class="font-semibold mb-1">Alasan Penolakan:</p>
-                <p>{{ $properti->alasan_penolakan_pembayaran }}</p>
+                <p>{{ $properti->alasan_penolakan }}</p>
             </div>
         @endif
         {{-- FORM UPLOAD --}}

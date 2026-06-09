@@ -12,26 +12,21 @@ class AdminController extends Controller
 {
     public function beranda()
     {
-        $totalProperti = Properti::where(function ($q) {
-
-    //  SUDAH BAYAR MENUNGGU VALIDASI
-            $q->where(function ($sub) {
-                $sub->where('status_pembayaran', 'pending')
-                    ->whereNotNull('bukti_pembayaran');
-            })
-
-            //  SUDAH VALID & BUKAN DITOLAK
-            ->orWhere(function ($sub) {
-                $sub->where('status_pembayaran', 'valid')
-                    ->whereIn('status', ['menunggu', 'disetujui']);
-            });
-
-        })->count();
-
         $totalPemilik = User::where('role', 'pemilik')->count();
 
-        $menunggu = Properti::where('status_pembayaran', 'valid')
-            ->where('status', 'menunggu')
+        $menunggu = Properti::where('status', 'menunggu')
+            ->where(function ($query) {
+
+                $query->where('status_pembayaran', 'valid')
+
+                    ->orWhere(function ($q) {
+
+                        $q->where('status_pembayaran', 'pending')
+                            ->whereNotNull('bukti_pembayaran');
+
+                    });
+
+            })
             ->count();
 
         $totalAktif = Properti::where('status_pembayaran', 'valid')
@@ -46,7 +41,6 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.beranda', compact(
-            'totalProperti',
             'totalPemilik',
             'totalAktif',
             'menunggu',
@@ -75,6 +69,18 @@ class AdminController extends Controller
     {
         $properti = Properti::with('fotos')
             ->where('status', 'menunggu')
+            ->where(function ($query) {
+
+                $query->where('status_pembayaran', 'valid')
+
+                    ->orWhere(function ($q) {
+
+                        $q->where('status_pembayaran', 'pending')
+                            ->whereNotNull('bukti_pembayaran');
+
+                    });
+
+            })
             ->latest()
             ->get();
 
@@ -87,6 +93,18 @@ class AdminController extends Controller
         $properti = Properti::with(['fotos', 'user'])
             ->where('properti_id', $id)
             ->where('status', 'menunggu')
+            ->where(function ($query) {
+
+                $query->where('status_pembayaran', 'valid')
+
+                    ->orWhere(function ($q) {
+
+                        $q->where('status_pembayaran', 'pending')
+                            ->whereNotNull('bukti_pembayaran');
+
+                    });
+
+            })
             ->firstOrFail();
 
         return view('admin.detail', compact('properti'));
@@ -108,6 +126,14 @@ class AdminController extends Controller
         }
 
         if ($aksi === 'tolak-pembayaran') {
+
+            if ($properti->status_pembayaran === 'valid') {
+
+                return back()->with(
+                    'error',
+                    'Pembayaran yang sudah valid tidak dapat ditolak kembali.'
+                );
+            }
 
             $request->validate([
                 'alasan_penolakan' => 'required|string'
@@ -134,7 +160,6 @@ class AdminController extends Controller
 
             $properti->update([
                 'status' => 'ditolak',
-                'is_unggulan' => 0,
                 'alasan_penolakan' => $request->alasan_penolakan
             ]);
         }

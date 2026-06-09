@@ -155,59 +155,15 @@
                 </div>
             </div>
 
-            @php
-                $icons = [
-                    'AC' => '❄️',
-                    'WiFi' => '📶',
-                    'Garasi' => '🚗',
-                    'Carport' => '🚘',
-                    'CCTV' => '📹',
-                    'Kolam Renang' => '🏊',
-                    'Taman' => '🌳',
-                    'PDAM' => '💧',
-                    'Keamanan 24 Jam' => '🛡️',
-                    'Mushola' => '🕌',
-                    'Balkon' => '🏠',
-                    'Gudang' => '📦',
-                ];
-            @endphp
+           <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
 
-            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+            <h3 class="font-semibold text-gray-800 mb-4 font-inria">
+                Fasilitas
+            </h3>
 
-                <h3 class="font-semibold text-gray-800 mb-4 font-inria">
-                    Fasilitas
-                </h3>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-
-                    @foreach(explode(',', $properti->fasilitas ?? '') as $item)
-
-                        @php
-                            $item = trim($item);
-                        @endphp
-
-                        @if($item)
-
-                            <div class="flex items-center gap-3
-                                        p-3 rounded-xl
-                                        bg-gray-50 border border-gray-100">
-
-                                <span class="text-lg">
-                                    {{ $icons[$item] ?? '🏢' }}
-                                </span>
-
-                                <span class="text-sm text-gray-700 font-inria">
-                                    {{ $item }}
-                                </span>
-
-                            </div>
-
-                        @endif
-
-                    @endforeach
-
-                </div>
-
+            @include('components.fasilitas', [
+                'fasilitas' => $properti->fasilitas
+            ])
             </div>
 
             <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
@@ -216,7 +172,7 @@
                     Deskripsi
                 </h3>
 
-                <ul class="space-y-2">
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
 
                     @foreach(explode(',', $properti->deskripsi) as $item)
 

@@ -1,6 +1,6 @@
 @extends('layouts.pemilik')
 
-@section('title', 'Riwayat Properti')
+@section('title', 'Properti')
 
 @section('content')
 
@@ -74,7 +74,7 @@
 
                 @empty
                     <p class="col-span-3 text-gray-500 text-center font-inria">
-                        Tidak ada properti yang sedang menunggu verifikasi.
+                        Belum ada properti yang sedang menunggu verifikasi.
                     </p>
                 @endforelse
 
@@ -164,7 +164,7 @@
 
                 @empty
                     <p class="col-span-3 text-gray-500 text-center font-inria">
-                        Tidak ada properti yang ditolak.
+                       Belum ada properti yang ditolak.
                     </p>
                 @endforelse
 

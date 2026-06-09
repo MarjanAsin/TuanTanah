@@ -18,15 +18,18 @@
                 transition duration-300 overflow-hidden border border-gray-100 relative">
 
         {{-- BADGE STATUS --}}
-        @if(is_null($item->bukti_pembayaran))
+        @if($item->status_pembayaran == 'ditolak')
+
+            <div class="absolute top-4 left-4 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow font-inria">
+                Ditolak
+            </div>
+
+        @else
+
             <div class="absolute top-4 left-4 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow font-inria">
                 Belum Dibayar
             </div>
 
-        @elseif($item->status_pembayaran == 'ditolak')
-            <div class="absolute top-4 left-4 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow font-inria">
-                Ditolak
-            </div>
         @endif
 
         {{-- IMAGE --}}
@@ -55,7 +58,7 @@
                     Alasan Penolakan:
                 </p>
                 <div class="bg-red-50 border border-red-200 text-red-600 text-xs p-2 rounded mb-4 font-inria">
-                    {{ $item->alasan_penolakan_pembayaran }}
+                    {{ $item->alasan_penolakan }}
                 </div>
             @endif
 
@@ -65,12 +68,14 @@
                       text-white py-2.5 rounded-xl text-sm font-semibold
                       transition duration-300 shadow font-inria">
 
-                @if(is_null($item->bukti_pembayaran))
-                    Bayar Sekarang
-                @elseif($item->status_pembayaran == 'pending')
-                    Lihat Status
-                @elseif($item->status_pembayaran == 'ditolak')
+                @if($item->status_pembayaran == 'ditolak')
+
                     Upload Ulang
+
+                @else
+
+                    Bayar Sekarang
+
                 @endif
 
             </a>

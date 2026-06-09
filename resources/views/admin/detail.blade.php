@@ -67,164 +67,153 @@
 
             </div>
 
-            <div class="bg-white rounded-2xl shadow-sm p-4 text-center">
+            @if($properti->status_pembayaran === 'pending' && $properti->bukti_pembayaran)
 
-                <div class="bg-white rounded-2xl shadow-sm p-4">
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mt-6">
 
-                    <p class="text-sm font-semibold mb-3 text-gray-800 font-inria">
-                        Pembayaran
-                    </p>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 font-inria">
+                    Bukti Pembayaran
+                </h3>
 
-                    @if($properti->bukti_pembayaran)
+                <a href="{{ asset('storage/' . $properti->bukti_pembayaran) }}"
+                target="_blank">
 
-                        <a href="{{ asset('storage/' . $properti->bukti_pembayaran) }}"
-                        target="_blank">
+                    <img
+                        src="{{ asset('storage/' . $properti->bukti_pembayaran) }}"
+                        class="w-full h-80 object-contain rounded-2xl border border-gray-200 hover:opacity-90 transition">
 
-                            <img src="{{ asset('storage/' . $properti->bukti_pembayaran) }}"
-                                class="w-full h-72 object-contain rounded-lg border hover:opacity-90 transition">
+                </a>
 
-                        </a>
-
-                        <p class="text-xs text-gray-500 mt-2 font-inria">
-                            Klik untuk memperbesar
-                        </p>
-
-                    @else
-
-                        <div class="h-48 flex flex-col items-center justify-center
-                                    bg-green-50 border border-green-200 rounded-xl">
-
-                            <p class="text-green-700 font-semibold font-inria">
-                                Upload Gratis Pertama
-                            </p>
-
-                            <p class="text-sm text-green-600 mt-1 font-inria">
-                                Tidak memerlukan pembayaran
-                            </p>
-
-                        </div>
-
-                    @endif
-
-                </div>
+                <p class="text-xs text-gray-500 mt-3 text-center font-inria">
+                    Klik gambar untuk memperbesar
+                </p>
 
             </div>
 
+            @endif
+            
+            {{-- AKSI UTAMA --}}
             <div class="space-y-4">
 
-            {{-- BARIS ATAS --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {{-- BARIS 1 --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                {{-- VERIFIKASI --}}
-                <form method="POST"
-                    action="{{ route('admin.proses', [$properti->properti_id, 'setujui']) }}">
+                    {{-- SETUJUI PROPERTI --}}
+                    <form method="POST"
+                        action="{{ route('admin.proses', [$properti->properti_id, 'setujui']) }}">
 
-                    @csrf
+                        @csrf
 
-                    <button type="submit"
-                            class="w-full bg-green-600 hover:bg-green-700
+                        <button type="submit"
+                                class="w-full bg-green-600 hover:bg-green-700
+                                    text-white py-3 rounded-xl
+                                    text-sm font-semibold
+                                    transition duration-300 shadow-sm
+                                    cursor-pointer font-inria">
+
+                            Setujui Properti
+
+                        </button>
+
+                    </form>
+
+                    {{-- TOLAK PROPERTI --}}
+                    <button type="button"
+                            onclick="toggleAlasanProperti()"
+                            class="w-full bg-red-600 hover:bg-red-700
                                 text-white py-3 rounded-xl
                                 text-sm font-semibold
                                 transition duration-300 shadow-sm
                                 cursor-pointer font-inria">
 
-                        ✓ Verifikasi Properti
+                        Tolak Properti
 
                     </button>
 
+                </div>
+
+                {{-- FORM TOLAK PROPERTI --}}
+                <form method="POST"
+                    action="{{ route('admin.proses', [$properti->properti_id, 'tolak']) }}">
+
+                    @csrf
+
+                    <div id="fieldAlasanProperti"
+                        class="hidden space-y-3">
+
+                        <textarea
+                            name="alasan_penolakan"
+                            rows="4"
+                            placeholder="Contoh: Foto properti tidak sesuai atau informasi properti tidak lengkap."
+                            class="w-full border border-red-300 rounded-xl
+                                px-4 py-3 text-sm font-inria
+                                focus:outline-none
+                                focus:ring-2 focus:ring-red-500"></textarea>
+
+                        <button type="submit"
+                                class="w-full bg-red-600 hover:bg-red-800
+                                    text-white py-3 rounded-xl
+                                    text-sm font-semibold
+                                    cursor-pointer font-inria">
+
+                            Konfirmasi Penolakan Properti
+
+                        </button>
+
+                    </div>
+
                 </form>
 
-                {{-- TOLAK PEMBAYARAN --}}
-                <button type="button"
-                        onclick="toggleAlasanPembayaran()"
-                        class="w-full bg-orange-500 hover:bg-orange-600
-                            text-white py-3 rounded-xl
-                            text-sm font-semibold
-                            transition duration-300 shadow-sm
-                            cursor-pointer font-inria">
+                {{-- BARIS 2 : PEMBAYARAN --}}
+                @if($properti->status_pembayaran !== 'valid')
 
-                    ✕ Tolak Pembayaran
+                    <button type="button"
+                            onclick="toggleAlasanPembayaran()"
+                            class="w-full bg-orange-500 hover:bg-orange-600
+                                text-white py-3 rounded-xl
+                                text-sm font-semibold
+                                transition duration-300 shadow-sm
+                                cursor-pointer font-inria">
 
-                </button>
+                        Tolak Pembayaran
 
-            </div>
+                    </button>
 
-            {{-- FORM TOLAK PEMBAYARAN --}}
-            <form method="POST"
-                action="{{ route('admin.proses', [$properti->properti_id, 'tolak-pembayaran']) }}">
+                    {{-- FORM TOLAK PEMBAYARAN --}}
+                    <form method="POST"
+                        action="{{ route('admin.proses', [$properti->properti_id, 'tolak-pembayaran']) }}">
 
-                @csrf
+                        @csrf
 
-                <div id="fieldAlasanPembayaran"
-                    class="hidden space-y-3">
+                        <div id="fieldAlasanPembayaran"
+                            class="hidden space-y-3">
 
-                    <textarea name="alasan_penolakan"
-                            rows="4"
-                            placeholder="Contoh: Bukti transfer tidak valid."
-                            class="w-full border border-orange-300 rounded-xl
+                            <textarea
+                                name="alasan_penolakan"
+                                rows="4"
+                                placeholder="Contoh: Bukti transfer tidak valid atau nominal tidak sesuai."
+                                class="w-full border border-orange-300 rounded-xl
                                     px-4 py-3 text-sm font-inria
                                     focus:outline-none
                                     focus:ring-2 focus:ring-orange-500"></textarea>
 
-                    <button type="submit"
-                            class="w-full bg-orange-500 hover:bg-orange-700
-                                text-white py-3 rounded-xl
-                                text-sm font-semibold
-                                cursor-pointer font-inria">
+                            <button type="submit"
+                                    class="w-full bg-orange-500 hover:bg-orange-700
+                                        text-white py-3 rounded-xl
+                                        text-sm font-semibold
+                                        cursor-pointer font-inria">
 
-                        Konfirmasi Penolakan Pembayaran
+                                Konfirmasi Penolakan Pembayaran
 
-                    </button>
+                            </button>
 
-                </div>
+                        </div>
 
-            </form>
+                    </form>
 
-            {{-- TOLAK PROPERTI --}}
-            <button type="button"
-                    onclick="toggleAlasanProperti()"
-                    class="w-full bg-red-600 hover:bg-red-700
-                        text-white py-3 rounded-xl
-                        text-sm font-semibold
-                        transition duration-300 shadow-sm
-                        cursor-pointer font-inria">
+                @endif
 
-                ✕ Tolak Properti
-
-            </button>
-
-            {{-- FORM TOLAK PROPERTI --}}
-            <form method="POST"
-                action="{{ route('admin.proses', [$properti->properti_id, 'tolak']) }}">
-
-                @csrf
-
-                <div id="fieldAlasanProperti"
-                    class="hidden space-y-3">
-
-                    <textarea name="alasan_penolakan"
-                            rows="4"
-                            placeholder="Contoh: Foto properti tidak sesuai."
-                            class="w-full border border-red-300 rounded-xl
-                                    px-4 py-3 text-sm font-inria
-                                    focus:outline-none
-                                    focus:ring-2 focus:ring-red-500"></textarea>
-
-                    <button type="submit"
-                            class="w-full bg-red-600 hover:bg-red-800
-                                text-white py-3 rounded-xl
-                                text-sm font-semibold
-                                cursor-pointer font-inria">
-
-                        Konfirmasi Penolakan Properti
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
+            </div>
 
         </div>
 
@@ -232,22 +221,6 @@
         <div class="space-y-6">
 
             <div class="bg-white rounded-2xl shadow-sm p-5 sm:p-6">
-                @if(
-                    $properti->status_pembayaran === 'valid'
-                    && !$properti->bukti_pembayaran
-                )
-
-                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold font-inria">
-                        Gratis
-                    </span>
-
-                @elseif($properti->status_pembayaran === 'pending')
-
-                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold font-inria">
-                        Berbayar
-                    </span>
-
-                @endif
 
                 <h3 class="text-lg sm:text-xl font-semibold mb-6 font-inria break-words">
                     {{ $properti->nama_properti }}
@@ -345,52 +318,9 @@
                             Fasilitas
                         </p>
 
-                        @php
-                            $icons = [
-                                'AC' => '❄️',
-                                'WiFi' => '📶',
-                                'Garasi' => '🚗',
-                                'Carport' => '🚘',
-                                'CCTV' => '📹',
-                                'Kolam Renang' => '🏊',
-                                'Taman' => '🌳',
-                                'PDAM' => '💧',
-                                'Keamanan 24 Jam' => '🛡️',
-                                'Mushola' => '🕌',
-                                'Balkon' => '🏠',
-                                'Gudang' => '📦',
-                            ];
-                        @endphp
-
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-
-                            @foreach(explode(',', $properti->fasilitas ?? '') as $item)
-
-                                @php
-                                    $item = trim($item);
-                                @endphp
-
-                                @if($item)
-
-                                    <div class="flex items-center gap-3
-                                                p-3 rounded-xl
-                                                bg-gray-50 border border-gray-100">
-
-                                        <span class="text-lg">
-                                            {{ $icons[$item] ?? '🏢' }}
-                                        </span>
-
-                                        <span class="text-sm text-gray-700 font-inria">
-                                            {{ $item }}
-                                        </span>
-
-                                    </div>
-
-                                @endif
-
-                            @endforeach
-
-                        </div>
+                        @include('components.fasilitas', [
+                            'fasilitas' => $properti->fasilitas
+                        ])
 
                     </div>
 
@@ -406,17 +336,21 @@
 
                     </div>
 
-                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                    @if($properti->status_pembayaran !== 'valid')
 
-                        <p class="font-semibold text-gray-700 mb-1 font-inria">
-                            Biaya Upload
-                        </p>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
 
-                        <p class="text-indigo-600 font-bold text-lg font-inria">
-                            Rp 10.000
-                        </p>
+                            <p class="font-semibold text-gray-700 mb-1 font-inria">
+                                Biaya Upload
+                            </p>
 
-                    </div>
+                            <p class="text-indigo-600 font-bold text-lg font-inria">
+                                Rp 10.000
+                            </p>
+
+                        </div>
+
+                    @endif
 
                     <div class="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 shadow-sm">
 
@@ -424,7 +358,7 @@
                             Deskripsi
                         </p>
 
-                        <ul class="space-y-2">
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
 
                             @foreach(explode(',', $properti->deskripsi) as $item)
 

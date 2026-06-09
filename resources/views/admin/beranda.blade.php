@@ -9,15 +9,6 @@
 
     <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
         <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
-            Total Properti
-        </h3>
-        <p class="text-xl sm:text-3xl font-bold">
-            {{ $totalProperti }}
-        </p>
-    </div>
-
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
-        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
             Properti Aktif
         </h3>
         <p class="text-xl sm:text-3xl font-bold">

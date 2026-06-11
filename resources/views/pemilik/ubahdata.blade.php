@@ -61,7 +61,7 @@
         <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200">
 
             <p class="text-sm font-semibold text-red-600 mb-2 font-inria">
-                Alasan Penolakan
+                Alasan Penolakan:
             </p>
 
             <p class="text-sm text-red-700 font-inria">
@@ -600,10 +600,6 @@
                         Klik untuk memilih foto baru
                     </p>
 
-                    <p class="text-sm text-gray-500 mt-1 font-inria">
-                        JPG, JPEG, PNG • Maksimal 5 Foto
-                    </p>
-
                 </label>
 
                 @error('foto_properti')
@@ -637,18 +633,18 @@
             </div>
 
             {{-- SUBMIT --}}
-            <div class="pt-8 border-t border-gray-100 mt-8">
+            <div class="mt-8 bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
 
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
                     <div>
 
-                        <p class="text-sm font-medium text-gray-700 font-inria">
+                        <h3 class="text-base font-semibold text-gray-800 font-inria">
                             Simpan Perubahan
-                        </p>
+                        </h3>
 
-                        <p class="text-xs text-gray-500 font-inria">
-                            Perubahan akan dikirim untuk proses verifikasi ulang oleh admin.
+                        <p class="text-sm text-gray-500 mt-1 font-inria">
+                            Perubahan akan dikirim kembali untuk proses verifikasi oleh admin.
                         </p>
 
                     </div>

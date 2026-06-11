@@ -128,7 +128,7 @@
                             $foto = $item->fotos->first();
                         @endphp
 
-                        <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                        <img alt="{{ $item->nama_properti }}" loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                             class="w-full h-44 object-cover group-hover:scale-105 transition duration-300">
 
                         <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold font-inria">
@@ -172,10 +172,13 @@
             </div>
         </div>
     </section>
-
     @if($unggulan->hasPages())
-        <div class="mt-8 flex justify-center">
-            {{ $unggulan->links() }}
+        <div class="mt-10 font-inria border-gray-100 flex justify-center">
+
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm px-2 py-2">
+                {{ $unggulan->appends(request()->query())->onEachSide(1)->links() }}
+            </div>
+
         </div>
     @endif
 
@@ -200,7 +203,7 @@
                             $foto = $item->fotos->first();
                         @endphp
 
-                        <img loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
+                        <img alt="{{ $item->nama_properti }}" loading="lazy" src="{{ $foto ? asset('storage/' . $foto->path) : asset('images/no-image.png') }}"
                             class="w-full h-44 object-cover group-hover:scale-105 transition duration-300">
 
                         <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-gray-700 text-xs px-3 py-1 rounded-full shadow font-bold font-inria">
@@ -243,8 +246,12 @@
     </section>
 
     @if($properti->hasPages())
-        <div class="mt-8 flex justify-center">
-            {{ $properti->links() }}
+        <div class="mt-9 font-inria border-gray-100 flex justify-center">
+
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm px-2 py-2">
+                {{ $properti->appends(request()->query())->onEachSide(1)->links() }}
+            </div>
+
         </div>
     @endif
 

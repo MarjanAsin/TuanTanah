@@ -17,25 +17,8 @@ class PemilikController extends Controller
     {
         $userId = Auth::id();
 
-        $total = Properti::where('user_id', $userId)
-
-            ->where(function ($q) {
-
-                //  SUDAH BAYAR MENUNGGU VALIDASI
-                $q->where(function ($sub) {
-                    $sub->where('status_pembayaran', 'pending')
-                        ->whereNotNull('bukti_pembayaran');
-                })
-
-                //  SUDAH VALID & BUKAN DITOLAK
-                ->orWhere(function ($sub) {
-                    $sub->where('status_pembayaran', 'valid')
-                        ->whereIn('status', ['menunggu', 'disetujui']);
-                });
-
-            })
-
-            ->count();
+        // TOTAL PROPERTI
+        $total = Properti::where('user_id', $userId)->count();
 
         //  BELUM BAYAR + DITOLAK PEMBAYARAN
         $menungguPembayaran = Properti::where('user_id', $userId)
@@ -48,16 +31,21 @@ class PemilikController extends Controller
             })
             ->count();
 
-        //  SUDAH BAYAR (MENUNGGU VALIDASI)
-        $sudahBayar = Properti::where('user_id', $userId)
-            ->where('status_pembayaran', 'pending')
-            ->whereNotNull('bukti_pembayaran')
-            ->count();
-
         //  MENUNGGU VERIFIKASI ADMIN
         $menunggu = Properti::where('user_id', $userId)
-            ->where('status_pembayaran', 'valid')
             ->where('status', 'menunggu')
+            ->where(function ($query) {
+
+                $query->where('status_pembayaran', 'valid')
+
+                    ->orWhere(function ($q) {
+
+                        $q->where('status_pembayaran', 'pending')
+                            ->whereNotNull('bukti_pembayaran');
+
+                    });
+
+            })
             ->count();
 
         $disetujui = Properti::where('user_id', $userId)
@@ -67,8 +55,19 @@ class PemilikController extends Controller
 
         //  DITOLAK (HANYA VERIFIKASI PROPERTI)
         $ditolak = Properti::where('user_id', $userId)
-            ->where('status_pembayaran', 'valid')
             ->where('status', 'ditolak')
+            ->where(function ($query) {
+
+                $query->where('status_pembayaran', 'valid')
+
+                    ->orWhere(function ($q) {
+
+                        $q->where('status_pembayaran', 'pending')
+                            ->whereNotNull('bukti_pembayaran');
+
+                    });
+
+            })
             ->count();
 
         //  LIST PROPERTI (YANG SUDAH SIAP TAMPIL)
@@ -77,11 +76,10 @@ class PemilikController extends Controller
             ->where('status_pembayaran', 'valid')
             ->where('status', 'disetujui')
             ->latest()
-            ->paginate(20);
+            ->paginate(12);
 
         return view('pemilik.beranda', compact(
             'total',
-            'sudahBayar',
             'menungguPembayaran',
             'menunggu',
             'disetujui',
@@ -589,14 +587,26 @@ class PemilikController extends Controller
 
             })
             ->latest()
-            ->paginate(20, ['*'], 'menunggu_page');
+            ->paginate(12, ['*'], 'menunggu_page');
 
-        //  DITOLAK OLEH ADMIN
+        // DITOLAK OLEH ADMIN
         $ditolak = Properti::with('fotos')
             ->where('user_id', $userId)
             ->where('status', 'ditolak')
+            ->where(function ($query) {
+
+                $query->where('status_pembayaran', 'valid')
+
+                    ->orWhere(function ($q) {
+
+                        $q->where('status_pembayaran', 'pending')
+                            ->whereNotNull('bukti_pembayaran');
+
+                    });
+
+            })
             ->latest()
-            ->paginate(20, ['*'], 'ditolak_page');
+            ->paginate(12, ['*'], 'ditolak_page');
 
         return view('pemilik.properti', compact('menunggu', 'ditolak'));
     }
@@ -619,7 +629,7 @@ class PemilikController extends Controller
 
             })
             ->latest()
-            ->paginate(20);
+            ->paginate(12);
 
         return view('pemilik.pembayaran', compact('properti'));
     }

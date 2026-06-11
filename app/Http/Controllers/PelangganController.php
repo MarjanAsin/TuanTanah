@@ -80,8 +80,8 @@ class PelangganController extends Controller
             ->where('properti_id', '!=', $properti->properti_id)
             ->where('status', 'disetujui')
             ->where('status_pembayaran', 'valid')
-            ->latest()
-            ->take(5)
+            ->inRandomOrder()
+            ->take(6)
             ->get();
 
         return view('pelanggan.detail', compact(

@@ -9,7 +9,7 @@
     {{-- CARD --}}
     <div class="bg-[#151541] w-full max-w-sm rounded-2xl shadow-2xl p-8 text-white relative">
 
-        <a href="{{ url()->previous() ?: route('pelanggan.beranda') }}"
+        <a href="{{ route('pelanggan.beranda') }}"
         class="absolute top-4 left-4 flex items-center justify-center w-9 h-9
                 rounded-full bg-white/10 backdrop-blur-md
                 border border-white/20

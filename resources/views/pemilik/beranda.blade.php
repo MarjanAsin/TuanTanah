@@ -5,21 +5,6 @@
 @section('content')
 <div class="flex flex-col lg:flex-row gap-8 mb-12">
 
-    <div class="bg-gradient-to-br from-[#151541] to-indigo-800
-                text-white p-6 rounded-2xl
-                w-full lg:w-56 text-center
-                shadow-md hover:shadow-xl transition duration-300">
-
-        <h3 class="text-base uppercase tracking-wide text-gray-200 mb-2 font-semibold font-inria">
-            Jumlah Properti
-        </h3>
-
-        <p class="text-3xl font-bold">
-            {{ $total }}
-        </p>
-    </div>
-    
-
     <div class="flex-1">
 
         <div class="bg-gradient-to-r from-[#151541] to-indigo-800
@@ -33,38 +18,39 @@
                     gap-4 bg-white p-4 sm:p-6
                     rounded-b-2xl shadow-sm">
 
-            <div class="bg-red-50 text-red-500 px-4 py-4 rounded-xl text-center">
+            <div class="bg-gradient-to-br from-[#151541] to-indigo-800
+                        text-white px-4 py-4 rounded-xl text-center">
+                <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold text-indigo-200">
+                    Total Properti
+                </p>
+                <p class="text-xl sm:text-2xl font-bold mt-1 font-inria">
+                    {{ $total }}
+                </p>
+            </div>
+
+            <div class="bg-red-100 text-red-500 px-4 py-4 rounded-xl text-center">
                 <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold">
                     Belum Dibayar
                 </p>
-                <p class="text-xl sm:text-2xl font-bold mt-1">
+                <p class="text-xl sm:text-2xl font-bold mt-1 font-inria">
                     {{ $menungguPembayaran }}
                 </p>
             </div>
 
-            <div class="bg-yellow-50 text-yellow-600 px-4 py-4 rounded-xl text-center">
-                <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold">
-                    Sudah Bayar
-                </p>
-                <p class="text-xl sm:text-2xl font-bold mt-1">
-                    {{ $sudahBayar }}
-                </p>
-            </div>
-
-            <div class="bg-indigo-50 text-indigo-700 px-4 py-4 rounded-xl text-center">
+            <div class="bg-indigo-100 text-indigo-700 px-4 py-4 rounded-xl text-center">
                 <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold">
                     Menunggu
                 </p>
-                <p class="text-xl sm:text-2xl font-bold mt-1">
+                <p class="text-xl sm:text-2xl font-bold mt-1 font-inria">
                     {{ $menunggu }}
                 </p>
             </div>
 
-            <div class="bg-green-50 text-green-700 px-4 py-4 rounded-xl text-center">
+            <div class="bg-green-100 text-green-700 px-4 py-4 rounded-xl text-center">
                 <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold">
                     Disetujui
                 </p>
-                <p class="text-xl sm:text-2xl font-bold mt-1">
+                <p class="text-xl sm:text-2xl font-bold mt-1 font-inria">
                     {{ $disetujui }}
                 </p>
             </div>
@@ -73,7 +59,7 @@
                 <p class="text-[10px] sm:text-xs uppercase tracking-wide font-bold">
                     Ditolak
                 </p>
-                <p class="text-xl sm:text-2xl font-bold mt-1">
+                <p class="text-xl sm:text-2xl font-bold mt-1 font-inria">
                     {{ $ditolak }}
                 </p>
             </div>
@@ -155,8 +141,12 @@
 </div>
 
 @if($properti->hasPages())
-    <div class="mt-8 flex justify-center">
-        {{ $properti->links() }}
+    <div class="mt-10 border-gray-100 flex justify-center font-inria">
+
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm px-2 py-2">
+            {{ $properti->onEachSide(1)->links() }}
+        </div>
+
     </div>
 @endif
 

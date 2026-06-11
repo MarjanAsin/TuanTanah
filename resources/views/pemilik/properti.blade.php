@@ -83,8 +83,12 @@
     </section>
 
     @if($menunggu->hasPages())
-        <div class="mt-8 flex justify-center">
-            {{ $menunggu->links() }}
+        <div class="mt-10 border-gray-100 flex justify-center font-inria">
+
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm px-2 py-2">
+                {{ $menunggu->onEachSide(1)->links() }}
+            </div>
+
         </div>
     @endif
 
@@ -178,9 +182,13 @@
         </div>
     </section>
 
-    @if($menunggu->hasPages())
-        <div class="mt-8 flex justify-center">
-            {{ $menunggu->links() }}
+    @if($ditolak->hasPages())
+        <div class="mt-10 border-gray-100 flex justify-center font-inria">
+
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm px-2 py-2">
+                {{ $ditolak->onEachSide(1)->links() }}
+            </div>
+
         </div>
     @endif
 

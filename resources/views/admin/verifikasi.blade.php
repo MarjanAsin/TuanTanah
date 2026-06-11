@@ -63,15 +63,19 @@
 
     @empty
         <p class="text-gray-500 col-span-3 text-center font-inria">
-            Tidak ada properti yang perlu diverifikasi.
+            Belum ada properti yang perlu diverifikasi.
         </p>
     @endforelse
 
 </div>
 
 @if($properti->hasPages())
-    <div class="mt-8">
-        {{ $properti->links() }}
+    <div class="mt-10 border-gray-100 flex justify-center font-inria">
+
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm px-2 py-2">
+            {{ $properti->onEachSide(1)->links() }}
+        </div>
+
     </div>
 @endif
 

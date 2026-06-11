@@ -23,7 +23,7 @@
             <div class="relative">
 
                 <span class="inline-block text-xs uppercase tracking-widest
-                             bg-white/20 px-3 py-1 rounded-full mb-3 font-semibold">
+                             bg-white/20 px-3 py-1 rounded-full mb-3 font-semibold font-inria">
                     Freemium
                 </span>
 
@@ -51,7 +51,7 @@
 
                 @csrf
 
-                <div class="border-b border-gray-100 pb-8">
+                <div class="border-gray-100 pb-7">
 
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">
@@ -199,7 +199,7 @@
 
                 </div>
 
-                <div class="border-b border-gray-100">
+                <div class="border-gray-100">
 
                     <div class="flex items-center gap-3 mb-6">
 
@@ -365,7 +365,7 @@
 
                 </div>
                     
-                <div class="border-b border-gray-100">
+                <div class="border-gray-100">
 
                     <div class="flex items-center gap-3 mb-6">
 
@@ -404,7 +404,7 @@
                 </div>
 
 
-                <div class="border-b border-gray-100">
+                <div class="border-gray-100">
 
                     <div class="flex items-center gap-3 mb-6">
 
@@ -457,10 +457,6 @@
                             Klik untuk memilih foto
                         </p>
 
-                        <p class="text-sm text-gray-500 mt-1 font-inria">
-                            JPG, JPEG, PNG
-                        </p>
-
                         <span
                             id="namaFotoProperti"
                             class="mt-4 text-xs text-indigo-600 font-medium font-inria">
@@ -481,9 +477,6 @@
                             <li>• Format gambar JPG, JPEG, atau PNG</li>
                             <li>• Maksimal ukuran 5MB per foto</li>
                             <li>• Maksimal upload 5 foto</li>
-                            <li>• Resolusi disarankan 1200 × 800 px</li>
-                            <li>• Gunakan foto yang jelas dan terang</li>
-
                         </ul>
 
                     </div>
@@ -502,7 +495,7 @@
 
                 </div>
 
-                <div class="border-b border-gray-100">
+                <div class="border-gray-100">
 
                     <div class="flex items-center gap-3 mb-6">
 

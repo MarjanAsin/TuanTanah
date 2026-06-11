@@ -5,33 +5,69 @@
 @section('content')
 
 {{-- STATISTIK --}}
-<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
-        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
+    {{-- Properti Aktif --}}
+    <div class="bg-gradient-to-br from-[#151541] to-indigo-800 text-white rounded-2xl p-6 shadow-md hover:shadow-xl transition duration-300">
+
+        <p class="text-xs uppercase tracking-wider text-indigo-200 font-semibold font-inria">
             Properti Aktif
-        </h3>
-        <p class="text-xl sm:text-3xl font-bold">
-            {{ $totalAktif }}
         </p>
+
+        <div class="flex items-end justify-between mt-4">
+
+            <h3 class="text-4xl font-bold font-inria">
+                {{ $totalAktif }}
+            </h3>
+
+            <span class="text-4xl opacity-20">
+                🏠
+            </span>
+
+        </div>
+
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
-        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
+    {{-- Pemilik Properti --}}
+    <div class="bg-gradient-to-br from-[#151541] to-indigo-800 text-white rounded-2xl p-6 shadow-md hover:shadow-xl transition duration-300">
+
+        <p class="text-xs uppercase tracking-wider text-indigo-200 font-semibold font-inria">
             Pemilik Properti
-        </h3>
-        <p class="text-xl sm:text-3xl font-bold">
-            {{ $totalPemilik }}
         </p>
+
+        <div class="flex items-end justify-between mt-4">
+
+            <h3 class="text-4xl font-bold font-inria">
+                {{ $totalPemilik }}
+            </h3>
+
+            <span class="text-4xl opacity-15">
+                👤
+            </span>
+
+        </div>
+
     </div>
 
-    <div class="bg-gradient-to-br from-indigo-800 to-indigo-900 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition text-center font-semibold font-inria">
-        <h3 class="text-[10px] sm:text-xs uppercase tracking-wider opacity-80 mb-1 sm:mb-2">
+    {{-- Menunggu Verifikasi --}}
+    <div class="bg-gradient-to-br from-[#151541] to-indigo-800 text-white rounded-2xl p-6 shadow-md hover:shadow-xl transition duration-300">
+
+        <p class="text-xs uppercase tracking-wider text-indigo-200 font-semibold font-inria">
             Menunggu Verifikasi
-        </h3>
-        <p class="text-xl sm:text-3xl font-bold">
-            {{ $menunggu }}
         </p>
+
+        <div class="flex items-end justify-between mt-4">
+
+            <h3 class="text-4xl font-bold font-inria">
+                {{ $menunggu }}
+            </h3>
+
+            <span class="text-4xl opacity-20">
+                ⏳
+            </span>
+
+        </div>
+
     </div>
 
 </div>
@@ -109,15 +145,17 @@
 
             @empty
                 <p class="text-gray-500 col-span-full text-center font-inria">
-                    Tidak ada properti yang disetujui.
+                    Belum ada properti yang disetujui.
                 </p>
             @endforelse
 
         </div>
         
         @if($properti->hasPages())
-            <div class="mt-8">
-                {{ $properti->links() }}
+            <div class="mt-10 border-gray-100 flex justify-center font-inria">
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm px-2 py-2">
+                    {{ $properti->onEachSide(1)->links() }}
+                </div>
             </div>
         @endif
 

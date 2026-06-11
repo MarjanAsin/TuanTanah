@@ -27,6 +27,18 @@
         Kembali
     </a>
 
+    <div class="mb-10 text-center">
+
+        <h1 class="text-3xl font-bold text-gray-800 font-inria">
+            Verifikasi Properti
+        </h1>
+
+        <p class="text-gray-500 mt-2 font-inria">
+            Tinjau informasi properti sebelum disetujui atau ditolak.
+        </p>
+
+    </div>
+
     {{-- GRID --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
 
@@ -390,7 +402,7 @@
                             Kontak WhatsApp
                         </p>
 
-                        <p class="text-gray-600 break-all font-inria">
+                        <p class="text-gray-600 font-semibold break-all font-inria">
                             {{ $properti->user->nomor_whatsapp }}
                         </p>
 

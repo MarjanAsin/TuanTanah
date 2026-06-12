@@ -548,9 +548,11 @@ class PemilikController extends Controller
 
             DB::rollBack();
 
-            return back()
-                ->withInput()
-                ->with('error', 'Upload properti gagal, silakan coba lagi.');
+            dd([
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
         }
 
         //  REDIRECT
